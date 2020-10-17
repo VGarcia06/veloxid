@@ -20,6 +20,11 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
+            //Foreign Keys
+            $table->foreignId('idStatus');
+            $table->foreignId('idUserType');
+            
             $table->timestamps();
         });
     }
