@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User as Driver;
+use App\Models\Driver as ModelsDriver;
+use App\Models\Person;
+use App\User as Driver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class DriverController extends Controller
 {
@@ -16,10 +21,12 @@ class DriverController extends Controller
     {
         $driver = new Driver; // Driver is a Eloquent object that makes references to User.
 
-        return $driver
-                    ->where('idUserType', 2) // The 2 is defined as Conductor/Driver
-                    ->get()
-                    ->toJson();         
+        $drivers = $driver
+                        ->where('idUserType', 2) // The 2 is defined as Conductor/Driver
+                        ->get();
+                   
+        return response()
+                        ->json($drivers,200);         
     }
 
     /**
@@ -43,6 +50,19 @@ class DriverController extends Controller
             DB::beginTransaction();
 
             /**
+             * Validating unique email
+             */
+            $validator = Validator::make($request->all(), [
+                'email' => 'unique:users'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => 'email taken'
+                ], 400);
+            }
+
+            /**
              * Laravel default user table instertion
              */ 
             $driver->name = $request->name;
@@ -56,7 +76,7 @@ class DriverController extends Controller
             /**
              * Person Table that contains personal data
              */
-            $person = new App\Models\Person;
+            $person = new Person;
 
             $person->nombre = $request->nombre;
             $person->apellidoPaterno = $request->apellidoPaterno;
@@ -69,6 +89,18 @@ class DriverController extends Controller
             $person->idDocumentType = $request->idDocumentType; // ID CARD type
 
             $driver->person()->save($person); // insert personal data on Person for a User
+
+            /**
+             * Driver Table that contains driver data
+             */
+            $driverdata = new ModelsDriver;
+            
+            $driverdata->licenciaConducir = $request->licenciaConducir;
+            $driverdata->constanciaEstadoSalud = $request->constanciaEstadoSalud;
+            $driverdata->cuentaBancaria = $request->cuentaBancaria;
+            $driverdata->banco = $request->banco;
+
+            $driver->driver()->save($driverdata); // insert driver data on Driver for a User
             
             /**
              * Lastly, you can commit a transaction via the commit method:
@@ -81,10 +113,13 @@ class DriverController extends Controller
              * You can rollback the transaction via the rollBack method:
              */
             DB::rollBack();
+            return response()->json([
+                'error' => 'Something was wrong'
+            ], 400);
         }
 
-        return $driver
-                    ->toJson();        
+        return response()
+                    ->json(['state' => True], 201);        
     }
 
     /**
@@ -96,8 +131,28 @@ class DriverController extends Controller
     {
         $driver = Driver::find($id);
 
-        return $driver
-                    ->toJson();
+        $person = $driver->person()->first();
+
+        $driverdata = $driver->driver()->first();
+
+        return response()->json([
+            'name' => $driver->name,
+            'email' => $driver->email, 
+            'password' => $driver->password, 
+            'nombre' => $person->nombre, 
+            'apellidoPaterno' => $person->apellidoPaterno, 
+            'apellidoMaterno' => $person->apellidoMaterno, 
+            'telefono' => $person->apellidoPaterno, 
+            'direccion' => $person->direccion, 
+            'correo' => $person->correo, 
+            'imagen' => $person->imagen, 
+            'numero' => $person->numero,
+            'idDocumentType' => $person->idDocumentType,
+            'licenciaConducir' => $driverdata->licenciaConducir,
+            'constanciaEstadoSalud' => $driverdata->constanciaEstadoSalud,
+            'cuentaBancaria' => $driverdata->cuentaBancaria,
+            'banco' => $driverdata->banco
+        ],200);
     }
 
     /**
@@ -147,6 +202,18 @@ class DriverController extends Controller
             $person->idDocumentType = $request->idDocumentType; // ID CARD type
 
             $person->save();
+
+            /**
+             * Driver Table that contains driver data
+             */
+            $driverdata = $driver->driver()->first();
+
+            $driverdata->licenciaConducir = $request->licenciaConducir;
+            $driverdata->constanciaEstadoSalud = $request->constanciaEstadoSalud;
+            $driverdata->cuentaBancaria = $request->cuentaBancaria;
+            $driverdata->banco = $request->banco;
+
+            $driverdata->save(); // update   driver data on Driver for a User
             
             /**
              * Lastly, you can commit a transaction via the commit method:
@@ -159,10 +226,13 @@ class DriverController extends Controller
              * You can rollback the transaction via the rollBack method:
              */
             DB::rollBack();
+            return response()->json([
+                'error' => 'Something was wrong'
+            ], 400);
         }
-
-        return $driver
-                    ->toJson();
+        
+        return response()
+                    ->json($driver, 200);
     }
 
     /**
@@ -172,11 +242,19 @@ class DriverController extends Controller
      */
     public function destroy($id)
     {
-        $driver = Driver::find($id);
+        try {
+            $driver = Driver::find($id);
 
-        $driver->idStatus = 2; // 2 references to Inactive mode
+            $driver->idStatus = 2; // 2 references to Inactive mode
+        } catch (\Throwable $th) {
+            //throw $th;
 
-        return $driver
-                    ->toJson();
+            return response()
+                    ->json([],400);
+        }
+        
+
+        return response()
+                    ->json([],204);
     }
 }

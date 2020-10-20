@@ -14,7 +14,7 @@ class Driver extends Model
     protected $fillable = [
         'licenciaConducir',
         'constanciaEstadoSalud',
-        'cuenta bancaria',
+        'cuentaBancaria',
         'banco',
         'idUser'
     ];
