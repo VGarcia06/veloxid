@@ -19,3 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('drivers', DriverController::class);
+
+Route::apiResource('drivers.evaluations', DriverEvaluationController::class);
+
+Route::apiResource('vehicles.evaluations', VehicleEvaluationController::class);

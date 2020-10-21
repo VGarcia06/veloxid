@@ -68,7 +68,6 @@ class DriverTest extends TestCase
 
         $response =  $this->Json('GET','/api/drivers', []);
 
-        $response->dump();
         $response
                 ->assertStatus(200)
                 ->assertJson([
