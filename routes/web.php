@@ -22,3 +22,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::apiResource('drivers', DriverController::class);
+Route::apiResource('vehicles', VehicleController::class);
