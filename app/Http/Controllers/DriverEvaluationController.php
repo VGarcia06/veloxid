@@ -11,11 +11,33 @@ class DriverEvaluationController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        try {
+
+            $driver = Driver::find($id);
+
+            $revisions = $driver->driver()
+                                    ->first()
+                                    ->revisions()
+                                    ->with('requirements')
+                                    ->get();
+                                    
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([
+                'message' => 'Something was wrong'
+            ],400);
+        }
+
+        return response()->json([
+            'message' => True,
+            'revisions' => $revisions
+        ],200);
     }
 
     /**

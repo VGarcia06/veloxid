@@ -54,4 +54,61 @@ class DriverEvaluationTest extends TestCase
         $response->dump();
         $response->assertStatus(201);
     }
+
+    /**
+     * A driver chief gets driver's revisions
+     *
+     * @return void
+     */
+    public function testDriverChiefGetsDriversRevisions()
+    {
+
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+        
+        $driverdata = new Driver;
+        $driverdata->licenciaConducir = "asfd";
+        $driverdata->constanciaEstadoSalud = "asfdasf";
+        $driverdata->cuentaBancaria = "asfasf";
+        $driverdata->banco = "asdf";
+
+        $user->driver()->save($driverdata);
+
+        $json = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 1,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => false
+                ]
+            ]
+        ];
+        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+
+        $response = $this->json('GET', '/api/drivers/'. $user->id . '/evaluations');
+
+        $response->dump();
+        $response->assertStatus(200)
+                    ->assertJsonStructure([
+                        "message",
+                        "revisions" => [
+                            0 => [
+                                "requirements" => [
+                                    0 => [
+                                        "requerimiento"
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]);
+    }
 }
