@@ -96,7 +96,6 @@ class DriverEvaluationTest extends TestCase
 
         $response = $this->json('GET', '/api/drivers/'. $user->id . '/evaluations');
 
-        $response->dump();
         $response->assertStatus(200)
                     ->assertJsonStructure([
                         "message",
