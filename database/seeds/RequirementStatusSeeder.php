@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RequirementStatusSeeder extends Seeder
 {
@@ -12,11 +13,11 @@ class RequirementStatusSeeder extends Seeder
     public function run()
     {
         DB::table('requirement_status')->insert([
-            'nombre' => 'Apto',
+            'estado' => 'Apto',
         ]);
 
         DB::table('requirement_status')->insert([
-            'nombre' => 'No apto',
+            'estado' => 'No apto',
         ]);
     }
 }

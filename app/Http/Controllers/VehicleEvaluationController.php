@@ -30,12 +30,18 @@ class VehicleEvaluationController extends Controller
             DB::beginTransaction();
             $vehicle = Vehicle::find($id);
 
+            $suitable = 1;
+            foreach ($request->evals as $eval) {
+                if (!$eval['valor']) {
+                    $suitable = 2;
+                }
+            }
 
             $revision = $vehicle->revisions()
                                 ->createMany([
                                     [
                                         'observacion' => $request->observacion,
-                                        'requirement_status_id' => $request->requirement_status_id
+                                        'requirement_status_id' => $suitable
                                     ]
                                 ])
                                 ->first();

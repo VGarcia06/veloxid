@@ -314,7 +314,6 @@ class DriverTest extends TestCase
 
         $json = [
             "observacion" => "Hola",
-            "requirement_status_id" => 1,
             "evals" => [
                 [
                     "idRequirement" => 1,
@@ -322,7 +321,7 @@ class DriverTest extends TestCase
                 ],
                 [
                     "idRequirement" => 2,
-                    "valor" => false
+                    "valor" => False
                 ]
             ]
         ];
@@ -344,20 +343,49 @@ class DriverTest extends TestCase
 
         $json1 = [
             "observacion" => "Hola",
-            "requirement_status_id" => 2,
             "evals" => [
                 [
                     "idRequirement" => 1,
-                    "valor" => false
+                    "valor" => True
                 ],
                 [
                     "idRequirement" => 2,
-                    "valor" => false
+                    "valor" => True
                 ]
             ]
         ];
 
         $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+
+        $driver = $user1->driver()->first();
+
+        $driver->vehicles()
+                ->createMany([
+                    [
+                        'placa' => 'asdfasdf',
+                        'capacidadCarga' => 4124,
+                        'imagen' => 'asfs/asda.jpg',
+                        'idVehicleType' => 1,
+                    ]
+                ]);
+
+
+        $vehicle = $driver->vehicles()->first();
+        $json = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 1,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => True
+                ]
+            ]
+        ];
+        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         $response = $this->json('GET','/api/drivers/evaluated');
 
@@ -394,6 +422,36 @@ class DriverTest extends TestCase
 
         $json = [
             "observacion" => "Hola",
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => True
+                ]
+            ]
+        ];
+
+        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+
+        $driver = $user->driver()->first();
+
+        $driver->vehicles()
+                ->createMany([
+                    [
+                        'placa' => 'asdfasdf',
+                        'capacidadCarga' => 4124,
+                        'imagen' => 'asfs/asda.jpg',
+                        'idVehicleType' => 1,
+                    ]
+                ]);
+
+
+        $vehicle = $driver->vehicles()->first();
+        $json = [
+            "observacion" => "Hola",
             "requirement_status_id" => 1,
             "evals" => [
                 [
@@ -402,12 +460,11 @@ class DriverTest extends TestCase
                 ],
                 [
                     "idRequirement" => 2,
-                    "valor" => false
+                    "valor" => True
                 ]
             ]
         ];
-
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         $user1 = factory(User::class)->create([
             'idUserType' => 2,
@@ -424,7 +481,6 @@ class DriverTest extends TestCase
 
         $json1 = [
             "observacion" => "Hola",
-            "requirement_status_id" => 1,
             "evals" => [
                 [
                     "idRequirement" => 1,
@@ -438,6 +494,36 @@ class DriverTest extends TestCase
         ];
 
         $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+
+        $driver = $user1->driver()->first();
+
+        $driver->vehicles()
+                ->createMany([
+                    [
+                        'placa' => 'asdfasdf',
+                        'capacidadCarga' => 4124,
+                        'imagen' => 'asfs/asda.jpg',
+                        'idVehicleType' => 1,
+                    ]
+                ]);
+
+
+        $vehicle = $driver->vehicles()->first();
+        $json = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 1,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => True
+                ]
+            ]
+        ];
+        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         $response = $this->json('GET','/api/drivers/evaluated');
 
@@ -477,7 +563,6 @@ class DriverTest extends TestCase
 
         $json = [
             "observacion" => "Hola",
-            "requirement_status_id" => 2,
             "evals" => [
                 [
                     "idRequirement" => 1,
@@ -491,6 +576,36 @@ class DriverTest extends TestCase
         ];
 
         $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+
+        $driver = $user->driver()->first();
+
+        $driver->vehicles()
+                ->createMany([
+                    [
+                        'placa' => 'asdfasdf',
+                        'capacidadCarga' => 4124,
+                        'imagen' => 'asfs/asda.jpg',
+                        'idVehicleType' => 1,
+                    ]
+                ]);
+
+
+        $vehicle = $driver->vehicles()->first();
+        $json = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 1,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => True
+                ]
+            ]
+        ];
+        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         $user1 = factory(User::class)->create([
             'idUserType' => 2,
@@ -507,11 +622,10 @@ class DriverTest extends TestCase
 
         $json1 = [
             "observacion" => "Hola",
-            "requirement_status_id" => 2,
             "evals" => [
                 [
                     "idRequirement" => 1,
-                    "valor" => false
+                    "valor" => True
                 ],
                 [
                     "idRequirement" => 2,
@@ -521,6 +635,36 @@ class DriverTest extends TestCase
         ];
 
         $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+
+        $driver = $user1->driver()->first();
+
+        $driver->vehicles()
+                ->createMany([
+                    [
+                        'placa' => 'asdfasdf',
+                        'capacidadCarga' => 4124,
+                        'imagen' => 'asfs/asda.jpg',
+                        'idVehicleType' => 1,
+                    ]
+                ]);
+
+
+        $vehicle = $driver->vehicles()->first();
+        $json = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 1,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => True
+                ]
+            ]
+        ];
+        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         $response = $this->json('GET','/api/drivers/evaluated');
 

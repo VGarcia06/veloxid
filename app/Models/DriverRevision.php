@@ -24,4 +24,12 @@ class DriverRevision extends Model
     {
         return $this->belongsToMany('App\Models\DriverRequirement', 'driver_evaluations', 'driver_revision_id', 'driver_requirement_id');
     }
+
+    /**
+     * Get the status that owns the revision.
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status\RequirementStatus', 'requirement_status_id');
+    }    
 }

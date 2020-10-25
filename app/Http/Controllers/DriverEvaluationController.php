@@ -52,6 +52,14 @@ class DriverEvaluationController extends Controller
             DB::beginTransaction();
             $driver = Driver::find($id);
 
+            $suitable = 1;
+
+            foreach ($request->evals as $eval) {
+                if (!$eval['valor']) {
+                    $suitable = 2;
+                    break;
+                }
+            }
 
             $revision = $driver->driver()
                                 ->first()
@@ -59,7 +67,7 @@ class DriverEvaluationController extends Controller
                                 ->createMany([
                                     [
                                         'observacion' => $request->observacion,
-                                        'requirement_status_id' => $request->requirement_status_id
+                                        'requirement_status_id' => $suitable
                                     ]
                                 ])
                                 ->first();

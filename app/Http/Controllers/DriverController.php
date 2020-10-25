@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Driver as ModelsDriver;
 use App\Models\Person;
 use App\User as Driver;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -266,10 +267,36 @@ class DriverController extends Controller
     public function getEvaluated()
     {
         try {
-            $drivers = Driver::has('driver')->get();
+            $drivers = Driver::has('driver')
+                                ->get()
+                                ->load(
+                                    'driver.revisions.status',
+                                    'driver.vehicles.revisions.status'
+                                );
 
             $suitable = $drivers->reject(function ($driver) {
-                return $driver->driver()
+                return      $driver->driver()
+                                ->first()
+                                ->vehicles()
+                                // 
+                                ->get()
+                                ->reject(function ($vehicle) {
+                                    return $vehicle->first()
+                                                    ->revisions()
+                                                    ->orderBy('created_at', 'desc')
+                                                    ->first()
+                                                    ['requirement_status_id'] == 2;
+                                })
+                                ->first() == null
+                                //
+                                //->revisions()
+                                //->orderBy('created_at', 'desc')
+                                //->first()
+                                //['requirement_status_id'] == 2
+
+                                OR
+
+                            $driver->driver()
                                 ->first()
                                 ->revisions()
                                 ->orderBy('created_at', 'desc')
@@ -277,6 +304,7 @@ class DriverController extends Controller
                                 ['requirement_status_id'] == 2;
             });
 
+            /*
             $unsuitable = $drivers->reject(function ($driver) {
                 return $driver->driver()
                                 ->first()
@@ -285,7 +313,9 @@ class DriverController extends Controller
                                 ->first()
                                 ['requirement_status_id'] == 1;
             });            
-            
+            */
+
+            $unsuitable = $drivers->diff($suitable);
             
         } catch (\Throwable $th) {
             throw $th;
@@ -297,8 +327,14 @@ class DriverController extends Controller
 
         return response()
                     ->json(['message' => True,
-                            'suitable' => $suitable,
-                            'unsuitable' => $unsuitable
+                            'suitable' => $suitable->load(
+                                'driver.revisions.status',
+                                'driver.vehicles.revisions.status'
+                            ),
+                            'unsuitable' => $unsuitable->load(
+                                'driver.revisions.status',
+                                'driver.vehicles.revisions.status'
+                            )
                         ], 200);        
     }
 }
