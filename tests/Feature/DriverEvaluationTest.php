@@ -26,6 +26,7 @@ class DriverEvaluationTest extends TestCase
             'idUserType' => 2,
             'idStatus' => 1
         ]);
+        
         $driverdata = new Driver;
         $driverdata->licenciaConducir = "asfd";
         $driverdata->constanciaEstadoSalud = "asfdasf";

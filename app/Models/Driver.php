@@ -20,6 +20,14 @@ class Driver extends Model
     ];
 
     /**
+     * Get the user that owns the driver data.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'idUser');
+    }
+
+    /**
      * Get the revisions for the driver.
      */
     public function revisions()

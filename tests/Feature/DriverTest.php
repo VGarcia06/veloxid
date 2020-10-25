@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Driver;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -286,5 +287,251 @@ class DriverTest extends TestCase
 
         $response
                 ->assertStatus(400);
+    }
+
+    /**
+     * A driver chief gets drivers Aptos and no aptos
+     *
+     * @return void
+     */
+    public function testDriverChiefGetsSuitableAndUnsuitableDrivers()
+    {
+
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
+        $driverdata = new Driver;
+        $driverdata->licenciaConducir = "asfd";
+        $driverdata->constanciaEstadoSalud = "asfdasf";
+        $driverdata->cuentaBancaria = "asfasf";
+        $driverdata->banco = "asdf";
+
+        $user->driver()->save($driverdata);
+
+        $json = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 1,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => false
+                ]
+            ]
+        ];
+
+        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+
+        $user1 = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
+        $driverdata1 = new Driver;
+        $driverdata1->licenciaConducir = "asfd";
+        $driverdata1->constanciaEstadoSalud = "asfdasf";
+        $driverdata1->cuentaBancaria = "asfasf";
+        $driverdata1->banco = "asdf";
+
+        $user1->driver()->save($driverdata1);
+
+        $json1 = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 2,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => false
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => false
+                ]
+            ]
+        ];
+
+        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+
+        $response = $this->json('GET','/api/drivers/evaluated');
+
+        $response->assertStatus(200)
+                    ->assertJsonStructure([
+                        "message",
+                        "suitable",
+                        "unsuitable"
+                    ]);
+    }
+
+    /**
+     * A driver chief gets drivers Aptos and no aptos if there are not no aptos 
+     *
+     * @return void
+     */
+    public function testDriverChiefGetsSuitableAndUnsuitableDriversIfThereAreNotUnsuitableDrivers()
+    {
+
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
+        $driverdata = new Driver;
+        $driverdata->licenciaConducir = "asfd";
+        $driverdata->constanciaEstadoSalud = "asfdasf";
+        $driverdata->cuentaBancaria = "asfasf";
+        $driverdata->banco = "asdf";
+
+        $user->driver()->save($driverdata);
+
+        $json = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 1,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => false
+                ]
+            ]
+        ];
+
+        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+
+        $user1 = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
+        $driverdata1 = new Driver;
+        $driverdata1->licenciaConducir = "asfd";
+        $driverdata1->constanciaEstadoSalud = "asfdasf";
+        $driverdata1->cuentaBancaria = "asfasf";
+        $driverdata1->banco = "asdf";
+
+        $user1->driver()->save($driverdata1);
+
+        $json1 = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 1,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => True
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => True
+                ]
+            ]
+        ];
+
+        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+
+        $response = $this->json('GET','/api/drivers/evaluated');
+
+        $response->assertStatus(200)
+                    ->assertJsonStructure([
+                        "message",
+                        "suitable",
+                        "unsuitable"
+                        ])
+                    ->assertJsonFragment([
+                        "unsuitable" => []
+                        ]);
+    }
+    
+    /**
+     * A driver chief gets drivers Aptos and no aptos if there are not aptos 
+     *
+     * @return void
+     */
+    public function testDriverChiefGetsSuitableAndUnsuitableDriversIfThereAreNotSuitableDrivers()
+    {
+
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
+        $driverdata = new Driver;
+        $driverdata->licenciaConducir = "asfd";
+        $driverdata->constanciaEstadoSalud = "asfdasf";
+        $driverdata->cuentaBancaria = "asfasf";
+        $driverdata->banco = "asdf";
+
+        $user->driver()->save($driverdata);
+
+        $json = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 2,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => false
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => false
+                ]
+            ]
+        ];
+
+        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+
+        $user1 = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
+        $driverdata1 = new Driver;
+        $driverdata1->licenciaConducir = "asfd";
+        $driverdata1->constanciaEstadoSalud = "asfdasf";
+        $driverdata1->cuentaBancaria = "asfasf";
+        $driverdata1->banco = "asdf";
+
+        $user1->driver()->save($driverdata1);
+
+        $json1 = [
+            "observacion" => "Hola",
+            "requirement_status_id" => 2,
+            "evals" => [
+                [
+                    "idRequirement" => 1,
+                    "valor" => false
+                ],
+                [
+                    "idRequirement" => 2,
+                    "valor" => false
+                ]
+            ]
+        ];
+
+        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+
+        $response = $this->json('GET','/api/drivers/evaluated');
+
+        $response->assertStatus(200)
+                    ->assertJsonStructure([
+                        "message",
+                        "suitable",
+                        "unsuitable"
+                    ])
+                    ->assertJsonFragment([
+                        "suitable" => []
+                        ]);
     }
 }

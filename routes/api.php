@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('drivers/evaluated', "DriverController@getEvaluated");
+
 Route::apiResource('drivers', DriverController::class);
 
 Route::apiResource('drivers.evaluations', DriverEvaluationController::class);

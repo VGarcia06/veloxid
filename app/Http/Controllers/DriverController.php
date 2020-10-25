@@ -257,4 +257,48 @@ class DriverController extends Controller
         return response()
                     ->json([],204);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getEvaluated()
+    {
+        try {
+            $drivers = Driver::has('driver')->get();
+
+            $suitable = $drivers->reject(function ($driver) {
+                return $driver->driver()
+                                ->first()
+                                ->revisions()
+                                ->orderBy('created_at', 'desc')
+                                ->first()
+                                ['requirement_status_id'] == 2;
+            });
+
+            $unsuitable = $drivers->reject(function ($driver) {
+                return $driver->driver()
+                                ->first()
+                                ->revisions()
+                                ->orderBy('created_at', 'desc')
+                                ->first()
+                                ['requirement_status_id'] == 1;
+            });            
+            
+            
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([
+                'message' => 'Something was wrong'
+            ], 400);
+        }
+
+        return response()
+                    ->json(['message' => True,
+                            'suitable' => $suitable,
+                            'unsuitable' => $unsuitable
+                        ], 200);        
+    }
 }
