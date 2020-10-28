@@ -82,6 +82,7 @@
                                 @endif
               </center>
             </form>
+            
             <p class="login-wrapper-footer-text">¡No tienes cuenta? <a href="{{ route('register') }}" class="text-reset">Registrate aqui</a></p>
             <nav class="social-links">
               <a href="#!"><i class="mdi mdi-facebook-box"></i></a>
