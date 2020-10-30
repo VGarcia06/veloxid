@@ -16,7 +16,7 @@
 <title>Veloxid</title>
 <!--{{ config('app.name', 'Veloxid') }}-->
 <!-- Fav Icon -->
-<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
@@ -49,9 +49,9 @@
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="home"><img src="purple/assets/images/logo1.jpg" alt="logo" />
-             NixMedia</a>
-          <a class="navbar-brand brand-logo-mini" href="home"><img src="purple/assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo" href="home"><img src="purple/assets/images/logo.png" alt="logo" />
+             </a>
+          <a class="navbar-brand brand-logo-mini" href="home"><img src="purple/assets/images/perfil.jpg" alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -110,19 +110,20 @@
           <ul class="nav">
             <li class="nav-item nav-profile">
               <a href="home" class="nav-link">
+                
                 <div class="nav-profile-image">
-                  <img src="purple/assets/images/logo1.jpg" alt="profile">
+                  <img src="purple/assets/images/perfil.jpg" alt="profile">
                   <span class="login-status online"></span>
                   <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
-                  <span class="font-weight-bold mb-2">{{ Auth::user()->name }}</span>
+                  <span class="font-weight-bold mb-2 text-truncate">{{ Auth::user()->name }}</span>
                   <span class="text-secondary text-small">{{ Auth::user()->rol }}</span>
                 </div>
                 <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
               </a>
             </li>
-            <menulateral></menulateral>
+            <lateralmenu></lateralmenu>
 
           </ul>
         </nav>
@@ -166,6 +167,10 @@
     <!-- End custom js for this page -->
 <!--js de purple-->
 
-
+<style>
+  .text-truncate {
+    width: 80px;
+  }
+  </style>
 </body>
 </html>

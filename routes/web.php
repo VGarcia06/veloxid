@@ -17,9 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::apiResource('drivers', DriverController::class);
 Route::apiResource('vehicles', VehicleController::class);
+
+//Ruta de los modulos para el Menu Lateral
+Route::get('get_menulateral', 'LateralMenuController@get_menulateral');
+
