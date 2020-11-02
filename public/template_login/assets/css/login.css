@@ -56,16 +56,16 @@ body {
           border-bottom-right-radius: 24px; }
     .login-wrapper .login-btn {
       padding: 13px 20px;
-      background-color: #00a518;
+      background-color: #36BC43;
       border-radius: 24px;
       font-size: 20px;
       font-weight: bold;
       color: #fff;
       margin-bottom: 32px; }
       .login-wrapper .login-btn:hover {
-        border: 1px solid #00a518;
+        border: 1px solid #36BC43;
         background-color: #fff;
-        color: #00a518; }
+        color: #36BC43; }
     .login-wrapper-footer-text {
       font-size: 13px;
       color: #000;
@@ -125,7 +125,7 @@ body {
     font-weight: normal;
     color: #000; }
     .form-options-wrapper a.forgot-password-link {
-      color: #00a518; }
+      color: #36BC43; }
       .form-options-wrapper a.forgot-password-link:hover {
         text-decoration: none; }
     @media (max-width: 576px) {

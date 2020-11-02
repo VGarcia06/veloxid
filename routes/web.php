@@ -17,7 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/vehiculos', function () {
+    return view('Jefe_Transporte/vehicle');
+})->middleware('auth');
 
+Route::get('/conductores', function () {
+    return view('Jefe_Transporte/driver');
+})->middleware('auth');
 
 Auth::routes();
 

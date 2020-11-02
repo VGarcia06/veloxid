@@ -13,8 +13,12 @@ class VehicleController extends Controller
     
     public function index()
     {
-        $vehicle = Vehicle::all();
-
+        $vehicle = Vehicle::select(vehicles.id, `placa`, `capacidadCarga`, `imagen`, vehicletype.nombre,users.name, `updated_at`)
+        ->join('vehicletype', 'vehicles.idVehicleType', '=', 'vehicletype.id')
+        ->join('drivers', 'vehicles.idDriver', '=', 'drivers.id')
+        ->join('users', 'drivers.id', '=', 'users.id')
+        ->paginate(9);
+        
         return $vehicle;
     }
 

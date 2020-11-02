@@ -4013,27 +4013,27 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(91, 102, 116, 0.5); }
 
 .btn-outline-primary {
-  color:#00a518;
-  border-color:#00a518 ; }
+  color:#36BC43;
+  border-color:#36BC43 ; }
   .btn-outline-primary:hover {
     color: #fff;
-    background-color:#00a518;
-    border-color: #00a518; }
+    background-color:#36BC43;
+    border-color: #36BC43; }
   .btn-outline-primary:focus, .btn-outline-primary.focus {
-    -webkit-box-shadow: 0 0 0 0.2rem rgba(40, 143, 228, 0.5);
-    box-shadow: 0 0 0 0.2rem rgba(40, 143, 228, 0.5); }
+    -webkit-box-shadow: 0 0 0 0.2rem #36BC43;
+    box-shadow: 0 0 0 0.2rem #36BC43; }
   .btn-outline-primary.disabled, .btn-outline-primary:disabled {
-    color: #00a518;
+    color: #36BC43;
     background-color: transparent; }
   .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active,
   .show > .btn-outline-primary.dropdown-toggle {
     color: #fff;
-    background-color: #00a518;
-    border-color: #00a518; }
+    background-color: #36BC43;
+    border-color: #36BC43; }
     .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
     .show > .btn-outline-primary.dropdown-toggle:focus {
-      -webkit-box-shadow: 0 0 0 0.2rem rgba(40, 143, 228, 0.5);
-      box-shadow: 0 0 0 0.2rem rgba(40, 143, 228, 0.5); }
+      -webkit-box-shadow: 0 0 0 0.2rem #36BC43;
+      box-shadow: 0 0 0 0.2rem #36BC43; }
 
 .btn-outline-secondary {
   color: #c3bdbd;
@@ -11251,12 +11251,12 @@ code {
   .btn-primary:not(.btn-light):hover, .btn-primary:not(.btn-light):focus, .btn-primary:not(.btn-light):active {
     color: #ffffff; }
   .btn-primary:not(.btn-light):focus, .btn-primary:not(.btn-light):active {
-    background: #007bff;
-    border-color:#007bff; }
+    background: #309D4F;
+    border-color:#309D4F; }
 
 .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active {
-  background: -webkit-gradient(linear, left top, right top, from(#007bff), to(#0056b3));
-  background: linear-gradient(to right, #007bff, #007bff);
+  background: -webkit-gradient(linear, left top, right top, from(#36BC43), to(#36BC43));
+  background: linear-gradient(to right, #36BC43, #36BC43);
   color: #000; }
 
 .btn-inverse-secondary {
@@ -11505,8 +11505,8 @@ code {
 
 /* gradient buttons */
 .btn-gradient-primary {
-  background: -webkit-gradient(linear, left top, right top, from(#007bff), to(#0056b3));
-  background: linear-gradient(to right, #007bff, #0056b3);
+  background: -webkit-gradient(linear, left top, right top, from(#36BC43), to(#309D4F));
+  background: linear-gradient(to right, #36BC43, #309D4F);
   border: 0;
   -webkit-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease; }

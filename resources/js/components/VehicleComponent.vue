@@ -1,7 +1,6 @@
 <template>
-<div>
-
-     <!-- Modal -->
+  <div>
+    <!-- Modal -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -11,11 +10,10 @@
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
-        <div
-          class="modal-content">
+        <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Registrar Vehículo
+            <h5 class="modal-title text-primary" id="exampleModalLabel">
+              ACTUALIZAR VEHICULO
             </h5>
             <button
               type="button"
@@ -27,130 +25,251 @@
             </button>
           </div>
           <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Placa</label>
+                  <div class="col-sm-9">
+                    <textarea
+                      class="form-control"
+                      v-model="marca"
+                      id="exampleTextarea1"
+                      rows="2"
+                      placeholder="Placa"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"
+                    >Capacidad de Carga</label
+                  >
+                  <div class="col-sm-9">
+                    <textarea
+                      class="form-control"
+                      v-model="marca"
+                      id="exampleTextarea1"
+                      rows="2"
+                      placeholder="Capacidad de Carga"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label" for="exampleInputName1"
+                    >Tipo de Vehículo</label
+                  >
+                  <div class="col-sm-9">
+                    <select
+                      class="form-control"
+                      v-model="tipo"
+                      @click="getUbicacion(tipo)"
+                    >
+                      <option value="NAVE">NAVE</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Subir Imagen</label>
+                  <div class="col-sm-9">
+                    <input
+                      type="file"
+                      class="form-control file-upload-info"
+                      @change="subirImagen"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Imagen</label>
+                  <div class="col-sm-9">
+                    <figure>
+                      <img
+                        with="200"
+                        height="200"
+                        :src="imagen"
+                        alt="Foto del Vehículo"
+                      />
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
+            <!-- Botón que modifica la tarea que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
+            <button
+              @click="updateVehicles()"
+              class="btn btn-warning btn-fw"
+            >
+              Actualizar
+            </button>
+            <!-- Botón que cierra el modal-->
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-danger"
               data-dismiss="modal"
             >
-              Cerrar
+              Cancelar
             </button>
           </div>
         </div>
       </div>
     </div>
     <!-- FIN -->
-
-          <div class="row">
-            <div class="col-lg-10">
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Buscar producto"
-                  @keyup="searchVehicles()"
-                  aria-describedby="basic-addon2"
-                  v-model="key_busqueda"
-                />
-                <div class="input-group-append">
-                  <button
-                    class="btn btn-outline-primary"
-                    type="button"
-                    @click="searchVehicles()"
-                  >
-                    Buscar
-                  </button>
-                </div>
-              <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-toggle="modal"
-                    data-target="#exampleModal" >                  >
-                    Registrar Vehículo
-                  </button>
-              </div>
-            </div>
-          </div>
-
-    <div class="row">
-      <div class="col-lg-3" v-for="item in vehicles.data">
-        <div class="card-body">
-          <img class="card-img-top" :src="item.imagen" style="height: 270.75px" />
-          <div class="card-title text-truncate">
-            {{ item.descripcion }}
-          </div>
-
-          <div class="input-group">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar vehiculo"
+              @keyup="searchVehicles()"
+              aria-describedby="basic-addon2"
+              v-model="key_busqueda"
+            />
             <div class="input-group-append">
               <button
-                class="btn btn-primary"
+                class="btn btn-outline-primary"
                 type="button"
-                @click="updateVehicles(item.id)"
+                @click="searchVehicles()"
               >
-                Actualizar
+                Buscar
               </button>
             </div>
           </div>
-          <p class="card-text crop-text-2">
-            Placa: {{ item.placa }} | Capacidad_Carga: {{ item.capacidadCarga }} <br/>
-            | Tipo: {{ item. idVehicleType }} <br/>
-            | Conductor : {{ item.idDriver }}
-          </p>
-          <p class="card-text">
-            <small class="text-muted"
-              >Ultima actualizacion {{ item.updated_at }}</small
-            >
-          </p>
         </div>
       </div>
     </div>
 
-             <div class="row">
-            <div class="col-sm-12 col-md-5"></div>
-            <div class="col-sm-12 col-md-7">
-              <div
-                class="dataTables_paginate paging_simple_numbers"
-                id="order-listing_paginate"
+    <div class="row">
+      <div class="col-lg-4" v-for="item in vehicles">
+        <div class="card">
+          <div class="card-body">
+            <img
+              class="card-img-top"
+              :src="item.imagen"
+              style="height: 240.75px"
+            />
+            <div class="card-title text-truncate">
+              {{ item.descripcion }}
+            </div>
+
+            <p class="card-text crop-text-2">
+              Placa: {{ item.placa }} <br />
+              Capacidad_Carga: {{ item.capacidadCarga }} <br />
+              Tipo: {{ item.idVehicleType }} <br />
+              Conductor : {{ item.idDriver }}
+            </p>
+            <p class="card-text">
+              <small class="text-muted"
+                >Ultima actualizacion {{ item.updated_at }}</small
               >
-                <ul class="pagination">
-                  <li id="order-listing_previous">
-                    <button
-                      aria-controls="order-listing"
-                      data-dt-idx="0"
-                      tabindex="0"
-                      class="page-link"
-                      @click="getVehicles(vehicles.current_page - 1)"
-                    >
-                      Anterior
-                    </button>
-                  </li>
-                  <li class="paginate_button page-item active">
-                    <a
-                      aria-controls="order-listing"
-                      data-dt-idx="1"
-                      tabindex="0"
-                      class="page-link"
-                      >{{ vehicles.current_page }}</a
-                    >
-                  </li>
-                  <li id="order-listing_next">
-                    <button
-                      aria-controls="order-listing"
-                      data-dt-idx="2"
-                      tabindex="0"
-                      class="page-link"
-                      @click="getVehicles(vehicles.current_page + 1)"
-                    >
-                      Siguiente
-                    </button>
-                  </li>
-                </ul>
+            </p>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-lg-5">
+                  <div class="input-group">
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        type="button"
+                        @click="updateVehicles(item.id)"
+                        title="Editar"
+                      >
+                        <i class="mdi mdi-lead-pencil"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <div class="input-group">
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-danger"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        type="button"
+                        @click="updateVehicles(item.id)"
+                        title="Eliminar"
+                      >
+                        <i class="mdi mdi-delete"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-5"></div>
+      <div class="col-sm-12 col-md-7">
+        <div
+          class="dataTables_paginate paging_simple_numbers"
+          id="order-listing_paginate"
+        >
+          <ul class="pagination">
+            <li id="order-listing_previous">
+              <button
+                aria-controls="order-listing"
+                data-dt-idx="0"
+                tabindex="0"
+                class="page-link"
+                @click="getVehicles(vehicles.current_page - 1)"
+              >
+                Anterior
+              </button>
+            </li>
+            <li class="paginate_button page-item active">
+              <a
+                aria-controls="order-listing"
+                data-dt-idx="1"
+                tabindex="0"
+                class="page-link"
+                >{{ vehicles.current_page }}</a
+              >
+            </li>
+            <li id="order-listing_next">
+              <button
+                aria-controls="order-listing"
+                data-dt-idx="2"
+                tabindex="0"
+                class="page-link"
+                @click="getVehicles(vehicles.current_page + 1)"
+              >
+                Siguiente
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -160,10 +279,14 @@ export default {
       vehicles: [],
       imagen: "",
       key_busqueda: "",
+      update: 0,
     };
   },
   created() {
-    axios.get("").then((res) => {
+    axios.get("api/vehicles").then((res) => {
+      this.vehicles = res.data;
+    });
+    axios.get("api/drivers").then((res) => {
       this.vehicles = res.data;
     });
   },
@@ -171,7 +294,7 @@ export default {
   methods: {
     getVehicles(num_page) {
       axios
-        .get("", {
+        .get("api/vehicles", {
           params: {
             page: num_page,
           },
@@ -195,7 +318,7 @@ export default {
       formData.append("idVehicleType", this.idVehicleType);
       formData.append("idDriver", this.idDriver);
       formData.append("imagen", this.imagen);
-      let url = ""; //Ruta que hemos creado para enviar un vehiculo y guardarlo
+      let url = "api/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
       axios
         .post(url, formData, config)
         .then(function (response) {
@@ -257,7 +380,7 @@ export default {
       formData.append("idDriver", this.idDriver);
       formData.append("imagen", this.imagen);
       formData.append("_method", "put");
-      let url = ""; //Ruta que hemos creado para enviar una tarea y guardarla
+      let url = "api/vehicles"; //Ruta que hemos creado para enviar una tarea y guardarla
       axios
         .post(url, formData, config)
         .then(function (response) {
@@ -274,7 +397,7 @@ export default {
       //Esta nos abrirá un alert de javascript y si aceptamos borrará el vehículo que hemos elegido
       let me = this;
       if (confirm("¿Seguro que deseas eliminar este vehículo? " + matricula)) {
-        axios.get("", {
+        axios.get("api/vehicles", {
           params: {
             id: id,
           },

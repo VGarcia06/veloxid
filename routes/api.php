@@ -22,6 +22,8 @@ Route::get('drivers/evaluated', "DriverController@getEvaluated");
 
 Route::apiResource('drivers', DriverController::class);
 
+Route::apiResource('vehicles', VehicleController::class);
+
 Route::apiResource('drivers.evaluations', DriverEvaluationController::class);
 
 Route::apiResource('vehicles.evaluations', VehicleEvaluationController::class);
