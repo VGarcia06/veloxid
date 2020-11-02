@@ -6,6 +6,8 @@ use App\Models\Driver;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class DriverTest extends TestCase
@@ -72,11 +74,15 @@ class DriverTest extends TestCase
         $response
                 ->assertStatus(200)
                 ->assertJson([
-                    ['name' => 'ANDRES JUNIOR'],
-                    ['name' => 'ANA MARIA']
+                    'data' => [
+                        ['name' => 'ANDRES JUNIOR'],
+                        ['name' => 'ANA MARIA']
+                    ]
                 ])
                 ->assertJsonMissing([
-                    ['name' => 'ANA JUANA']
+                    'data' => [
+                        ['name' => 'ANA JUANA']
+                    ]
                 ]);
     }
 
@@ -122,7 +128,7 @@ class DriverTest extends TestCase
      *
      * @return void
      */
-    public function testDriverChiefCreatesDriver()
+    public function testDriverChiefCreatesADriver()
     {
         $response =  $this->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
@@ -142,6 +148,45 @@ class DriverTest extends TestCase
             'cuentaBancaria' => 'asdfasdfasdf',
             'banco' => 'asdfasdf'
         ]);
+
+        $response
+                ->assertStatus(201)
+                ->assertJson([
+                    'state' => True
+                    ]);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testDriverChiefCreatesADriverWithImage()
+    {
+        //Storage::fake('public');
+        
+        //$file = UploadedFile::fake()->image('avatar.png');
+
+        $response =  $this->Json('POST','/api/drivers', [
+            'name' => 'ANDRES JUNIOR', 
+            'email' => 'aaparcanatm@autonoma.edu.pe', 
+            'password' => 'asdfasdfasdf', 
+            'nombre' => 'algun nombre', 
+            'apellidoPaterno' => 'Algun paellido', 
+            'apellidoMaterno' => 'Algun apellido', 
+            'telefono' => 535345, 
+            'direccion' => 'asdfasdfsd', 
+            'correo' => 'asdf@afa.com', 
+            'imagen' => 'jasd.jpg', 
+            'numero' => 98485747,
+            'idDocumentType' => 1,
+            'licenciaConducir' => 'asdfasdfasdf',
+            'constanciaEstadoSalud' => 'asdfasdf',
+            'cuentaBancaria' => 'asdfasdfasdf',
+            'banco' => 'asdfasdf'
+        ]);
+
+        //Storage::disk('public')->assertExists($file->hashName());
 
         $response
                 ->assertStatus(201)

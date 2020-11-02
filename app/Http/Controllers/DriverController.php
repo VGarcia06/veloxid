@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class DriverController extends Controller
@@ -24,7 +25,7 @@ class DriverController extends Controller
 
         $drivers = $driver
                         ->where('idUserType', 2) // The 2 is defined as Conductor/Driver
-                        ->get();
+                        ->paginate(15);
                    
         return response()
                         ->json($drivers,200);         
@@ -73,6 +74,10 @@ class DriverController extends Controller
             $driver->idStatus = 1; // Driver is always activated once is created
 
             $driver->save();
+
+            if ($request->hasFile('imagen')) {
+                $request->imagen = Storage::put('drivers', $request->file('imagen'), 'public');
+            }
 
             /**
              * Person Table that contains personal data
