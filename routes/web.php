@@ -17,9 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/vehiculos', function () {
-    return view('Jefe_Transporte/vehicle');
-})->middleware('auth');
+Route::get('/conductoresbuscar', 'HomeController@show')->middleware('auth');
 
 Route::get('/conductores', function () {
     return view('Jefe_Transporte/driver');

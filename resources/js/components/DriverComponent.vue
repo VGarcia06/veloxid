@@ -12,14 +12,19 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-primary" id="exampleModalLabel">
+            <h5 class="modal-title text-primary" id="exampleModalLabel" v-if="update == 0">
               REGISTRAR CONDUCTOR
             </h5>
+            <h5 class="modal-title text-primary" id="exampleModalLabel" v-if="update != 0">
+              ACTUALIZAR CONDUCTOR
+            </h5>
+            
             <button
               type="button"
               class="close"
               data-dismiss="modal"
               aria-label="Close"
+              @click="clearFields()"
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -30,6 +35,7 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="text"
                       class="form-control"
                       v-model="nombre"
                       id="exampleTextarea1"
@@ -45,6 +51,7 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="text"
                       class="form-control"
                       v-model="apellidoPaterno"
                       id="exampleTextarea1"
@@ -57,6 +64,7 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="text"
                       class="form-control"
                       v-model="apellidoMaterno"
                       id="exampleTextarea1"
@@ -72,6 +80,7 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="number"
                       class="form-control"
                       v-model="telefono"
                       id="exampleTextarea1"
@@ -84,6 +93,7 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="email"
                       class="form-control"
                       v-model="email"
                       id="exampleTextarea1"
@@ -118,10 +128,7 @@
                       <option value="" selected disabled>
                         Tipo de Documento
                       </option>
-                      <option value="DNI">DNI</option>
-                      <option value="Pasaporte de Extranjeria">
-                        Pasaporte de Extranjeria
-                      </option>
+                      <option v-for="item in documenttypes" :value="item.id" :key="item.id">{{item.tipo}}</option>
                     </select>
                   </div>
                 </div>
@@ -130,6 +137,7 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="text"
                       class="form-control"
                       v-model="numero"
                       id="exampleTextarea1"
@@ -145,6 +153,7 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="text"
                       class="form-control"
                       v-model="licenciaConducir"
                       id="exampleTextarea1"
@@ -161,6 +170,7 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="text"
                       class="form-control"
                       v-model="banco"
                       id="exampleTextarea1"
@@ -173,10 +183,40 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
+                      type="text"
                       class="form-control"
                       v-model="cuentaBancaria"
                       id="exampleTextarea1"
                       placeholder="Cuenta Bancaria"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="name"
+                      id="exampleTextarea1"
+                      placeholder="Usuario"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="password"
+                      class="form-control"
+                      v-model="password"
+                      id="exampleTextarea1"
+                      placeholder="Contraseña"
                     />
                   </div>
                 </div>
@@ -193,7 +233,7 @@
                     <input
                       type="file"
                       class="form-control file-upload-info"
-                      @change="subirImagen"
+                      @change="subirArchivo"
                     />
                   </div>
                 </div>
@@ -226,7 +266,7 @@
                       <img
                         with="200"
                         height="200"
-                        :src="imagen"
+                        :src="img"
                         alt="Foto del Conductor"
                       />
                     </figure>
@@ -235,11 +275,12 @@
               </div>
             </div>
           </div>
+
           <div class="modal-footer">
             <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
             <button
               v-if="update == 0"
-              @click="saveVehicles()"
+              @click="saveDrivers()"
               class="btn btn-gradient-primary mr-2"
             >
               Registrar
@@ -247,7 +288,7 @@
             <!-- Botón que modifica la tarea que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
             <button
               v-if="update != 0"
-              @click="updateVehicles()"
+              @click="updateDrivers()"
               class="btn btn-warning btn-fw"
             >
               Actualizar
@@ -298,7 +339,7 @@
                   <div class="col-sm-9">
                     <textarea
                       class="form-control"
-                      v-model="marca"
+                      v-model="placa"
                       id="exampleTextarea1"
                       rows="2"
                       placeholder="Placa"
@@ -317,7 +358,7 @@
                   <div class="col-sm-9">
                     <textarea
                       class="form-control"
-                      v-model="marca"
+                      v-model="capacidadCarga"
                       id="exampleTextarea1"
                       rows="2"
                       placeholder="Capacidad de Carga"
@@ -334,12 +375,10 @@
                     >Tipo de Vehículo</label
                   >
                   <div class="col-sm-9">
-                    <select
-                      class="form-control"
-                      v-model="tipo"
-                      @click="get(tipo)"
-                    >
-                      <option value=""></option>
+                    <select class="form-control" v-model="idVehicleType">
+                      <option v-for="item in vehicletypes" :value="item.id">
+                        {{ item.nombre }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -370,7 +409,7 @@
                       <img
                         with="200"
                         height="200"
-                        :src="imagen"
+                        :src="img"
                         alt="Foto del Vehículo"
                       />
                     </figure>
@@ -388,22 +427,6 @@
             >
               Registrar
             </button>
-            <!-- Botón que modifica la tarea que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
-            <button
-              v-if="update != 0"
-              @click="updateVehicles()"
-              class="btn btn-warning btn-fw"
-            >
-              Actualizar
-            </button>
-            <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
-            <button
-              v-if="update != 0"
-              @click="clearFields()"
-              class="btn btn-danger btn-fw"
-            >
-              Cancelar
-            </button>
           </div>
         </div>
       </div>
@@ -416,8 +439,8 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Buscar vehiculo"
-              @keyup="searchVehicles()"
+              placeholder="Buscar conductor"
+              @keyup="searchDrivers()"
               aria-describedby="basic-addon2"
               v-model="key_busqueda"
             />
@@ -425,7 +448,7 @@
               <button
                 class="btn btn-outline-primary"
                 type="button"
-                @click="searchVehicles()"
+                @click="searchDrivers()"
               >
                 Buscar
               </button>
@@ -447,23 +470,27 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-5" v-for="item in vehicles">
+      <div class="col-lg-5" v-for="item in drivers.data">
         <div class="card">
           <div class="card-body">
-            <img
-              class="card-img-top"
-              :src="item.imagen"
-              style="height: 200px"
-            />
-            <div class="card-title text-truncate">
-              {{ item.descripcion }}
-            </div>
-
+            <a class="nav-link" :href="'/conductoresbuscar?id=' + item.id">
+              <i title="Ver detalle" class="mdi mdi-arrow-right-bold"></i>
+            </a>
+            <center>
+              <img
+                class="card-img-top"
+                :src="item.person.imagen"
+                style="width: 180px; height: 170px"
+              />
+            </center>
+            <br />
             <p class="card-text crop-text-2">
-              Placa: {{ item.placa }} <br />
-              Capacidad_Carga: {{ item.capacidadCarga }} <br />
-              Tipo: {{ item.idVehicleType }} <br />
-              Conductor : {{ item.idDriver }}
+              Nombres: {{ item.person.nombre }}
+              {{ item.person.apellidoPaterno }}
+              {{ item.person.apellidoMaterno }} <br />
+              Número de Identidad:{{ item.person.numero }} <br />
+              Licencia de Conducir: {{ item.driver.licenciaConducir }} <br />
+              Usuario: {{ item.name }}
             </p>
             <p class="card-text">
               <small class="text-muted"
@@ -482,7 +509,7 @@
                           type="button"
                           data-toggle="modal"
                           data-target="#exampleModal1"
-                          @click="addVehicle(item.id)"
+                          @click="addVehicles(item.id)"
                           title="Agregar vehículo"
                         >
                           <i class="mdi mdi-truck-delivery"></i>
@@ -498,7 +525,7 @@
                           data-toggle="modal"
                           data-target="#exampleModal"
                           type="button"
-                          @click="updateVehicles(item.id)"
+                          @click="loadFieldsUpdate(item.id)"
                           title="Actualizar"
                         >
                           <i class="mdi mdi-lead-pencil"></i>
@@ -514,7 +541,7 @@
                           data-toggle="modal"
                           data-target="#exampleModal"
                           type="button"
-                          @click="updateVehicles(item.id)"
+                          @click="deleteDrivers(item.id)"
                           title="Eliminar"
                         >
                           <i class="mdi mdi-delete"></i>
@@ -529,7 +556,7 @@
         </div>
       </div>
     </div>
-
+    <br />
     <div class="row">
       <div class="col-sm-12 col-md-5"></div>
       <div class="col-sm-12 col-md-7">
@@ -544,7 +571,7 @@
                 data-dt-idx="0"
                 tabindex="0"
                 class="page-link"
-                @click="getVehicles(vehicles.current_page - 1)"
+                @click="getDrivers(drivers.current_page - 1)"
               >
                 Anterior
               </button>
@@ -555,7 +582,7 @@
                 data-dt-idx="1"
                 tabindex="0"
                 class="page-link"
-                >{{ vehicles.current_page }}</a
+                >{{ drivers.current_page }}</a
               >
             </li>
             <li id="order-listing_next">
@@ -564,7 +591,7 @@
                 data-dt-idx="2"
                 tabindex="0"
                 class="page-link"
-                @click="getVehicles(vehicles.current_page + 1)"
+                @click="getDrivers(drivers.current_page + 1)"
               >
                 Siguiente
               </button>
@@ -580,37 +607,99 @@
 export default {
   data() {
     return {
-      vehicles: [],
+      drivers: [],
+      id: "",
+      name: "",
+      password: "",
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      direccion: "",
+      telefono: "",
+      email: "",
+      placa: "",
+      capacidadCarga: "",
+      idVehicleType: "",
+      idDriver: "",
+      numero: "",
       imagen: "",
+      cuentaBancaria: "",
+      banco: "",
+      idDocumentType: "",
+      licenciaConducir: "",
+      constanciaEstadoSalud: "",
       key_busqueda: "",
+      vehicletypes: "",
+      documenttypes:"",
       update: 0,
+      imagenminiatura: "",
     };
   },
   created() {
-    axios.get("api/vehicles").then((res) => {
-      this.vehicles = res.data;
-    });
     axios.get("api/drivers").then((res) => {
-      this.vehicles = res.data;
+      this.drivers = res.data;
+    });
+    axios.get("api/vehicletypes").then((res) => {
+      this.vehicletypes = res.data.VehicleTypes;
+    });
+    axios.get("api/documenttypes").then((res) => {
+      this.documenttypes = res.data.DocumentTypes;
     });
   },
 
   methods: {
-    getVehicles(num_page) {
+    getDrivers(num_page) {
       axios
-        .get("api/vehicles", {
+        .get("api/drivers", {
           params: {
             page: num_page,
           },
         })
         .then((res) => {
-          this.vehicles = res.data;
+          this.drivers = res.data;
           console.log(this.vehicles);
         })
         .catch(function (error) {
           // handle error
           console.log(error);
         });
+    },
+
+    saveDrivers() {
+      const config = { headers: { "content-type": "multipart/form-data" } };
+      let me = this;
+      let formData = new FormData();
+      formData.append("nombre", this.nombre);
+      formData.append("apellidoPaterno", this.apellidoPaterno);
+      formData.append("apellidoMaterno", this.apellidoMaterno);
+      formData.append("telefono", this.telefono);
+      formData.append("email", this.email);
+      formData.append("direccion", this.direccion);
+      formData.append("idDocumentType", this.idDocumentType);
+      formData.append("licenciaConducir", this.licenciaConducir);
+      formData.append("numero", this.numero);
+      formData.append("banco", this.banco);
+      formData.append("cuentaBancaria", this.cuentaBancaria);
+      formData.append("constanciaEstadoSalud", this.constanciaEstadoSalud);
+      formData.append("name", this.name);
+      formData.append("password", this.password);
+      formData.append("imagen", this.imagen);
+      let url = "api/drivers"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
+      axios
+        .post(url, formData, config)
+        .then(function (response) {
+          alert("Se registró correctamente el conductor.");
+          me.getDrivers(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
+          me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    addVehicles(id) {
+      this.idDriver = id;
+      console.log(this.idDriver);
     },
 
     saveVehicles() {
@@ -620,19 +709,24 @@ export default {
       formData.append("placa", this.placa);
       formData.append("capacidadCarga", this.capacidadCarga);
       formData.append("idVehicleType", this.idVehicleType);
-      formData.append("idDriver", this.idDriver);
       formData.append("imagen", this.imagen);
-      let url = "api/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
+      let url = "api/drivers/"+this.idDriver+"/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
       axios
         .post(url, formData, config)
         .then(function (response) {
           alert("Se registró correctamente el vehículo.");
-          me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
+          me.getDrivers(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
           me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
         })
         .catch(function (error) {
           console.log(error);
         });
+    },
+
+    subirArchivo(e) {
+      let file = e.target.files[0];
+      this.constanciaEstadoSalud = file;
+      console.log(this.constanciaEstadoSalud);
     },
 
     subirImagen(e) {
@@ -655,17 +749,22 @@ export default {
       //Esta función rellena los campos y la variable update, con la tarea que queremos modificar
       let me = this;
       this.update = id;
-      let url = "?id=" + this.update;
+      let url = "api/drivers/" + this.update;
       axios
         .get(url)
         .then(function (response) {
-          me.descripcion_detalle = response.data.descripcion_detalle;
-          me.stock = response.data.stock;
-          me.estado = response.data.estado;
-          me.tipo = response.data.tipo;
-          me.ubicaciones_id = response.data.ubicaciones_id;
-          me.nota = response.data.nota;
-          me.nota1 = response.data.nota1;
+          me.nombre = response.data.person.nombre;
+          me.apellidoPaterno = response.data.person.apellidoPaterno;
+          me.apellidoMaterno = response.data.person.apellidoMaterno;
+          me.telefono = response.data.person.telefono;
+          me.direccion= response.data.person.direccion;
+          me.idDocumentType=response.data.person.idDocumentType;
+          me.numero=response.data.person.numero;
+          me.banco=response.data.driver.banco;
+          me.cuentaBancaria=response.data.driver.cuentaBancaria;
+          me.licenciaConducir=response.data.driver.licenciaConducir;
+          me.email=response.data.email;
+          me.name=response.data.name;
         })
         .catch(function (error) {
           // handle error
@@ -673,23 +772,32 @@ export default {
         });
     },
 
-    updateVehicles() {
+    updateDrivers() {
       const config = { headers: { "content-type": "multipart/form-data" } };
       let me = this;
       let formData = new FormData();
       formData.append("id", this.update);
-      formData.append("placa", this.placa);
-      formData.append("capacidadCarga", this.capacidadCarga);
-      formData.append("idVehicleType", this.idVehicleType);
-      formData.append("idDriver", this.idDriver);
-      formData.append("imagen", this.imagen);
+      formData.append("nombre", this.nombre);
+      formData.append("apellidoPaterno", this.apellidoPaterno);
+      formData.append("apellidoMaterno", this.apellidoMaterno);
+      formData.append("telefono", this.telefono);
+      formData.append("email", this.email);
+      formData.append("direccion", this.direccion);
+      formData.append("idDocumentType", this.idDocumentType);
+      formData.append("licenciaConducir", this.licenciaConducir);
+      formData.append("numero", this.numero);
+      formData.append("banco", this.banco);
+      formData.append("cuentaBancaria", this.cuentaBancaria);
+      formData.append("constanciaEstadoSalud", this.constanciaEstadoSalud);
+      formData.append("name", this.name);
+      formData.append("password", this.password);
       formData.append("_method", "put");
-      let url = "api/vehicles"; //Ruta que hemos creado para enviar una tarea y guardarla
+      let url = "api/drivers/" + this.update; //Ruta que hemos creado para enviar una tarea y guardarla
       axios
         .post(url, formData, config)
         .then(function (response) {
-          alert("Se modificó correctamente el vehículo.");
-          me.getVehicles(); //llamamos al metodo getProductos(); para que refresque nuestro array y muestro los nuevos datos
+          alert("Se modificó correctamente los datos del conductor.");
+          me.getDrivers(); //llamamos al metodo getPDrivers(); para que refresque nuestro array y muestro los nuevos datos
           me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
         })
         .catch(function (error) {
@@ -697,21 +805,25 @@ export default {
         });
     },
 
-    deleteVehicles(id, matricula) {
+    deleteDrivers(id, numero) {
       //Esta nos abrirá un alert de javascript y si aceptamos borrará el vehículo que hemos elegido
       let me = this;
-      if (confirm("¿Seguro que deseas eliminar este vehículo? " + matricula)) {
-        axios.get("api/vehicles", {
-          params: {
-            id: id,
-          },
-        });
+      if (
+        confirm(
+          "¿Seguro que deseas eliminar al conductor con dni " + numero + "?"
+        )
+      ) {
+        //axios.get("api/drivers" + id, {
+        //  params: {
+        //    id: id,
+        //  },
+        //});
 
         axios
-          .get("apiproductosalmacen")
+          .delete("api/drivers/" + id)
           .then(function (response) {
-            alert("Se eliminó correctamente el vehículo.");
-            me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
+            alert("Se eliminó correctamente al conductor.");
+            me.getDrivers(); //llamamos al metodo getDrivers(); para que refresque nuestro array y muestro los nuevos datos
           })
           .catch(function (error) {
             console.log(error);
@@ -721,16 +833,37 @@ export default {
 
     clearFields() {
       /*Limpia los campos e inicializa la variable update a 0*/
-      this.placa = "";
-      this.capacidadCarga = "";
-      this.idVehicleType = "";
-      this.idDriver = "";
+      this.nombre = "";
+      this.apellidoPaterno = "";
+      this.apellidoMaterno = "";
+      this.telefono = "";
+      this.email = "";
+      this.direccion = "";
+      this.idDocumentType = "";
+      this.licenciaConducir = "";
+      this.numero = "";
+      this.banco = "";
+      this.cuentaBancaria = "";
+      this.constanciaEstadoSalud = "";
+      this.name = "";
+      this.password = "";
+      this.imagen = "";
+      this.placa="";
+      this.capacidadCarga="";
+      this.idDriver="";
+      this.idVehicleType="";
       this.update = 0;
     },
   },
 
+  computed: {
+    img() {
+      return this.imagenminiatura;
+    },
+  },
+
   mounted() {
-    this.getVehicles();
+    this.getDrivers();
   },
 };
 </script>

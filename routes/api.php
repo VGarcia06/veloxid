@@ -24,7 +24,9 @@ Route::apiResource('drivers', DriverController::class);
 
 Route::apiResource('vehicles', VehicleController::class);
 
+// getting types
 Route::apiResource('vehicletypes', Types\VehicleTypeController::class);
+Route::apiResource('documenttypes', Types\DocumentTypeController::class);
 
 Route::apiResource('drivers.vehicles', VehicleController::class);
 

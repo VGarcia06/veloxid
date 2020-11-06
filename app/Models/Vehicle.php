@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vehicle extends Model
 {
+
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -25,5 +28,14 @@ class Vehicle extends Model
     public function revisions()
     {
         return $this->hasMany('App\Models\VehicleRevision', 'vehicle_id');
-    }  
+    } 
+
+    /**
+     * One to Many (inverse)
+     * Get the document type that owns the person.
+     */
+    public function type()
+    {
+        return $this->belongsTo('App\Models\VehicleType', 'idVehicleType');
+    }
 }

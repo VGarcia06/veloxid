@@ -25,7 +25,6 @@ class Person extends Model
         'apellidoMaterno', 
         'telefono', 
         'direccion', 
-        'correo', 
         'imagen', 
         'numero',
         'idDocumentType',
@@ -38,6 +37,6 @@ class Person extends Model
      */
     public function documentType()
     {
-        return $this->belongsTo('App\Models\Document', 'idDocumentType');
+        return $this->belongsTo('App\Models\DocumentType', 'idDocumentType');
     }
 }

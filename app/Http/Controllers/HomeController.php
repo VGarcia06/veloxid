@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function show(Request $request)
+    {
+        return view('Jefe_Transporte/vehicle')->with(['id' => $request->id]);
+    }
 }

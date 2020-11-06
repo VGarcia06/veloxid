@@ -11512,8 +11512,8 @@ code {
   transition: opacity 0.3s ease; }
   .btn-gradient-primary:not([disabled]):not(.disabled):active, .btn-gradient-primary:not([disabled]):not(.disabled).active,
   .show > .btn-gradient-primary.dropdown-toggle {
-    background: -webkit-gradient(linear, left top, right top, from(#007bff), to(#0056b3));
-    background: linear-gradient(to right, #007bff, #0056b3); }
+    background: -webkit-gradient(linear, left top, right top, from(#36BC43), to(#309D4F));
+    background: linear-gradient(to right, #36BC43, #309D4F); }
   .btn-gradient-primary:hover {
     opacity: .8; }
   .btn-gradient-primary:not(.btn-gradient-light) {
@@ -11701,8 +11701,8 @@ code {
 
 /* inverse breadcrumb */
 .bg-inverse-primary, .image-grouped .text-avatar {
-  background: #f6edff;
-  border-color: #b66dff; }
+  background: #309D4F;
+  border-color: #309D4F; }
   .bg-inverse-primary .breadcrumb-item, .image-grouped .text-avatar .breadcrumb-item {
     color: #b66dff; }
     .bg-inverse-primary .breadcrumb-item:before, .image-grouped .text-avatar .breadcrumb-item:before {
@@ -13121,10 +13121,10 @@ dl {
       .sidebar .nav .nav-item.active {
         background: #ffffff; }
         .sidebar .nav .nav-item.active > .nav-link .menu-title {
-          color: #b66dff;
+          color: #309D4F;
           font-family: "ubuntu-medium", sans-serif; }
         .sidebar .nav .nav-item.active > .nav-link i {
-          color: #b66dff; }
+          color: #309D4F; }
       .sidebar .nav .nav-item:hover {
         background: #fcfcfc; }
       .sidebar .nav .nav-item.nav-profile .nav-link {

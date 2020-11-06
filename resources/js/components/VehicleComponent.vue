@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Modal -->
+    <!-- MODAL -->
     <div
       class="modal fade"
       id="exampleModal"
@@ -12,7 +12,10 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-primary" id="exampleModalLabel">
+            <h5 class="modal-title text-primary" id="exampleModalLabel" v-if="update == 0">
+              REGISTRAR VEHICULO
+            </h5>
+            <h5 class="modal-title text-primary" id="exampleModalLabel" v-if="update != 0">
               ACTUALIZAR VEHICULO
             </h5>
             <button
@@ -32,7 +35,7 @@
                   <div class="col-sm-9">
                     <textarea
                       class="form-control"
-                      v-model="marca"
+                      v-model="placa"
                       id="exampleTextarea1"
                       rows="2"
                       placeholder="Placa"
@@ -51,7 +54,7 @@
                   <div class="col-sm-9">
                     <textarea
                       class="form-control"
-                      v-model="marca"
+                      v-model="capacidadCarga"
                       id="exampleTextarea1"
                       rows="2"
                       placeholder="Capacidad de Carga"
@@ -68,12 +71,10 @@
                     >Tipo de Vehículo</label
                   >
                   <div class="col-sm-9">
-                    <select
-                      class="form-control"
-                      v-model="tipo"
-                      @click="getUbicacion(tipo)"
-                    >
-                      <option value="NAVE">NAVE</option>
+                    <select class="form-control" v-model="idVehicleType">
+                      <option v-for="item in vehicletypes" :value="item.id">
+                        {{ item.nombre }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -114,19 +115,25 @@
             </div>
           </div>
           <div class="modal-footer">
+            <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
+            <button
+              v-if="update == 0"
+              @click="saveVehicles()"
+              class="btn btn-gradient-primary mr-2"
+            >
+              Registrar
+            </button>
             <!-- Botón que modifica la tarea que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
             <button
-              @click="updateVehicles()"
-              class="btn btn-warning btn-fw"
-            >
+              v-if="update != 0"
+             @click="updateVehicles()" class="btn btn-warning btn-fw">
               Actualizar
             </button>
             <!-- Botón que cierra el modal-->
-            <button
-              type="button"
-              class="btn btn-danger"
-              data-dismiss="modal"
-            >
+            <button 
+             v-if="update != 0"
+             @click="clearFields()"
+              class="btn btn-danger" data-dismiss="modal">
               Cancelar
             </button>
           </div>
@@ -134,6 +141,157 @@
       </div>
     </div>
     <!-- FIN -->
+
+    <!--DATOS DEL CONDUCTOR-->
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Conductor</h4>
+          <br />
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
+                  >Nombres</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.person.nombre
+                }}</label>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label
+                  class="col-sm-4 font-weight-bold"
+                  for="exampleInputEmail3"
+                  >Apellido Paterno</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.person.apellidoPaterno
+                }}</label>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label
+                  class="col-sm-4 font-weight-bold"
+                  for="exampleInputPassword4"
+                  >Apellido Materno</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.person.apellidoMaterno
+                }}</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label
+                  class="col-sm-4 font-weight-bold"
+                  for="exampleSelectGender"
+                  >Teléfono</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.person.telefono
+                }}</label>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label
+                  class="col-sm-4 font-weight-bold"
+                  for="exampleSelectGender"
+                  >Email</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.email
+                }}</label>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label class="col-sm-4 font-weight-bold" for="exampleInputCity1"
+                  >Dirección</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.person.direccion
+                }}</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
+                  >Tipo de Documento</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.person.document_type.tipo
+                }}</label>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
+                  >Número de Documento</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.person.numero
+                }}</label>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
+                  >Licencia de Conducir</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.driver.licenciaConducir
+                }}</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
+                  >Banco</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.driver.banco
+                }}</label>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
+                  >Número de Cuenta Bancaria</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.driver.cuentaBancaria
+                }}</label>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group row">
+                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
+                  >Usuario</label
+                >
+                <label class="col-sm-8" for="exampleInputName1">{{
+                  this.driver.name
+                }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--FIN DATOS DEL CONDUCTOR-->
+
     <div class="form-group">
       <div class="row">
         <div class="col-lg-8">
@@ -157,17 +315,28 @@
             </div>
           </div>
         </div>
+
+        <div class="col-lg-4">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            Registrar Vehículo
+          </button>
+        </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-4" v-for="item in vehicles">
+      <div class="col-lg-4" v-for="item in vehicles.data" :key="item.id">
         <div class="card">
           <div class="card-body">
             <img
               class="card-img-top"
               :src="item.imagen"
-              style="height: 240.75px"
+              style="width: 250px; height: 200px"
             />
             <div class="card-title text-truncate">
               {{ item.descripcion }}
@@ -176,8 +345,7 @@
             <p class="card-text crop-text-2">
               Placa: {{ item.placa }} <br />
               Capacidad_Carga: {{ item.capacidadCarga }} <br />
-              Tipo: {{ item.idVehicleType }} <br />
-              Conductor : {{ item.idDriver }}
+              Tipo: {{ item.type.nombre }} <br />
             </p>
             <p class="card-text">
               <small class="text-muted"
@@ -195,8 +363,8 @@
                         data-toggle="modal"
                         data-target="#exampleModal"
                         type="button"
-                        @click="updateVehicles(item.id)"
-                        title="Editar"
+                        @click="loadFieldsUpdate(item.id,item.placa,item.capacidadCarga,item.idVehicleType)"
+                        title="Actualizar"
                       >
                         <i class="mdi mdi-lead-pencil"></i>
                       </button>
@@ -211,7 +379,7 @@
                         data-toggle="modal"
                         data-target="#exampleModal"
                         type="button"
-                        @click="updateVehicles(item.id)"
+                        @click="deleteVehicles(item.id, item.placa)"
                         title="Eliminar"
                       >
                         <i class="mdi mdi-delete"></i>
@@ -225,7 +393,7 @@
         </div>
       </div>
     </div>
-
+    <br />
     <div class="row">
       <div class="col-sm-12 col-md-5"></div>
       <div class="col-sm-12 col-md-7">
@@ -274,59 +442,42 @@
 
 <script>
 export default {
+  props: ["id"],
   data() {
     return {
+      driver: {},
       vehicles: [],
+      placa: "",
+      capacidadCarga: "",
+      idVehicleType: "",
       imagen: "",
       key_busqueda: "",
+      vehicletypes:"",
       update: 0,
     };
   },
-  created() {
-    axios.get("api/vehicles").then((res) => {
-      this.vehicles = res.data;
+  created() {    
+    
+    axios.get("api/vehicletypes").then((res) => {
+      this.vehicletypes = res.data.VehicleTypes;
     });
-    axios.get("api/drivers").then((res) => {
-      this.vehicles = res.data;
-    });
-  },
+    },
 
   methods: {
     getVehicles(num_page) {
       axios
-        .get("api/vehicles", {
+        .get("api/drivers/" + this.id + "/vehicles", {
           params: {
             page: num_page,
           },
         })
         .then((res) => {
-          this.vehicles = res.data;
-          console.log(this.vehicles);
+          this.vehicles = res.data.vehicles;
+          console.log("Obteniendo vehiculos");
+          console.log(this.vehicles.data);
         })
         .catch(function (error) {
           // handle error
-          console.log(error);
-        });
-    },
-
-    saveVehicles() {
-      const config = { headers: { "content-type": "multipart/form-data" } };
-      let me = this;
-      let formData = new FormData();
-      formData.append("placa", this.placa);
-      formData.append("capacidadCarga", this.capacidadCarga);
-      formData.append("idVehicleType", this.idVehicleType);
-      formData.append("idDriver", this.idDriver);
-      formData.append("imagen", this.imagen);
-      let url = "api/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
-      axios
-        .post(url, formData, config)
-        .then(function (response) {
-          alert("Se registró correctamente el vehículo.");
-          me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
-          me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
-        })
-        .catch(function (error) {
           console.log(error);
         });
     },
@@ -347,27 +498,36 @@ export default {
       reader.readAsDataURL(file);
     },
 
-    loadFieldsUpdate(id) {
+    loadFieldsUpdate(id,placa,capacidadCarga,idVehicleType) {
       //Esta función rellena los campos y la variable update, con la tarea que queremos modificar
       let me = this;
-      this.update = id;
-      let url = "?id=" + this.update;
+      me.update = id;
+      me.placa =placa;
+      me.capacidadCarga=capacidadCarga;
+      me.idVehicleType=idVehicleType;
+    },
+
+      saveVehicles() {
+      const config = { headers: { "content-type": "multipart/form-data" } };
+      let me = this;
+      let formData = new FormData();
+      formData.append("placa", this.placa);
+      formData.append("capacidadCarga", this.capacidadCarga);
+      formData.append("idVehicleType", this.idVehicleType);
+      formData.append("imagen", this.imagen);
+      let url = "api/drivers/"+this.idDriver+"/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
       axios
-        .get(url)
+        .post(url, formData, config)
         .then(function (response) {
-          me.descripcion_detalle = response.data.descripcion_detalle;
-          me.stock = response.data.stock;
-          me.estado = response.data.estado;
-          me.tipo = response.data.tipo;
-          me.ubicaciones_id = response.data.ubicaciones_id;
-          me.nota = response.data.nota;
-          me.nota1 = response.data.nota1;
+          alert("Se registró correctamente el vehículo.");
+          me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
+          me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
         })
         .catch(function (error) {
-          // handle error
           console.log(error);
         });
     },
+
 
     updateVehicles() {
       const config = { headers: { "content-type": "multipart/form-data" } };
@@ -380,7 +540,7 @@ export default {
       formData.append("idDriver", this.idDriver);
       formData.append("imagen", this.imagen);
       formData.append("_method", "put");
-      let url = "api/vehicles"; //Ruta que hemos creado para enviar una tarea y guardarla
+      let url = "api/vehicles/" + this.update; //Ruta que hemos creado para enviar una tarea y guardarla
       axios
         .post(url, formData, config)
         .then(function (response) {
@@ -393,18 +553,15 @@ export default {
         });
     },
 
-    deleteVehicles(id, matricula) {
+    deleteVehicles(id, placa) {
       //Esta nos abrirá un alert de javascript y si aceptamos borrará el vehículo que hemos elegido
       let me = this;
-      if (confirm("¿Seguro que deseas eliminar este vehículo? " + matricula)) {
-        axios.get("api/vehicles", {
+      if (confirm("¿Seguro que deseas eliminar este vehículo? ")) {
+        axios.delete("api/vehicles/" + id, {
           params: {
             id: id,
           },
-        });
-
-        axios
-          .get("apiproductosalmacen")
+        })
           .then(function (response) {
             alert("Se eliminó correctamente el vehículo.");
             me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
@@ -427,6 +584,10 @@ export default {
 
   mounted() {
     this.getVehicles();
+
+    axios.get("api/drivers/" + this.id).then((res) => {
+      this.driver = res.data;
+    });
   },
 };
 </script>

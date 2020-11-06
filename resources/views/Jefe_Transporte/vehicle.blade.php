@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <vehicle></vehicle>
+    <vehicle :id="{{ json_encode($id) }}"></vehicle>
 @endsection

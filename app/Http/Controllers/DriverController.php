@@ -21,12 +21,17 @@ class DriverController extends Controller
      */
     public function index()
     {
-        $driver = new Driver; // Driver is a Eloquent object that makes references to User.
+        $drivers = Driver::where('idUserType', 2) // The 2 is defined as Conductor/Driver
+                        ->with('person', 'driver')
+                        ->paginate(12);
+                        
+        
+        foreach ($drivers->items() as $driver) {
+            if (Storage::disk('public')->exists($driver->person->imagen)) {
+                $driver->person->imagen = Storage::url($driver->person->imagen);
+            }
+        }
 
-        $drivers = $driver
-                        ->where('idUserType', 2) // The 2 is defined as Conductor/Driver
-                        ->paginate(15);
-                   
         return response()
                         ->json($drivers,200);         
     }
@@ -40,7 +45,6 @@ class DriverController extends Controller
     public function store(Request $request)
     {
         // Validate the request...
-        
         try {
             $driver = new Driver;
 
@@ -75,8 +79,10 @@ class DriverController extends Controller
 
             $driver->save();
 
+            // testing Driver 's image
+            $path_imagen = "";
             if ($request->hasFile('imagen')) {
-                $request->imagen = Storage::put('drivers', $request->file('imagen'), 'public');
+                $path_imagen = Storage::disk('public')->put('drivers', $request->file('imagen'));
             }
 
             /**
@@ -89,8 +95,7 @@ class DriverController extends Controller
             $person->apellidoMaterno = $request->apellidoMaterno;
             $person->telefono = $request->telefono;
             $person->direccion = $request->direccion;
-            $person->correo = $request->correo;
-            $person->imagen = $request->imagen;
+            $person->imagen = $path_imagen;
             $person->numero = $request->numero; // ID CARD number
             $person->idDocumentType = $request->idDocumentType; // ID CARD type
 
@@ -100,9 +105,15 @@ class DriverController extends Controller
              * Driver Table that contains driver data
              */
             $driverdata = new ModelsDriver;
+
+            // Testing Health Status Document
+            $path_estado_salud = "";
+            if ($request->hasFile('constanciaEstadoSalud')) {
+                $path_estado_salud = Storage::disk('public')->put('drivers', $request->file('constanciaEstadoSalud'));
+            }
             
             $driverdata->licenciaConducir = $request->licenciaConducir;
-            $driverdata->constanciaEstadoSalud = $request->constanciaEstadoSalud;
+            $driverdata->constanciaEstadoSalud = $path_estado_salud;
             $driverdata->cuentaBancaria = $request->cuentaBancaria;
             $driverdata->banco = $request->banco;
 
@@ -113,7 +124,7 @@ class DriverController extends Controller
              */
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
 
             /**
              * You can rollback the transaction via the rollBack method:
@@ -135,30 +146,18 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-        $driver = Driver::find($id);
+        try {
+            $driver = Driver::findOrFail($id)
+                                ->load('person.documentType', 'driver');
+        } catch (\Throwable $th) {
+            throw $th;
 
-        $person = $driver->person()->first();
+            return response()->json([],400);
+        }
+        
+        
 
-        $driverdata = $driver->driver()->first();
-
-        return response()->json([
-            'name' => $driver->name,
-            'email' => $driver->email, 
-            'password' => $driver->password, 
-            'nombre' => $person->nombre, 
-            'apellidoPaterno' => $person->apellidoPaterno, 
-            'apellidoMaterno' => $person->apellidoMaterno, 
-            'telefono' => $person->apellidoPaterno, 
-            'direccion' => $person->direccion, 
-            'correo' => $person->correo, 
-            'imagen' => $person->imagen, 
-            'numero' => $person->numero,
-            'idDocumentType' => $person->idDocumentType,
-            'licenciaConducir' => $driverdata->licenciaConducir,
-            'constanciaEstadoSalud' => $driverdata->constanciaEstadoSalud,
-            'cuentaBancaria' => $driverdata->cuentaBancaria,
-            'banco' => $driverdata->banco
-        ],200);
+        return response()->json($driver,200);
     }
 
     /**
@@ -197,13 +196,19 @@ class DriverController extends Controller
              */
             $person = $driver->person()->first(); // Getting the Person Object from driver/user
 
+            // testing Driver 's image
+            $path_imagen = $person->imagen;
+            if ($request->hasFile('imagen')) {
+                Storage::delete($person->imagen);
+                $path_imagen = Storage::disk('public')->put('drivers', $request->file('imagen'));
+            }
+
             $person->nombre = $request->nombre;
             $person->apellidoPaterno = $request->apellidoPaterno;
             $person->apellidoMaterno = $request->apellidoMaterno;
             $person->telefono = $request->telefono;
             $person->direccion = $request->direccion;
-            $person->correo = $request->correo;
-            $person->imagen = $request->imagen;
+            $person->imagen = $path_imagen;
             $person->numero = $request->numero; // ID CARD number
             $person->idDocumentType = $request->idDocumentType; // ID CARD type
 
@@ -214,8 +219,15 @@ class DriverController extends Controller
              */
             $driverdata = $driver->driver()->first();
 
+            // Testing Health Status Document
+            $path_estado_salud = $driverdata->constanciaEstadoSalud;
+            if ($request->hasFile('constanciaEstadoSalud')) {
+                Storage::delete($driverdata->constanciaEstadoSalud);
+                $path_estado_salud = Storage::disk('public')->put('drivers', $request->file('constanciaEstadoSalud'));
+            }
+
             $driverdata->licenciaConducir = $request->licenciaConducir;
-            $driverdata->constanciaEstadoSalud = $request->constanciaEstadoSalud;
+            $driverdata->constanciaEstadoSalud = $path_estado_salud;
             $driverdata->cuentaBancaria = $request->cuentaBancaria;
             $driverdata->banco = $request->banco;
 
@@ -226,7 +238,7 @@ class DriverController extends Controller
              */
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
 
             /**
              * You can rollback the transaction via the rollBack method:
@@ -249,9 +261,11 @@ class DriverController extends Controller
     public function destroy($id)
     {
         try {
-            $driver = Driver::find($id);
+            $driver = Driver::findOrFail($id);
 
             $driver->idStatus = 2; // 2 references to Inactive mode
+
+            $driver->delete();
         } catch (\Throwable $th) {
             //throw $th;
 

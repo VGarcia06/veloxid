@@ -2612,40 +2612,130 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      vehicles: [],
+      drivers: [],
+      id: "",
+      name: "",
+      password: "",
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      direccion: "",
+      telefono: "",
+      email: "",
+      placa: "",
+      capacidadCarga: "",
+      idVehicleType: "",
+      idDriver: "",
+      numero: "",
       imagen: "",
+      cuentaBancaria: "",
+      banco: "",
+      idDocumentType: "",
+      licenciaConducir: "",
+      constanciaEstadoSalud: "",
       key_busqueda: "",
-      update: 0
+      vehicletypes: "",
+      documenttypes: "",
+      update: 0,
+      imagenminiatura: ""
     };
   },
   created: function created() {
     var _this = this;
 
-    axios.get("api/vehicles").then(function (res) {
-      _this.vehicles = res.data;
-    });
     axios.get("api/drivers").then(function (res) {
-      _this.vehicles = res.data;
+      _this.drivers = res.data;
+    });
+    axios.get("api/vehicletypes").then(function (res) {
+      _this.vehicletypes = res.data.VehicleTypes;
+    });
+    axios.get("api/documenttypes").then(function (res) {
+      _this.documenttypes = res.data.DocumentTypes;
     });
   },
   methods: {
-    getVehicles: function getVehicles(num_page) {
+    getDrivers: function getDrivers(num_page) {
       var _this2 = this;
 
-      axios.get("api/vehicles", {
+      axios.get("api/drivers", {
         params: {
           page: num_page
         }
       }).then(function (res) {
-        _this2.vehicles = res.data;
+        _this2.drivers = res.data;
         console.log(_this2.vehicles);
       })["catch"](function (error) {
         // handle error
         console.log(error);
       });
+    },
+    saveDrivers: function saveDrivers() {
+      var config = {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      var me = this;
+      var formData = new FormData();
+      formData.append("nombre", this.nombre);
+      formData.append("apellidoPaterno", this.apellidoPaterno);
+      formData.append("apellidoMaterno", this.apellidoMaterno);
+      formData.append("telefono", this.telefono);
+      formData.append("email", this.email);
+      formData.append("direccion", this.direccion);
+      formData.append("idDocumentType", this.idDocumentType);
+      formData.append("licenciaConducir", this.licenciaConducir);
+      formData.append("numero", this.numero);
+      formData.append("banco", this.banco);
+      formData.append("cuentaBancaria", this.cuentaBancaria);
+      formData.append("constanciaEstadoSalud", this.constanciaEstadoSalud);
+      formData.append("name", this.name);
+      formData.append("password", this.password);
+      formData.append("imagen", this.imagen);
+      var url = "api/drivers"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
+
+      axios.post(url, formData, config).then(function (response) {
+        alert("Se registró correctamente el conductor.");
+        me.getDrivers(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
+
+        me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    addVehicles: function addVehicles(id) {
+      this.idDriver = id;
+      console.log(this.idDriver);
     },
     saveVehicles: function saveVehicles() {
       var config = {
@@ -2658,18 +2748,22 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("placa", this.placa);
       formData.append("capacidadCarga", this.capacidadCarga);
       formData.append("idVehicleType", this.idVehicleType);
-      formData.append("idDriver", this.idDriver);
       formData.append("imagen", this.imagen);
-      var url = "api/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
+      var url = "api/drivers/" + this.idDriver + "/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
 
       axios.post(url, formData, config).then(function (response) {
         alert("Se registró correctamente el vehículo.");
-        me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
+        me.getDrivers(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
 
         me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    subirArchivo: function subirArchivo(e) {
+      var file = e.target.files[0];
+      this.constanciaEstadoSalud = file;
+      console.log(this.constanciaEstadoSalud);
     },
     subirImagen: function subirImagen(e) {
       var file = e.target.files[0];
@@ -2692,21 +2786,26 @@ __webpack_require__.r(__webpack_exports__);
       //Esta función rellena los campos y la variable update, con la tarea que queremos modificar
       var me = this;
       this.update = id;
-      var url = "?id=" + this.update;
+      var url = "api/drivers/" + this.update;
       axios.get(url).then(function (response) {
-        me.descripcion_detalle = response.data.descripcion_detalle;
-        me.stock = response.data.stock;
-        me.estado = response.data.estado;
-        me.tipo = response.data.tipo;
-        me.ubicaciones_id = response.data.ubicaciones_id;
-        me.nota = response.data.nota;
-        me.nota1 = response.data.nota1;
+        me.nombre = response.data.person.nombre;
+        me.apellidoPaterno = response.data.person.apellidoPaterno;
+        me.apellidoMaterno = response.data.person.apellidoMaterno;
+        me.telefono = response.data.person.telefono;
+        me.direccion = response.data.person.direccion;
+        me.idDocumentType = response.data.person.idDocumentType;
+        me.numero = response.data.person.numero;
+        me.banco = response.data.driver.banco;
+        me.cuentaBancaria = response.data.driver.cuentaBancaria;
+        me.licenciaConducir = response.data.driver.licenciaConducir;
+        me.email = response.data.email;
+        me.name = response.data.name;
       })["catch"](function (error) {
         // handle error
         console.log(error);
       });
     },
-    updateVehicles: function updateVehicles() {
+    updateDrivers: function updateDrivers() {
       var config = {
         headers: {
           "content-type": "multipart/form-data"
@@ -2715,36 +2814,45 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       var formData = new FormData();
       formData.append("id", this.update);
-      formData.append("placa", this.placa);
-      formData.append("capacidadCarga", this.capacidadCarga);
-      formData.append("idVehicleType", this.idVehicleType);
-      formData.append("idDriver", this.idDriver);
-      formData.append("imagen", this.imagen);
+      formData.append("nombre", this.nombre);
+      formData.append("apellidoPaterno", this.apellidoPaterno);
+      formData.append("apellidoMaterno", this.apellidoMaterno);
+      formData.append("telefono", this.telefono);
+      formData.append("email", this.email);
+      formData.append("direccion", this.direccion);
+      formData.append("idDocumentType", this.idDocumentType);
+      formData.append("licenciaConducir", this.licenciaConducir);
+      formData.append("numero", this.numero);
+      formData.append("banco", this.banco);
+      formData.append("cuentaBancaria", this.cuentaBancaria);
+      formData.append("constanciaEstadoSalud", this.constanciaEstadoSalud);
+      formData.append("name", this.name);
+      formData.append("password", this.password);
       formData.append("_method", "put");
-      var url = "api/vehicles"; //Ruta que hemos creado para enviar una tarea y guardarla
+      var url = "api/drivers/" + this.update; //Ruta que hemos creado para enviar una tarea y guardarla
 
       axios.post(url, formData, config).then(function (response) {
-        alert("Se modificó correctamente el vehículo.");
-        me.getVehicles(); //llamamos al metodo getProductos(); para que refresque nuestro array y muestro los nuevos datos
+        alert("Se modificó correctamente los datos del conductor.");
+        me.getDrivers(); //llamamos al metodo getPDrivers(); para que refresque nuestro array y muestro los nuevos datos
 
         me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    deleteVehicles: function deleteVehicles(id, matricula) {
+    deleteDrivers: function deleteDrivers(id, numero) {
       //Esta nos abrirá un alert de javascript y si aceptamos borrará el vehículo que hemos elegido
       var me = this;
 
-      if (confirm("¿Seguro que deseas eliminar este vehículo? " + matricula)) {
-        axios.get("api/vehicles", {
-          params: {
-            id: id
-          }
-        });
-        axios.get("apiproductosalmacen").then(function (response) {
-          alert("Se eliminó correctamente el vehículo.");
-          me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
+      if (confirm("¿Seguro que deseas eliminar al conductor con dni " + numero + "?")) {
+        //axios.get("api/drivers" + id, {
+        //  params: {
+        //    id: id,
+        //  },
+        //});
+        axios["delete"]("api/drivers/" + id).then(function (response) {
+          alert("Se eliminó correctamente al conductor.");
+          me.getDrivers(); //llamamos al metodo getDrivers(); para que refresque nuestro array y muestro los nuevos datos
         })["catch"](function (error) {
           console.log(error);
         });
@@ -2752,15 +2860,35 @@ __webpack_require__.r(__webpack_exports__);
     },
     clearFields: function clearFields() {
       /*Limpia los campos e inicializa la variable update a 0*/
+      this.nombre = "";
+      this.apellidoPaterno = "";
+      this.apellidoMaterno = "";
+      this.telefono = "";
+      this.email = "";
+      this.direccion = "";
+      this.idDocumentType = "";
+      this.licenciaConducir = "";
+      this.numero = "";
+      this.banco = "";
+      this.cuentaBancaria = "";
+      this.constanciaEstadoSalud = "";
+      this.name = "";
+      this.password = "";
+      this.imagen = "";
       this.placa = "";
       this.capacidadCarga = "";
-      this.idVehicleType = "";
       this.idDriver = "";
+      this.idVehicleType = "";
       this.update = 0;
     }
   },
+  computed: {
+    img: function img() {
+      return this.imagenminiatura;
+    }
+  },
   mounted: function mounted() {
-    this.getVehicles();
+    this.getDrivers();
   }
 });
 
@@ -3086,62 +3214,210 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["id"],
   data: function data() {
     return {
+      driver: {},
       vehicles: [],
+      placa: "",
+      capacidadCarga: "",
+      idVehicleType: "",
       imagen: "",
       key_busqueda: "",
+      vehicletypes: "",
       update: 0
     };
   },
   created: function created() {
     var _this = this;
 
-    axios.get("api/vehicles").then(function (res) {
-      _this.vehicles = res.data;
-    });
-    axios.get("api/drivers").then(function (res) {
-      _this.vehicles = res.data;
+    axios.get("api/vehicletypes").then(function (res) {
+      _this.vehicletypes = res.data.VehicleTypes;
     });
   },
   methods: {
     getVehicles: function getVehicles(num_page) {
       var _this2 = this;
 
-      axios.get("api/vehicles", {
+      axios.get("api/drivers/" + this.id + "/vehicles", {
         params: {
           page: num_page
         }
       }).then(function (res) {
-        _this2.vehicles = res.data;
-        console.log(_this2.vehicles);
+        _this2.vehicles = res.data.vehicles;
+        console.log("Obteniendo vehiculos");
+        console.log(_this2.vehicles.data);
       })["catch"](function (error) {
         // handle error
-        console.log(error);
-      });
-    },
-    saveVehicles: function saveVehicles() {
-      var config = {
-        headers: {
-          "content-type": "multipart/form-data"
-        }
-      };
-      var me = this;
-      var formData = new FormData();
-      formData.append("placa", this.placa);
-      formData.append("capacidadCarga", this.capacidadCarga);
-      formData.append("idVehicleType", this.idVehicleType);
-      formData.append("idDriver", this.idDriver);
-      formData.append("imagen", this.imagen);
-      var url = "api/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
-
-      axios.post(url, formData, config).then(function (response) {
-        alert("Se registró correctamente el vehículo.");
-        me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
-
-        me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
-      })["catch"](function (error) {
         console.log(error);
       });
     },
@@ -3162,21 +3438,34 @@ __webpack_require__.r(__webpack_exports__);
 
       reader.readAsDataURL(file);
     },
-    loadFieldsUpdate: function loadFieldsUpdate(id) {
+    loadFieldsUpdate: function loadFieldsUpdate(id, placa, capacidadCarga, idVehicleType) {
       //Esta función rellena los campos y la variable update, con la tarea que queremos modificar
       var me = this;
-      this.update = id;
-      var url = "?id=" + this.update;
-      axios.get(url).then(function (response) {
-        me.descripcion_detalle = response.data.descripcion_detalle;
-        me.stock = response.data.stock;
-        me.estado = response.data.estado;
-        me.tipo = response.data.tipo;
-        me.ubicaciones_id = response.data.ubicaciones_id;
-        me.nota = response.data.nota;
-        me.nota1 = response.data.nota1;
+      me.update = id;
+      me.placa = placa;
+      me.capacidadCarga = capacidadCarga;
+      me.idVehicleType = idVehicleType;
+    },
+    saveVehicles: function saveVehicles() {
+      var config = {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      var me = this;
+      var formData = new FormData();
+      formData.append("placa", this.placa);
+      formData.append("capacidadCarga", this.capacidadCarga);
+      formData.append("idVehicleType", this.idVehicleType);
+      formData.append("imagen", this.imagen);
+      var url = "api/drivers/" + this.idDriver + "/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
+
+      axios.post(url, formData, config).then(function (response) {
+        alert("Se registró correctamente el vehículo.");
+        me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
+
+        me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
       })["catch"](function (error) {
-        // handle error
         console.log(error);
       });
     },
@@ -3195,7 +3484,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("idDriver", this.idDriver);
       formData.append("imagen", this.imagen);
       formData.append("_method", "put");
-      var url = "api/vehicles"; //Ruta que hemos creado para enviar una tarea y guardarla
+      var url = "api/vehicles/" + this.update; //Ruta que hemos creado para enviar una tarea y guardarla
 
       axios.post(url, formData, config).then(function (response) {
         alert("Se modificó correctamente el vehículo.");
@@ -3206,17 +3495,16 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    deleteVehicles: function deleteVehicles(id, matricula) {
+    deleteVehicles: function deleteVehicles(id, placa) {
       //Esta nos abrirá un alert de javascript y si aceptamos borrará el vehículo que hemos elegido
       var me = this;
 
-      if (confirm("¿Seguro que deseas eliminar este vehículo? " + matricula)) {
-        axios.get("api/vehicles", {
+      if (confirm("¿Seguro que deseas eliminar este vehículo? ")) {
+        axios["delete"]("api/vehicles/" + id, {
           params: {
             id: id
           }
-        });
-        axios.get("apiproductosalmacen").then(function (response) {
+        }).then(function (response) {
           alert("Se eliminó correctamente el vehículo.");
           me.getVehicles(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
         })["catch"](function (error) {
@@ -3234,7 +3522,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    var _this4 = this;
+
     this.getVehicles();
+    axios.get("api/drivers/" + this.id).then(function (res) {
+      _this4.driver = res.data;
+    });
   }
 });
 
@@ -38864,7 +39157,7 @@ var staticRenderFns = [
                 }),
                 _vm._v(" "),
                 _c("h4", { staticClass: "font-weight-normal mb-3" }, [
-                  _vm._v("Solicitudes Emitidas "),
+                  _vm._v("Pedidos "),
                   _c("i", {
                     staticClass: "mdi mdi-chart-line mdi-24px float-right"
                   })
@@ -38895,7 +39188,7 @@ var staticRenderFns = [
                 }),
                 _vm._v(" "),
                 _c("h4", { staticClass: "font-weight-normal mb-3" }, [
-                  _vm._v("Weekly Orders "),
+                  _vm._v("Pedidos Pendientes "),
                   _c("i", {
                     staticClass: "mdi mdi-bookmark-outline mdi-24px float-right"
                   })
@@ -38928,7 +39221,7 @@ var staticRenderFns = [
                 }),
                 _vm._v(" "),
                 _c("h4", { staticClass: "font-weight-normal mb-3" }, [
-                  _vm._v("Visitors Online "),
+                  _vm._v("Ingresos "),
                   _c("i", {
                     staticClass: "mdi mdi-diamond mdi-24px float-right"
                   })
@@ -39127,7 +39420,51 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(0),
+              _c("div", { staticClass: "modal-header" }, [
+                _vm.update == 0
+                  ? _c(
+                      "h5",
+                      {
+                        staticClass: "modal-title text-primary",
+                        attrs: { id: "exampleModalLabel" }
+                      },
+                      [_vm._v("\n            REGISTRAR CONDUCTOR\n          ")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.update != 0
+                  ? _c(
+                      "h5",
+                      {
+                        staticClass: "modal-title text-primary",
+                        attrs: { id: "exampleModalLabel" }
+                      },
+                      [_vm._v("\n            ACTUALIZAR CONDUCTOR\n          ")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.clearFields()
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39145,6 +39482,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "text",
                             id: "exampleTextarea1",
                             placeholder: "Nombres"
                           },
@@ -39178,6 +39516,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "text",
                             id: "exampleTextarea1",
                             placeholder: "Apellido Paterno"
                           },
@@ -39209,6 +39548,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "text",
                             id: "exampleTextarea1",
                             placeholder: "Apellido Materno"
                           },
@@ -39242,6 +39582,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "number",
                             id: "exampleTextarea1",
                             placeholder: "Teléfono"
                           },
@@ -39273,6 +39614,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "email",
                             id: "exampleTextarea1",
                             placeholder: "Email"
                           },
@@ -39370,20 +39712,15 @@ var render = function() {
                               ]
                             ),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "DNI" } }, [
-                              _vm._v("DNI")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "option",
-                              { attrs: { value: "Pasaporte de Extranjeria" } },
-                              [
-                                _vm._v(
-                                  "\n                      Pasaporte de Extranjeria\n                    "
-                                )
-                              ]
-                            )
-                          ]
+                            _vm._l(_vm.documenttypes, function(item) {
+                              return _c(
+                                "option",
+                                { key: item.id, domProps: { value: item.id } },
+                                [_vm._v(_vm._s(item.tipo))]
+                              )
+                            })
+                          ],
+                          2
                         )
                       ])
                     ])
@@ -39403,6 +39740,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "text",
                             id: "exampleTextarea1",
                             placeholder: "N° Documento"
                           },
@@ -39436,6 +39774,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "text",
                             id: "exampleTextarea1",
                             placeholder: "Licencia de Conducir",
                             row: "2"
@@ -39470,6 +39809,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "text",
                             id: "exampleTextarea1",
                             placeholder: "Banco"
                           },
@@ -39501,6 +39841,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           attrs: {
+                            type: "text",
                             id: "exampleTextarea1",
                             placeholder: "Cuenta Bancaria"
                           },
@@ -39520,6 +39861,72 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-sm-12" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.name,
+                              expression: "name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "exampleTextarea1",
+                            placeholder: "Usuario"
+                          },
+                          domProps: { value: _vm.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.name = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-sm-12" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.password,
+                              expression: "password"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "password",
+                            id: "exampleTextarea1",
+                            placeholder: "Contraseña"
+                          },
+                          domProps: { value: _vm.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-12" }, [
                     _c("div", { staticClass: "form-group row" }, [
                       _c("label", { staticClass: "col-sm-3 col-form-label" }, [
@@ -39530,7 +39937,7 @@ var render = function() {
                         _c("input", {
                           staticClass: "form-control file-upload-info",
                           attrs: { type: "file" },
-                          on: { change: _vm.subirImagen }
+                          on: { change: _vm.subirArchivo }
                         })
                       ])
                     ])
@@ -39568,7 +39975,7 @@ var render = function() {
                             attrs: {
                               with: "200",
                               height: "200",
-                              src: _vm.imagen,
+                              src: _vm.img,
                               alt: "Foto del Conductor"
                             }
                           })
@@ -39587,7 +39994,7 @@ var render = function() {
                         staticClass: "btn btn-gradient-primary mr-2",
                         on: {
                           click: function($event) {
-                            return _vm.saveVehicles()
+                            return _vm.saveDrivers()
                           }
                         }
                       },
@@ -39602,7 +40009,7 @@ var render = function() {
                         staticClass: "btn btn-warning btn-fw",
                         on: {
                           click: function($event) {
-                            return _vm.updateVehicles()
+                            return _vm.updateDrivers()
                           }
                         }
                       },
@@ -39649,7 +40056,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -39665,8 +40072,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.marca,
-                              expression: "marca"
+                              value: _vm.placa,
+                              expression: "placa"
                             }
                           ],
                           staticClass: "form-control",
@@ -39675,13 +40082,13 @@ var render = function() {
                             rows: "2",
                             placeholder: "Placa"
                           },
-                          domProps: { value: _vm.marca },
+                          domProps: { value: _vm.placa },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.marca = $event.target.value
+                              _vm.placa = $event.target.value
                             }
                           }
                         })
@@ -39703,8 +40110,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.marca,
-                              expression: "marca"
+                              value: _vm.capacidadCarga,
+                              expression: "capacidadCarga"
                             }
                           ],
                           staticClass: "form-control",
@@ -39713,13 +40120,13 @@ var render = function() {
                             rows: "2",
                             placeholder: "Capacidad de Carga"
                           },
-                          domProps: { value: _vm.marca },
+                          domProps: { value: _vm.capacidadCarga },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.marca = $event.target.value
+                              _vm.capacidadCarga = $event.target.value
                             }
                           }
                         })
@@ -39748,15 +40155,12 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.tipo,
-                                expression: "tipo"
+                                value: _vm.idVehicleType,
+                                expression: "idVehicleType"
                               }
                             ],
                             staticClass: "form-control",
                             on: {
-                              click: function($event) {
-                                return _vm.get(_vm.tipo)
-                              },
                               change: function($event) {
                                 var $$selectedVal = Array.prototype.filter
                                   .call($event.target.options, function(o) {
@@ -39766,13 +40170,26 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.tipo = $event.target.multiple
+                                _vm.idVehicleType = $event.target.multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
                               }
                             }
                           },
-                          [_c("option", { attrs: { value: "" } })]
+                          _vm._l(_vm.vehicletypes, function(item) {
+                            return _c(
+                              "option",
+                              { domProps: { value: item.id } },
+                              [
+                                _vm._v(
+                                  "\n                      " +
+                                    _vm._s(item.nombre) +
+                                    "\n                    "
+                                )
+                              ]
+                            )
+                          }),
+                          0
                         )
                       ])
                     ])
@@ -39810,7 +40227,7 @@ var render = function() {
                             attrs: {
                               with: "200",
                               height: "200",
-                              src: _vm.imagen,
+                              src: _vm.img,
                               alt: "Foto del Vehículo"
                             }
                           })
@@ -39834,36 +40251,6 @@ var render = function() {
                         }
                       },
                       [_vm._v("\n            Registrar\n          ")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.update != 0
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-warning btn-fw",
-                        on: {
-                          click: function($event) {
-                            return _vm.updateVehicles()
-                          }
-                        }
-                      },
-                      [_vm._v("\n            Actualizar\n          ")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.update != 0
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-fw",
-                        on: {
-                          click: function($event) {
-                            return _vm.clearFields()
-                          }
-                        }
-                      },
-                      [_vm._v("\n            Cancelar\n          ")]
                     )
                   : _vm._e()
               ])
@@ -39889,13 +40276,13 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 type: "text",
-                placeholder: "Buscar vehiculo",
+                placeholder: "Buscar conductor",
                 "aria-describedby": "basic-addon2"
               },
               domProps: { value: _vm.key_busqueda },
               on: {
                 keyup: function($event) {
-                  return _vm.searchVehicles()
+                  return _vm.searchDrivers()
                 },
                 input: function($event) {
                   if ($event.target.composing) {
@@ -39914,7 +40301,7 @@ var render = function() {
                   attrs: { type: "button" },
                   on: {
                     click: function($event) {
-                      return _vm.searchVehicles()
+                      return _vm.searchDrivers()
                     }
                   }
                 },
@@ -39924,152 +40311,185 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(2)
+        _vm._m(1)
       ])
     ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.vehicles, function(item) {
+      _vm._l(_vm.drivers.data, function(item) {
         return _c("div", { staticClass: "col-lg-5" }, [
           _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-body" }, [
-              _c("img", {
-                staticClass: "card-img-top",
-                staticStyle: { height: "200px" },
-                attrs: { src: item.imagen }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-title text-truncate" }, [
-                _vm._v(
-                  "\n            " + _vm._s(item.descripcion) + "\n          "
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-text crop-text-2" }, [
-                _vm._v("\n            Placa: " + _vm._s(item.placa) + " "),
-                _c("br"),
-                _vm._v(
-                  "\n            Capacidad_Carga: " +
-                    _vm._s(item.capacidadCarga) +
-                    " "
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    attrs: { href: "/conductoresbuscar?id=" + item.id }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "mdi mdi-arrow-right-bold",
+                      attrs: { title: "Ver detalle" }
+                    })
+                  ]
                 ),
+                _vm._v(" "),
+                _c("center", [
+                  _c("img", {
+                    staticClass: "card-img-top",
+                    staticStyle: { width: "180px", height: "170px" },
+                    attrs: { src: item.person.imagen }
+                  })
+                ]),
+                _vm._v(" "),
                 _c("br"),
-                _vm._v(
-                  "\n            Tipo: " + _vm._s(item.idVehicleType) + " "
-                ),
-                _c("br"),
-                _vm._v(
-                  "\n            Conductor : " +
-                    _vm._s(item.idDriver) +
-                    "\n          "
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "card-text" }, [
-                _c("small", { staticClass: "text-muted" }, [
-                  _vm._v("Ultima actualizacion " + _vm._s(item.updated_at))
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "btn-group btn-group-toggle",
-                  attrs: { "data-toggle": "buttons" }
-                },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-lg-3" }, [
-                        _c("div", { staticClass: "input-group" }, [
-                          _c("div", { staticClass: "input-group-append" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: {
-                                  type: "button",
-                                  "data-toggle": "modal",
-                                  "data-target": "#exampleModal1",
-                                  title: "Agregar vehículo"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.addVehicle(item.id)
+                _vm._v(" "),
+                _c("p", { staticClass: "card-text crop-text-2" }, [
+                  _vm._v(
+                    "\n            Nombres: " +
+                      _vm._s(item.person.nombre) +
+                      "\n            " +
+                      _vm._s(item.person.apellidoPaterno) +
+                      "\n            " +
+                      _vm._s(item.person.apellidoMaterno) +
+                      " "
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n            Número de Identidad:" +
+                      _vm._s(item.person.numero) +
+                      " "
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n            Licencia de Conducir: " +
+                      _vm._s(item.driver.licenciaConducir) +
+                      " "
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n            Usuario: " +
+                      _vm._s(item.name) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "card-text" }, [
+                  _c("small", { staticClass: "text-muted" }, [
+                    _vm._v("Ultima actualizacion " + _vm._s(item.updated_at))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn-group btn-group-toggle",
+                    attrs: { "data-toggle": "buttons" }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-lg-3" }, [
+                          _c("div", { staticClass: "input-group" }, [
+                            _c("div", { staticClass: "input-group-append" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: {
+                                    type: "button",
+                                    "data-toggle": "modal",
+                                    "data-target": "#exampleModal1",
+                                    title: "Agregar vehículo"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.addVehicles(item.id)
+                                    }
                                   }
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "mdi mdi-truck-delivery"
-                                })
-                              ]
-                            )
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "mdi mdi-truck-delivery"
+                                  })
+                                ]
+                              )
+                            ])
                           ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-3" }, [
-                        _c("div", { staticClass: "input-group" }, [
-                          _c("div", { staticClass: "input-group-append" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-warning",
-                                attrs: {
-                                  "data-toggle": "modal",
-                                  "data-target": "#exampleModal",
-                                  type: "button",
-                                  title: "Actualizar"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.updateVehicles(item.id)
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-3" }, [
+                          _c("div", { staticClass: "input-group" }, [
+                            _c("div", { staticClass: "input-group-append" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-warning",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#exampleModal",
+                                    type: "button",
+                                    title: "Actualizar"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.loadFieldsUpdate(item.id)
+                                    }
                                   }
-                                }
-                              },
-                              [_c("i", { staticClass: "mdi mdi-lead-pencil" })]
-                            )
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "mdi mdi-lead-pencil"
+                                  })
+                                ]
+                              )
+                            ])
                           ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-3" }, [
-                        _c("div", { staticClass: "input-group" }, [
-                          _c("div", { staticClass: "input-group-append" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger",
-                                attrs: {
-                                  "data-toggle": "modal",
-                                  "data-target": "#exampleModal",
-                                  type: "button",
-                                  title: "Eliminar"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.updateVehicles(item.id)
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-3" }, [
+                          _c("div", { staticClass: "input-group" }, [
+                            _c("div", { staticClass: "input-group-append" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger",
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#exampleModal",
+                                    type: "button",
+                                    title: "Eliminar"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteDrivers(item.id)
+                                    }
                                   }
-                                }
-                              },
-                              [_c("i", { staticClass: "mdi mdi-delete" })]
-                            )
+                                },
+                                [_c("i", { staticClass: "mdi mdi-delete" })]
+                              )
+                            ])
                           ])
                         ])
                       ])
                     ])
-                  ])
-                ]
-              )
-            ])
+                  ]
+                )
+              ],
+              1
+            )
           ])
         ])
       }),
       0
     ),
+    _vm._v(" "),
+    _c("br"),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-sm-12 col-md-5" }),
@@ -40095,7 +40515,7 @@ var render = function() {
                     },
                     on: {
                       click: function($event) {
-                        return _vm.getVehicles(_vm.vehicles.current_page - 1)
+                        return _vm.getDrivers(_vm.drivers.current_page - 1)
                       }
                     }
                   },
@@ -40114,7 +40534,7 @@ var render = function() {
                       tabindex: "0"
                     }
                   },
-                  [_vm._v(_vm._s(_vm.vehicles.current_page))]
+                  [_vm._v(_vm._s(_vm.drivers.current_page))]
                 )
               ]),
               _vm._v(" "),
@@ -40130,7 +40550,7 @@ var render = function() {
                     },
                     on: {
                       click: function($event) {
-                        return _vm.getVehicles(_vm.vehicles.current_page + 1)
+                        return _vm.getDrivers(_vm.drivers.current_page + 1)
                       }
                     }
                   },
@@ -40145,34 +40565,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        {
-          staticClass: "modal-title text-primary",
-          attrs: { id: "exampleModalLabel" }
-        },
-        [_vm._v("\n            REGISTRAR CONDUCTOR\n          ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -40299,7 +40691,31 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(0),
+              _c("div", { staticClass: "modal-header" }, [
+                _vm.update == 0
+                  ? _c(
+                      "h5",
+                      {
+                        staticClass: "modal-title text-primary",
+                        attrs: { id: "exampleModalLabel" }
+                      },
+                      [_vm._v("\n            REGISTRAR VEHICULO\n          ")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.update != 0
+                  ? _c(
+                      "h5",
+                      {
+                        staticClass: "modal-title text-primary",
+                        attrs: { id: "exampleModalLabel" }
+                      },
+                      [_vm._v("\n            ACTUALIZAR VEHICULO\n          ")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._m(0)
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -40315,8 +40731,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.marca,
-                              expression: "marca"
+                              value: _vm.placa,
+                              expression: "placa"
                             }
                           ],
                           staticClass: "form-control",
@@ -40325,13 +40741,13 @@ var render = function() {
                             rows: "2",
                             placeholder: "Placa"
                           },
-                          domProps: { value: _vm.marca },
+                          domProps: { value: _vm.placa },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.marca = $event.target.value
+                              _vm.placa = $event.target.value
                             }
                           }
                         })
@@ -40353,8 +40769,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.marca,
-                              expression: "marca"
+                              value: _vm.capacidadCarga,
+                              expression: "capacidadCarga"
                             }
                           ],
                           staticClass: "form-control",
@@ -40363,13 +40779,13 @@ var render = function() {
                             rows: "2",
                             placeholder: "Capacidad de Carga"
                           },
-                          domProps: { value: _vm.marca },
+                          domProps: { value: _vm.capacidadCarga },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.marca = $event.target.value
+                              _vm.capacidadCarga = $event.target.value
                             }
                           }
                         })
@@ -40398,15 +40814,12 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.tipo,
-                                expression: "tipo"
+                                value: _vm.idVehicleType,
+                                expression: "idVehicleType"
                               }
                             ],
                             staticClass: "form-control",
                             on: {
-                              click: function($event) {
-                                return _vm.getUbicacion(_vm.tipo)
-                              },
                               change: function($event) {
                                 var $$selectedVal = Array.prototype.filter
                                   .call($event.target.options, function(o) {
@@ -40416,17 +40829,26 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.tipo = $event.target.multiple
+                                _vm.idVehicleType = $event.target.multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
                               }
                             }
                           },
-                          [
-                            _c("option", { attrs: { value: "NAVE" } }, [
-                              _vm._v("NAVE")
-                            ])
-                          ]
+                          _vm._l(_vm.vehicletypes, function(item) {
+                            return _c(
+                              "option",
+                              { domProps: { value: item.id } },
+                              [
+                                _vm._v(
+                                  "\n                      " +
+                                    _vm._s(item.nombre) +
+                                    "\n                    "
+                                )
+                              ]
+                            )
+                          }),
+                          0
                         )
                       ])
                     ])
@@ -40476,33 +40898,339 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-warning btn-fw",
-                    on: {
-                      click: function($event) {
-                        return _vm.updateVehicles()
-                      }
-                    }
-                  },
-                  [_vm._v("\n            Actualizar\n          ")]
-                ),
+                _vm.update == 0
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-gradient-primary mr-2",
+                        on: {
+                          click: function($event) {
+                            return _vm.saveVehicles()
+                          }
+                        }
+                      },
+                      [_vm._v("\n            Registrar\n          ")]
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("\n            Cancelar\n          ")]
-                )
+                _vm.update != 0
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning btn-fw",
+                        on: {
+                          click: function($event) {
+                            return _vm.updateVehicles()
+                          }
+                        }
+                      },
+                      [_vm._v("\n            Actualizar\n          ")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.update != 0
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { "data-dismiss": "modal" },
+                        on: {
+                          click: function($event) {
+                            return _vm.clearFields()
+                          }
+                        }
+                      },
+                      [_vm._v("\n            Cancelar\n          ")]
+                    )
+                  : _vm._e()
               ])
             ])
           ]
         )
       ]
     ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-12 grid-margin stretch-card" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("h4", { staticClass: "card-title" }, [_vm._v("Conductor")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v("Nombres")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.person.nombre))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputEmail3" }
+                  },
+                  [_vm._v("Apellido Paterno")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.person.apellidoPaterno))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputPassword4" }
+                  },
+                  [_vm._v("Apellido Materno")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.person.apellidoMaterno))]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleSelectGender" }
+                  },
+                  [_vm._v("Teléfono")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.person.telefono))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleSelectGender" }
+                  },
+                  [_vm._v("Email")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.email))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputCity1" }
+                  },
+                  [_vm._v("Dirección")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.person.direccion))]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v("Tipo de Documento")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.person.document_type.tipo))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v("Número de Documento")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.person.numero))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v("Licencia de Conducir")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.driver.licenciaConducir))]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v("Banco")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.driver.banco))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v("Número de Cuenta Bancaria")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.driver.cuentaBancaria))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-4 font-weight-bold",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v("Usuario")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-8",
+                    attrs: { for: "exampleInputName1" }
+                  },
+                  [_vm._v(_vm._s(this.driver.name))]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("div", { staticClass: "row" }, [
@@ -40553,20 +41281,22 @@ var render = function() {
               )
             ])
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(1)
       ])
     ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.vehicles, function(item) {
-        return _c("div", { staticClass: "col-lg-4" }, [
+      _vm._l(_vm.vehicles.data, function(item) {
+        return _c("div", { key: item.id, staticClass: "col-lg-4" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [
               _c("img", {
                 staticClass: "card-img-top",
-                staticStyle: { height: "240.75px" },
+                staticStyle: { width: "250px", height: "200px" },
                 attrs: { src: item.imagen }
               }),
               _vm._v(" "),
@@ -40585,15 +41315,8 @@ var render = function() {
                     " "
                 ),
                 _c("br"),
-                _vm._v(
-                  "\n            Tipo: " + _vm._s(item.idVehicleType) + " "
-                ),
-                _c("br"),
-                _vm._v(
-                  "\n            Conductor : " +
-                    _vm._s(item.idDriver) +
-                    "\n          "
-                )
+                _vm._v("\n            Tipo: " + _vm._s(item.type.nombre) + " "),
+                _c("br")
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "card-text" }, [
@@ -40615,11 +41338,16 @@ var render = function() {
                               "data-toggle": "modal",
                               "data-target": "#exampleModal",
                               type: "button",
-                              title: "Editar"
+                              title: "Actualizar"
                             },
                             on: {
                               click: function($event) {
-                                return _vm.updateVehicles(item.id)
+                                return _vm.loadFieldsUpdate(
+                                  item.id,
+                                  item.placa,
+                                  item.capacidadCarga,
+                                  item.idVehicleType
+                                )
                               }
                             }
                           },
@@ -40644,7 +41372,7 @@ var render = function() {
                             },
                             on: {
                               click: function($event) {
-                                return _vm.updateVehicles(item.id)
+                                return _vm.deleteVehicles(item.id, item.placa)
                               }
                             }
                           },
@@ -40661,6 +41389,8 @@ var render = function() {
       }),
       0
     ),
+    _vm._v(" "),
+    _c("br"),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-sm-12 col-md-5" }),
@@ -40740,27 +41470,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        {
-          staticClass: "modal-title text-primary",
-          attrs: { id: "exampleModalLabel" }
-        },
-        [_vm._v("\n            ACTUALIZAR VEHICULO\n          ")]
-      ),
-      _vm._v(" "),
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
       _c(
         "button",
         {
-          staticClass: "close",
+          staticClass: "btn btn-primary",
           attrs: {
             type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
+            "data-toggle": "modal",
+            "data-target": "#exampleModal"
           }
         },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        [_vm._v("\n          Registrar Vehículo\n        ")]
       )
     ])
   }
