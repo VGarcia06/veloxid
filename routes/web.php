@@ -23,6 +23,10 @@ Route::get('/conductores', function () {
     return view('Jefe_Transporte/driver');
 })->middleware('auth');
 
+Route::get('/evaluacion', function () {
+    return view('Jefe_Transporte/evaluation');
+})->middleware('auth');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
