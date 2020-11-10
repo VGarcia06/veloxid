@@ -22,10 +22,17 @@ class DriverController extends Controller
     public function index()
     {
         $drivers = Driver::where('idUserType', 2) // The 2 is defined as Conductor/Driver
-                        ->with('person', 'driver')
+                        ->with('person', 'driver', 'status')
                         ->paginate(12);
                         
-        
+        $active = Driver::where('idUserType', 2)
+                                ->get()
+                                ->count();
+        $inactive = Driver::onlyTrashed()
+                                ->where('idUserType', 2)
+                                ->get()
+                                ->count();
+
         foreach ($drivers->items() as $driver) {
             if (Storage::disk('public')->exists($driver->person->imagen)) {
                 $driver->person->imagen = Storage::url($driver->person->imagen);
@@ -33,7 +40,11 @@ class DriverController extends Controller
         }
 
         return response()
-                        ->json($drivers,200);         
+                        ->json([
+                            'active' => $active,
+                            'inactive' => $inactive,
+                            'drivers' => $drivers
+                        ],200);         
     }
 
     /**

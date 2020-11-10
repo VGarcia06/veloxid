@@ -13,11 +13,11 @@ class DocumentTypeSeeder extends Seeder
     public function run()
     {
         DB::table('documenttype')->insert([
-            'tipo' => 'dni',
+            'tipo' => 'DNI',
         ]);
 
         DB::table('documenttype')->insert([
-            'tipo' => 'pasaporte',
+            'tipo' => 'Carnet de Extranjeria',
         ]);
     }
 }

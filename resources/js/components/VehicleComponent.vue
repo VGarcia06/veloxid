@@ -1,9 +1,9 @@
 <template>
   <div>
-    <!-- MODAL -->
+     <!-- MODAL REGISTRAR -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="exampleModalRegistrar"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -12,11 +12,8 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-primary" id="exampleModalLabel" v-if="update == 0">
+            <h5 class="modal-title text-primary" id="exampleModalLabel">
               REGISTRAR VEHICULO
-            </h5>
-            <h5 class="modal-title text-primary" id="exampleModalLabel" v-if="update != 0">
-              ACTUALIZAR VEHICULO
             </h5>
             <button
               type="button"
@@ -117,23 +114,144 @@
           <div class="modal-footer">
             <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
             <button
-              v-if="update == 0"
               @click="saveVehicles()"
               class="btn btn-gradient-primary mr-2"
             >
               Registrar
             </button>
+            <!-- Botón que cierra el modal-->
+            <button 
+               @click="clearFields()"
+              class="btn btn-danger"  data-dismiss="modal">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIN -->
+
+    <!-- MODAL ACTUALIZAR -->
+    <div
+      class="modal fade"
+      id="exampleModalActualizar"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary" id="exampleModalLabel" >
+              ACTUALIZAR VEHICULO
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Placa</label>
+                  <div class="col-sm-9">
+                    <textarea
+                      class="form-control"
+                      v-model="placa"
+                      id="exampleTextarea1"
+                      rows="2"
+                      placeholder="Placa"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"
+                    >Capacidad de Carga</label
+                  >
+                  <div class="col-sm-9">
+                    <textarea
+                      class="form-control"
+                      v-model="capacidadCarga"
+                      id="exampleTextarea1"
+                      rows="2"
+                      placeholder="Capacidad de Carga"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label" for="exampleInputName1"
+                    >Tipo de Vehículo</label
+                  >
+                  <div class="col-sm-9">
+                    <select class="form-control" v-model="idVehicleType">
+                      <option v-for="item in vehicletypes" :value="item.id">
+                        {{ item.nombre }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Subir Imagen</label>
+                  <div class="col-sm-9">
+                    <input
+                      type="file"
+                      class="form-control file-upload-info"
+                      @change="subirImagen"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Imagen</label>
+                  <div class="col-sm-9">
+                    <figure>
+                      <img
+                        with="200"
+                        height="200"
+                        :src="imagen"
+                        alt="Foto del Vehículo"
+                      />
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
             <!-- Botón que modifica la tarea que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
             <button
-              v-if="update != 0"
-             @click="updateVehicles()" class="btn btn-warning btn-fw">
+             @click="updateVehicles()" class="btn btn-warning btn-fw" data-dismiss="modal">
               Actualizar
             </button>
             <!-- Botón que cierra el modal-->
             <button 
-             v-if="update != 0"
              @click="clearFields()"
-              class="btn btn-danger" data-dismiss="modal">
+              class="btn btn-danger"  data-dismiss="modal">
               Cancelar
             </button>
           </div>
@@ -321,7 +439,7 @@
             type="button"
             class="btn btn-primary"
             data-toggle="modal"
-            data-target="#exampleModal"
+            data-target="#exampleModalRegistrar"
           >
             Registrar Vehículo
           </button>
@@ -361,7 +479,7 @@
                       <button
                         class="btn btn-primary"
                         data-toggle="modal"
-                        data-target="#exampleModal"
+                        data-target="#exampleModalActualizar"
                         type="button"
                         @click="loadFieldsUpdate(item.id,item.placa,item.capacidadCarga,item.idVehicleType)"
                         title="Actualizar"
@@ -376,8 +494,6 @@
                     <div class="input-group-append">
                       <button
                         class="btn btn-danger"
-                        data-toggle="modal"
-                        data-target="#exampleModal"
                         type="button"
                         @click="deleteVehicles(item.id, item.placa)"
                         title="Eliminar"

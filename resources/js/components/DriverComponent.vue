@@ -12,13 +12,21 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-primary" id="exampleModalLabel" v-if="update == 0">
+            <h5
+              class="modal-title text-primary"
+              id="exampleModalLabel"
+              v-if="update == 0"
+            >
               REGISTRAR CONDUCTOR
             </h5>
-            <h5 class="modal-title text-primary" id="exampleModalLabel" v-if="update != 0">
+            <h5
+              class="modal-title text-primary"
+              id="exampleModalLabel"
+              v-if="update != 0"
+            >
               ACTUALIZAR CONDUCTOR
             </h5>
-            
+
             <button
               type="button"
               class="close"
@@ -128,7 +136,13 @@
                       <option value="" selected disabled>
                         Tipo de Documento
                       </option>
-                      <option v-for="item in documenttypes" :value="item.id" :key="item.id">{{item.tipo}}</option>
+                      <option
+                        v-for="item in documenttypes"
+                        :value="item.id"
+                        :key="item.id"
+                      >
+                        {{ item.tipo }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -470,12 +484,38 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-5" v-for="item in drivers.data">
+      <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <a class="nav-link" :href="'/conductoresbuscar?id=' + item.id">
-              <i title="Ver detalle" class="mdi mdi-arrow-right-bold"></i>
-            </a>
+            <div class="d-flex flex-row align-items-top">
+              <i class="mdi mdi-account-check text-success icon-md"></i>
+              <div class="ml-3">
+                <h6 class="text-success">Conductores Activos</h6>
+                <h3 class="mt-2 text-muted card-text">{{ active }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-row align-items-top">
+              <i class="mdi mdi-account-off text-danger icon-md"></i>
+              <div class="ml-3">
+                <h6 class="text-danger">Conductores Inactivos</h6>
+                <h3 class="mt-2 text-muted card-text">{{ inactive }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4" v-for="item in drivers" :key="item.id">
+        <div class="card">
+          <div class="card-body">
             <center>
               <img
                 class="card-img-top"
@@ -490,7 +530,8 @@
               {{ item.person.apellidoMaterno }} <br />
               Número de Identidad:{{ item.person.numero }} <br />
               Licencia de Conducir: {{ item.driver.licenciaConducir }} <br />
-              Usuario: {{ item.name }}
+              Usuario: {{ item.name }}<br />
+              Estado: {{ item.status.nombre }}
             </p>
             <p class="card-text">
               <small class="text-muted"
@@ -498,14 +539,29 @@
               >
             </p>
 
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3">
                     <div class="input-group">
                       <div class="input-group-append">
+                        <a :href="'/conductoresbuscar?id=' + item.id">
+                          <button
+                            class="btn btn-info btn-sm"
+                            type="button"
+                            title="Ver detalle"
+                          >
+                            <i class="mdi mdi-eye"></i>
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="input-group">
+                      <div class="input-group-append">
                         <button
-                          class="btn btn-primary"
+                          class="btn btn-primary btn-sm"
                           type="button"
                           data-toggle="modal"
                           data-target="#exampleModal1"
@@ -521,7 +577,7 @@
                     <div class="input-group">
                       <div class="input-group-append">
                         <button
-                          class="btn btn-warning"
+                          class="btn btn-warning btn-sm"
                           data-toggle="modal"
                           data-target="#exampleModal"
                           type="button"
@@ -537,9 +593,7 @@
                     <div class="input-group">
                       <div class="input-group-append">
                         <button
-                          class="btn btn-danger"
-                          data-toggle="modal"
-                          data-target="#exampleModal"
+                          class="btn btn-danger btn-sm"
                           type="button"
                           @click="deleteDrivers(item.id)"
                           title="Eliminar"
@@ -571,7 +625,7 @@
                 data-dt-idx="0"
                 tabindex="0"
                 class="page-link"
-                @click="getDrivers(drivers.current_page - 1)"
+                @click="getDrivers(current_page- 1)"
               >
                 Anterior
               </button>
@@ -582,7 +636,7 @@
                 data-dt-idx="1"
                 tabindex="0"
                 class="page-link"
-                >{{ drivers.current_page }}</a
+                >{{ current_page }}</a
               >
             </li>
             <li id="order-listing_next">
@@ -591,7 +645,7 @@
                 data-dt-idx="2"
                 tabindex="0"
                 class="page-link"
-                @click="getDrivers(drivers.current_page + 1)"
+                @click="getDrivers(current_page+ 1)"
               >
                 Siguiente
               </button>
@@ -603,11 +657,14 @@
   </div>
 </template>
 
+
+
 <script>
 export default {
   data() {
     return {
       drivers: [],
+      current_page: "",
       id: "",
       name: "",
       password: "",
@@ -630,15 +687,21 @@ export default {
       constanciaEstadoSalud: "",
       key_busqueda: "",
       vehicletypes: "",
-      documenttypes:"",
+      documenttypes: "",
       update: 0,
       imagenminiatura: "",
+      active: "",
+      inactive: "",
     };
   },
   created() {
     axios.get("api/drivers").then((res) => {
-      this.drivers = res.data;
+      this.drivers = res.data.drivers.data;
+      this.active = res.data.active;
+      this.inactive = res.data.inactive;
+      this.current_page = res.data.drivers.current_page;
     });
+
     axios.get("api/vehicletypes").then((res) => {
       this.vehicletypes = res.data.VehicleTypes;
     });
@@ -656,8 +719,8 @@ export default {
           },
         })
         .then((res) => {
-          this.drivers = res.data;
-          console.log(this.vehicles);
+          this.drivers = res.data.drivers.data;
+          console.log(this.drivers);
         })
         .catch(function (error) {
           // handle error
@@ -710,7 +773,7 @@ export default {
       formData.append("capacidadCarga", this.capacidadCarga);
       formData.append("idVehicleType", this.idVehicleType);
       formData.append("imagen", this.imagen);
-      let url = "api/drivers/"+this.idDriver+"/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
+      let url = "api/drivers/" + this.idDriver + "/vehicles"; //Ruta que hemos creado para enviar un vehiculo y guardarlo
       axios
         .post(url, formData, config)
         .then(function (response) {
@@ -753,18 +816,18 @@ export default {
       axios
         .get(url)
         .then(function (response) {
-          me.nombre = response.data.person.nombre;
-          me.apellidoPaterno = response.data.person.apellidoPaterno;
-          me.apellidoMaterno = response.data.person.apellidoMaterno;
-          me.telefono = response.data.person.telefono;
-          me.direccion= response.data.person.direccion;
-          me.idDocumentType=response.data.person.idDocumentType;
-          me.numero=response.data.person.numero;
-          me.banco=response.data.driver.banco;
-          me.cuentaBancaria=response.data.driver.cuentaBancaria;
-          me.licenciaConducir=response.data.driver.licenciaConducir;
-          me.email=response.data.email;
-          me.name=response.data.name;
+          me.nombre = response.drivers.data.person.nombre;
+          me.apellidoPaterno = response.data.drivers.data.person.apellidoPaterno;
+          me.apellidoMaterno = response.data.drivers.data.person.apellidoMaterno;
+          me.telefono = response.data.drivers.data.person.telefono;
+          me.direccion = response.data.drivers.data.person.direccion;
+          me.idDocumentType = response.data.drivers.data.person.idDocumentType;
+          me.numero = response.data.drivers.data.person.numero;
+          me.banco = response.data.driver.banco;
+          me.cuentaBancaria = response.data.driver.cuentaBancaria;
+          me.licenciaConducir = response.data.driver.licenciaConducir;
+          me.email = response.data.email;
+          me.name = response.data.name;
         })
         .catch(function (error) {
           // handle error
@@ -848,10 +911,10 @@ export default {
       this.name = "";
       this.password = "";
       this.imagen = "";
-      this.placa="";
-      this.capacidadCarga="";
-      this.idDriver="";
-      this.idVehicleType="";
+      this.placa = "";
+      this.capacidadCarga = "";
+      this.idDriver = "";
+      this.idVehicleType = "";
       this.update = 0;
     },
   },

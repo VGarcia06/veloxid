@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('drivers/evaluated', "DriverController@getEvaluated");
 
+Route::post('drivers/save', 'DriverEvaluationController@store');
+
 Route::apiResource('drivers', DriverController::class);
 
 Route::apiResource('vehicles', VehicleController::class);

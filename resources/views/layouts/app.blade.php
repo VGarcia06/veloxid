@@ -28,8 +28,8 @@
 
 <!--Estilo de purple-->
         <!-- plugins:css -->
-        <link rel="stylesheet" href="purple/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="purple/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="purple/assets/vendors/mdi/css/materialdesignicons.min.css">
+    {{-- <link rel="stylesheet" href="purple/assets/vendors/css/vendor.bundle.base.css"> --}}
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -37,7 +37,7 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="purple/assets/css/style.css">
-    <link rel="stylesheet" href="template/jsgrid-theme.min.css">
+    {{-- <link rel="stylesheet" href="template/jsgrid-theme.min.css"> --}}
     <!-- End layout styles -->
     <link rel="shortcut icon" href="purple/assets/images/favicon.png" />
 <!--fin de estilo de purple-->
@@ -147,11 +147,11 @@
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
   <!--js de purple-->
   <!-- plugins:js -->
-  <script src="purple/assets/vendors/js/vendor.bundle.base.js"></script>
+  {{-- <script src="purple/assets/vendors/js/vendor.bundle.base.js"></script> --}}
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="purple/assets/vendors/chart.js/Chart.min.js"></script>
