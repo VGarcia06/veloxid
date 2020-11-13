@@ -163,6 +163,14 @@ class DriverController extends Controller
         try {
             $driver = Driver::findOrFail($id)
                                 ->load('person.documentType', 'driver');
+
+            if (Storage::disk('public')->exists($driver->person->imagen)) {
+                $driver->person->imagen = Storage::url($driver->person->imagen);
+            }
+            if (Storage::disk('public')->exists($driver->driver->constanciaEstadoSalud)) {
+                $driver->driver->constanciaEstadoSalud = Storage::url($driver->driver->constanciaEstadoSalud);
+            }
+            
         } catch (\Throwable $th) {
             throw $th;
 
