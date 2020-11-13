@@ -37,6 +37,9 @@ class DriverController extends Controller
             if (Storage::disk('public')->exists($driver->person->imagen)) {
                 $driver->person->imagen = Storage::url($driver->person->imagen);
             }
+            if (Storage::disk('public')->exists($driver->driver->constanciaEstadoSalud)) {
+                $driver->driver->constanciaEstadoSalud = Storage::url($driver->driver->constanciaEstadoSalud);
+            }
         }
 
         return response()
