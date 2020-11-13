@@ -112,7 +112,7 @@ class VehicleController extends Controller
 
             $vehicle = Vehicle::findOrFail($id);
 
-            $path_image = "";
+            $path_image = $vehicle->imagen;
             if ($request->hasFile('imagen')) {
                 Storage::delete($vehicle->imagen);
                 $path_image = Storage::disk('public')->put('vehicles', $request->file('imagen'));
