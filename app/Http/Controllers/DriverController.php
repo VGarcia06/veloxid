@@ -290,7 +290,7 @@ class DriverController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource evaluated.
      *
      * @return \Illuminate\Http\Response
      */
@@ -366,5 +366,40 @@ class DriverController extends Controller
                                 'driver.vehicles.revisions.status'
                             )
                         ], 200);        
+    }
+
+    /**
+     * Display a listing of the query search.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+                        
+        $query = $request->query('query');
+
+        $drivers = Driver::whereHas('person', function ($item) use ($query) {
+            return $item->where('nombre', 'like', '%' . $query . '%')
+                        ->orWhere('apellidoPaterno', 'like', '%' . $query . '%')
+                        ->orWhere('apellidoMaterno', 'like', '%' . $query . '%')
+                        ->orWhere('telefono', 'like', '%' . $query . '%')
+                        ->orWhere('direccion', 'like', '%' . $query . '%')
+                        ->orWhere('numero', 'like', '%' . $query . '%');
+        })
+        ->where('idUserType', 2)
+        ->with('person', 'driver')
+        ->paginate(15);
+            
+
+        foreach ($drivers->items() as $driver) {
+            if (Storage::disk('public')->exists($driver->person->imagen)) {
+                $driver->person->imagen = Storage::url($driver->person->imagen);
+            }
+            if (Storage::disk('public')->exists($driver->driver->constanciaEstadoSalud)) {
+                $driver->driver->constanciaEstadoSalud = Storage::url($driver->driver->constanciaEstadoSalud);
+            }
+        }
+
+        return response()->json($drivers, 200);
     }
 }

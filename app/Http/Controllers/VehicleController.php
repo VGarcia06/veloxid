@@ -164,4 +164,34 @@ class VehicleController extends Controller
             'message' => True,
         ], 204);
     }
+
+    /**
+     * Display a listing of the query search.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request, $id)
+    {
+        $query = $request->query('query');
+
+        $vehicles = User::findOrFail($id)
+                                ->driver()
+                                ->first()
+                                ->vehicles()
+                                ->where('placa', 'like', '%' . $query . '%')
+                                ->orWhere('capacidadCarga', 'like', '%' . $query . '%')
+                                ->with('type')
+                                ->paginate(12);
+            
+        foreach ($vehicles->items() as $vehicle) {
+            if (Storage::disk('public')->exists($vehicle->imagen)) {
+                    $vehicle->imagen = Storage::url($vehicle->imagen);
+            }
+        }
+
+        return response()->json([
+            'message' => True,
+            'vehicles' => $vehicles
+        ], 200);
+    }
 }

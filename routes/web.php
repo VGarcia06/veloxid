@@ -27,12 +27,21 @@ Route::get('/evaluacion', function () {
     return view('Jefe_Transporte/evaluation');
 })->middleware('auth');
 
+Route::get('/revisiones', function () {
+    return view('Jefe_Transporte/revisionHistory');
+})->middleware('auth');
+
 Route::get('/cotizacion', function () {
     return view('Cliente/cotization');
 })->middleware('auth');
 
 Route::get('/tracking', function () {
     return view('Cliente/tracking');
+})->middleware('auth');
+
+
+Route::get('/confirmacionconductor', function () {
+    return view('Conductor/orderconfirmation');
 })->middleware('auth');
 
 Auth::routes();
