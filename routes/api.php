@@ -18,8 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// searching
+Route::get('drivers/{id}/vehicles/search', "VehicleController@search");
+Route::get('drivers/search', "DriverController@search");
+
+// getting suitable and unsuitable drivers
 Route::get('drivers/evaluated', "DriverController@getEvaluated");
 
+// api
 Route::apiResource('drivers', DriverController::class);
 
 Route::apiResource('vehicles', VehicleController::class);
