@@ -1,9 +1,9 @@
 <template>
   <div>
-    <!-- Modal Conductor-->
+        <!-- MODAL REGISTRAR CONDUCTOR-->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="exampleModalRegistrarConductor"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -15,16 +15,8 @@
             <h5
               class="modal-title text-primary"
               id="exampleModalLabel"
-              v-if="update == 0"
             >
               REGISTRAR CONDUCTOR
-            </h5>
-            <h5
-              class="modal-title text-primary"
-              id="exampleModalLabel"
-              v-if="update != 0"
-            >
-              ACTUALIZAR CONDUCTOR
             </h5>
 
             <button
@@ -46,8 +38,10 @@
                       type="text"
                       class="form-control"
                       v-model="nombre"
-                      id="exampleTextarea1"
                       placeholder="Nombres"
+                      maxlength="60"
+                      title="Ingresar nombres completos del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -62,8 +56,10 @@
                       type="text"
                       class="form-control"
                       v-model="apellidoPaterno"
-                      id="exampleTextarea1"
                       placeholder="Apellido Paterno"
+                      maxlength="50"
+                      title="Ingresar solo apellido paterno del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -75,8 +71,10 @@
                       type="text"
                       class="form-control"
                       v-model="apellidoMaterno"
-                      id="exampleTextarea1"
                       placeholder="Apellido Materno"
+                      maxlength="50"
+                      title="Ingresar solo apellido materno del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -91,8 +89,10 @@
                       type="number"
                       class="form-control"
                       v-model="telefono"
-                      id="exampleTextarea1"
+                      maxlength="9"
                       placeholder="Teléfono"
+                      title="Ingresar número de celular del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -104,8 +104,9 @@
                       type="email"
                       class="form-control"
                       v-model="email"
-                      id="exampleTextarea1"
                       placeholder="Email"
+                      title="Ingresar correo personal del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -119,9 +120,10 @@
                     <textarea
                       class="form-control"
                       v-model="direccion"
-                      id="exampleTextarea1"
                       placeholder="Dirección"
                       row="2"
+                      title="Ingresar dirección del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     ></textarea>
                   </div>
                 </div>
@@ -154,8 +156,9 @@
                       type="text"
                       class="form-control"
                       v-model="numero"
-                      id="exampleTextarea1"
                       placeholder="N° Documento"
+                      title="Ingresar número de identidad del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -170,9 +173,9 @@
                       type="text"
                       class="form-control"
                       v-model="licenciaConducir"
-                      id="exampleTextarea1"
                       placeholder="Licencia de Conducir"
-                      row="2"
+                      title="Ingresar licencia de conducir actual del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -187,8 +190,10 @@
                       type="text"
                       class="form-control"
                       v-model="banco"
-                      id="exampleTextarea1"
                       placeholder="Banco"
+                      maxlength="20"
+                      title="Ingresar entidad bancaria afiliada a la cuenta bancaria del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -197,11 +202,13 @@
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
                       v-model="cuentaBancaria"
-                      id="exampleTextarea1"
                       placeholder="Cuenta Bancaria"
+                      maxlength="50"
+                      title="Ingresar número de cuenta o CCI del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -216,8 +223,9 @@
                       type="text"
                       class="form-control"
                       v-model="name"
-                      id="exampleTextarea1"
                       placeholder="Usuario"
+                      title="Ingresar el nombre de usuario del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -229,8 +237,9 @@
                       type="password"
                       class="form-control"
                       v-model="password"
-                      id="exampleTextarea1"
                       placeholder="Contraseña"
+                      title="Ingresar la contraseña del conductor."
+                      data-toggle="tooltip" data-placement="right"
                     />
                   </div>
                 </div>
@@ -293,25 +302,305 @@
           <div class="modal-footer">
             <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
             <button
-              v-if="update == 0"
               @click="saveDrivers()"
               class="btn btn-gradient-primary mr-2"
             >
               Registrar
             </button>
-            <!-- Botón que modifica la tarea que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
+            <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
             <button
-              v-if="update != 0"
+              @click="clearFields()"
+              class="btn btn-danger btn-fw" data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIN -->
+    <!-- MODAL ACTUALIZAR CONDUCTOR-->
+    <div
+      class="modal fade"
+      id="exampleModalActualizarConductor"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5
+              class="modal-title text-primary"
+              id="exampleModalLabel"
+            >
+              ACTUALIZAR CONDUCTOR
+            </h5>
+
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              @click="clearFields()"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="nombre"
+                      placeholder="Nombres"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="apellidoPaterno"
+                      placeholder="Apellido Paterno"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="apellidoMaterno"
+                      placeholder="Apellido Materno"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="telefono"
+                      placeholder="Teléfono"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="email"
+                      class="form-control"
+                      v-model="email"
+                      placeholder="Email"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <textarea
+                      class="form-control"
+                      v-model="direccion"
+                      placeholder="Dirección"
+                      row="2"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <select class="form-control" v-model="idDocumentType">
+                      <option value="" selected disabled>
+                        Tipo de Documento
+                      </option>
+                      <option
+                        v-for="item in documenttypes"
+                        :value="item.id"
+                        :key="item.id"
+                      >
+                        {{ item.tipo }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="numero"
+                      placeholder="N° Documento"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="licenciaConducir"
+                      placeholder="Licencia de Conducir"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="banco"
+                      placeholder="Banco"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="cuentaBancaria"
+                      placeholder="Cuenta Bancaria"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="name"
+                      placeholder="Usuario"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <input
+                      type="password"
+                      class="form-control"
+                      v-model="password"
+                      placeholder="Contraseña"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"
+                    >Constancia de Salud</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      type="file"
+                      class="form-control file-upload-info"
+                      @change="subirArchivo"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"
+                    >Subir Fotografía</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      type="file"
+                      class="form-control file-upload-info"
+                      @change="subirImagen"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Fotografía</label>
+                  <div class="col-sm-9">
+                    <figure>
+                      <img
+                        with="200"
+                        height="200"
+                        :src="img"
+                        alt="Foto del Conductor"
+                      />
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <!-- Botón que modifica al conductor que anteriormente hemos seleccionado, solo se muestra si la variable update es diferente a 0-->
+            <button
               @click="updateDrivers()"
-              class="btn btn-warning btn-fw"
+              class="btn btn-warning btn-fw" data-dismiss="modal"
+
             >
               Actualizar
             </button>
             <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
             <button
-              v-if="update != 0"
               @click="clearFields()"
-              class="btn btn-danger btn-fw"
+              class="btn btn-danger btn-fw" data-dismiss="modal"
             >
               Cancelar
             </button>
@@ -321,13 +610,13 @@
     </div>
     <!-- FIN -->
 
-    <!-- Modal Vehículo -->
+    <!-- MODAL REGISTRAR VEHÍCULO -->
     <div
       class="modal fade"
-      id="exampleModal1"
+      id="exampleModalRegistrarVehiculo"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel1"
+      aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
@@ -351,13 +640,14 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Placa</label>
                   <div class="col-sm-9">
-                    <textarea
+                    <input
+                      type="text"
                       class="form-control"
                       v-model="placa"
-                      id="exampleTextarea1"
-                      rows="2"
                       placeholder="Placa"
-                    ></textarea>
+                      title="Ingresar la placa actual del vehículo."
+                      data-toggle="tooltip" data-placement="right"
+                    />
                   </div>
                 </div>
               </div>
@@ -370,13 +660,14 @@
                     >Capacidad de Carga</label
                   >
                   <div class="col-sm-9">
-                    <textarea
+                    <input
+                      type="text"
                       class="form-control"
                       v-model="capacidadCarga"
-                      id="exampleTextarea1"
-                      rows="2"
                       placeholder="Capacidad de Carga"
-                    ></textarea>
+                      title="Ingresar la capacidad máxima del vehículo."
+                      data-toggle="tooltip" data-placement="right"
+                    >
                   </div>
                 </div>
               </div>
@@ -390,7 +681,7 @@
                   >
                   <div class="col-sm-9">
                     <select class="form-control" v-model="idVehicleType">
-                      <option v-for="item in vehicletypes" :value="item.id">
+                      <option v-for="item in vehicletypes" :value="item.id" :key="item.id">
                         {{ item.nombre }}
                       </option>
                     </select>
@@ -435,11 +726,16 @@
           <div class="modal-footer">
             <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
             <button
-              v-if="update == 0"
               @click="saveVehicles()"
               class="btn btn-gradient-primary mr-2"
             >
               Registrar
+            </button>
+            <!-- Botón que cierra el modal-->
+            <button 
+             @click="clearFields()"
+              class="btn btn-danger"  data-dismiss="modal">
+              Cancelar
             </button>
           </div>
         </div>
@@ -475,11 +771,11 @@
             type="button"
             class="btn btn-primary"
             data-toggle="modal"
-            data-target="#exampleModal"
+            data-target="#exampleModalRegistrarConductor"
           >
             Registrar Conductor
           </button>
-        </div>
+        </div>        
       </div>
     </div>
 
@@ -564,7 +860,7 @@
                           class="btn btn-primary btn-sm"
                           type="button"
                           data-toggle="modal"
-                          data-target="#exampleModal1"
+                          data-target="#exampleModalRegistrarVehiculo"
                           @click="addVehicles(item.id)"
                           title="Agregar vehículo"
                         >
@@ -579,7 +875,7 @@
                         <button
                           class="btn btn-warning btn-sm"
                           data-toggle="modal"
-                          data-target="#exampleModal"
+                          data-target="#exampleModalActualizarConductor"
                           type="button"
                           @click="loadFieldsUpdate(item.id)"
                           title="Actualizar"
@@ -816,18 +1112,19 @@ export default {
       axios
         .get(url)
         .then(function (response) {
-          me.nombre = response.drivers.data.person.nombre;
-          me.apellidoPaterno = response.data.drivers.data.person.apellidoPaterno;
-          me.apellidoMaterno = response.data.drivers.data.person.apellidoMaterno;
-          me.telefono = response.data.drivers.data.person.telefono;
-          me.direccion = response.data.drivers.data.person.direccion;
-          me.idDocumentType = response.data.drivers.data.person.idDocumentType;
-          me.numero = response.data.drivers.data.person.numero;
+          me.nombre = response.data.person.nombre;
+          me.apellidoPaterno = response.data.person.apellidoPaterno;
+          me.apellidoMaterno = response.data.person.apellidoMaterno;
+          me.telefono = response.data.person.telefono;
+          me.direccion = response.data.person.direccion;
+          me.idDocumentType = response.data.person.idDocumentType;
+          me.numero = response.data.person.numero;
           me.banco = response.data.driver.banco;
           me.cuentaBancaria = response.data.driver.cuentaBancaria;
           me.licenciaConducir = response.data.driver.licenciaConducir;
           me.email = response.data.email;
           me.name = response.data.name;
+          me.password=response.data.password;
         })
         .catch(function (error) {
           // handle error

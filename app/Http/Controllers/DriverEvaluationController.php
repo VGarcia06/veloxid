@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User as Driver;
+use App\Models\DriverRequirement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,15 +51,20 @@ class DriverEvaluationController extends Controller
     {
         try {
             DB::beginTransaction();
-            $driver = Driver::find($id);
+            $driver = Driver::findOrFail($id);
 
+            $driver_requirements = DriverRequirement::all();
+            
             $suitable = 1;
 
+            $id_requirements = [];
+
             foreach ($request->evals as $eval) {
-                if (!$eval['valor']) {
-                    $suitable = 2;
-                    break;
-                }
+                $id_requirements[] = $eval['idRequirement'];
+            }
+
+            if ($driver_requirements->except($id_requirements) !== null) {
+                $suitable = 2;
             }
 
             $revision = $driver->driver()
@@ -71,9 +77,15 @@ class DriverEvaluationController extends Controller
                                     ]
                                 ])
                                 ->first();
-            foreach ($request->evals as $eval) {
-                $revision->requirements()
-                        ->attach($eval['idRequirement'], ['valor' => $eval['valor']]);
+            foreach ($driver_requirements as $driver_requirement) {
+                if (in_array($driver_requirement['id'], $id_requirements)) {
+                    $revision->requirements()
+                        ->attach($driver_requirement['id'], ['valor' => 1]);
+                }else {
+                    $revision->requirements()
+                        ->attach($driver_requirement['id'], ['valor' => 0]);
+                }
+                
             }
 
             DB::commit();

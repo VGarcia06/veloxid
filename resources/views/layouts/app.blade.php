@@ -29,9 +29,11 @@
 <!--Estilo de purple-->
         <!-- plugins:css -->
     <link rel="stylesheet" href="purple/assets/vendors/mdi/css/materialdesignicons.min.css">
-    {{-- <link rel="stylesheet" href="purple/assets/vendors/css/vendor.bundle.base.css"> --}}
+    <link rel="stylesheet" href="purple/assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="purple/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="purple/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
@@ -155,6 +157,7 @@
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="purple/assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="purple/assets/vendors/select2/select2.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="purple/assets/js/off-canvas.js"></script>
@@ -164,6 +167,11 @@
     <!-- Custom js for this page -->
     <script src="purple/assets/js/dashboard.js"></script>
     <script src="purple/assets/js/todolist.js"></script>
+    <script src="purple/assets/js/tooltips.js"></script>
+    <script src="purple/assets/js/select2.js"></script>
+    
+    {{-- <script src="purple/assets/js/popover.js"></script> --}}
+
     <!-- End custom js for this page -->
 <!--js de purple-->
 

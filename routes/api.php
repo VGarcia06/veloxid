@@ -20,8 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('drivers/evaluated', "DriverController@getEvaluated");
 
-Route::post('drivers/save', 'DriverEvaluationController@store');
-
 Route::apiResource('drivers', DriverController::class);
 
 Route::apiResource('vehicles', VehicleController::class);
@@ -29,6 +27,13 @@ Route::apiResource('vehicles', VehicleController::class);
 // getting types
 Route::apiResource('vehicletypes', Types\VehicleTypeController::class);
 Route::apiResource('documenttypes', Types\DocumentTypeController::class);
+
+// requirements
+//Route::get('drivers/requirements',[Requirements\DriverRequirementController::class, 'index']);
+Route::apiResource('requirements/drivers', Requirements\DriverRequirementController::class);
+Route::apiResource('requirements/vehicles', Requirements\VehicleRequirementController::class)->only([
+    'index'
+]);
 
 Route::apiResource('drivers.vehicles', VehicleController::class);
 

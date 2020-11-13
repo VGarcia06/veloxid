@@ -27,12 +27,21 @@ Route::get('/evaluacion', function () {
     return view('Jefe_Transporte/evaluation');
 })->middleware('auth');
 
+Route::get('/cotizacion', function () {
+    return view('Cliente/cotization');
+})->middleware('auth');
+
+Route::get('/tracking', function () {
+    return view('Cliente/tracking');
+})->middleware('auth');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::apiResource('drivers', DriverController::class);
 Route::apiResource('vehicles', VehicleController::class);
+
 
 //Ruta de los modulos para el Menu Lateral
 Route::get('get_menulateral', 'LateralMenuController@get_menulateral');

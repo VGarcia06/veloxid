@@ -24,6 +24,9 @@ Vue.component('lateralmenu', require('./components/LateralMenuComponent.vue').de
 Vue.component('vehicle', require('./components/VehicleComponent.vue').default);
 Vue.component('driver', require('./components/DriverComponent.vue').default);
 Vue.component('evaluation', require('./components/EvaluationComponent.vue').default);
+Vue.component('cotization', require('./components/CotizationComponent.vue').default);
+Vue.component('tracking', require('./components/TrackingComponent.vue').default);
+ 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

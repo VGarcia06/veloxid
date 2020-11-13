@@ -11,6 +11,6 @@ class DriverRequirementSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\DriverRequirement::class, 50)->create();
+        factory(App\Models\DriverRequirement::class, 20)->create();
     }
 }

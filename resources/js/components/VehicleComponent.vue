@@ -30,13 +30,14 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Placa</label>
                   <div class="col-sm-9">
-                    <textarea
+                    <input
+                      type="text"
                       class="form-control"
                       v-model="placa"
-                      id="exampleTextarea1"
-                      rows="2"
                       placeholder="Placa"
-                    ></textarea>
+                      title="Ingresar la placa actual del vehículo."
+                      data-toggle="tooltip" data-placement="right"
+                    />
                   </div>
                 </div>
               </div>
@@ -49,13 +50,14 @@
                     >Capacidad de Carga</label
                   >
                   <div class="col-sm-9">
-                    <textarea
+                    <input
+                     type="text"
                       class="form-control"
                       v-model="capacidadCarga"
-                      id="exampleTextarea1"
-                      rows="2"
                       placeholder="Capacidad de Carga"
-                    ></textarea>
+                      title="Ingresar la capacidad máxima del vehículo."
+                      data-toggle="tooltip" data-placement="right"
+                    />
                   </div>
                 </div>
               </div>
@@ -69,7 +71,7 @@
                   >
                   <div class="col-sm-9">
                     <select class="form-control" v-model="idVehicleType">
-                      <option v-for="item in vehicletypes" :value="item.id">
+                      <option v-for="item in vehicletypes" :value="item.id" :key="item.id">
                         {{ item.nombre }}
                       </option>
                     </select>
@@ -161,13 +163,13 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Placa</label>
                   <div class="col-sm-9">
-                    <textarea
+                    <input
+                      type="text"
                       class="form-control"
                       v-model="placa"
                       id="exampleTextarea1"
-                      rows="2"
                       placeholder="Placa"
-                    ></textarea>
+                    >
                   </div>
                 </div>
               </div>
@@ -180,13 +182,12 @@
                     >Capacidad de Carga</label
                   >
                   <div class="col-sm-9">
-                    <textarea
+                    <input
+                      type="text"
                       class="form-control"
                       v-model="capacidadCarga"
-                      id="exampleTextarea1"
-                      rows="2"
                       placeholder="Capacidad de Carga"
-                    ></textarea>
+                    >
                   </div>
                 </div>
               </div>
@@ -200,7 +201,7 @@
                   >
                   <div class="col-sm-9">
                     <select class="form-control" v-model="idVehicleType">
-                      <option v-for="item in vehicletypes" :value="item.id">
+                      <option v-for="item in vehicletypes" :value="item.id" :key="item.id">
                         {{ item.nombre }}
                       </option>
                     </select>
