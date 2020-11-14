@@ -324,16 +324,17 @@ class DriverController extends Controller
                                 ->reject(function ($vehicle) {
                                     return $vehicle->first()
                                                     ->revisions()
+                                                    ->first() == null
+                                            
+                                                    OR
+                                    
+                                            $vehicle->first()
+                                                    ->revisions()
                                                     ->orderBy('created_at', 'desc')
                                                     ->first()
                                                     ['requirement_status_id'] == 2;
                                 })
                                 ->first() == null
-                                //
-                                //->revisions()
-                                //->orderBy('created_at', 'desc')
-                                //->first()
-                                //['requirement_status_id'] == 2
 
                                 OR
 
@@ -344,17 +345,6 @@ class DriverController extends Controller
                                 ->first()
                                 ['requirement_status_id'] == 2;
             });
-
-            /*
-            $unsuitable = $drivers->reject(function ($driver) {
-                return $driver->driver()
-                                ->first()
-                                ->revisions()
-                                ->orderBy('created_at', 'desc')
-                                ->first()
-                                ['requirement_status_id'] == 1;
-            });            
-            */
 
             $unsuitable = $drivers->diff($suitable);
             

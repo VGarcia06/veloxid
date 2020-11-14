@@ -41,20 +41,10 @@ class VehicleEvaluationController extends Controller
                 $id_requirements[] = $eval['idRequirement'];
             }
 
-            if ($vehicle_requirements->except($id_requirements) !== null) {
+            if ($vehicle_requirements->except($id_requirements)->count()) {
                 $suitable = 2;
             }
-
-
-
-            /*
-            $suitable = 1;
-            foreach ($request->evals as $eval) {
-                if (!$eval['valor']) {
-                    $suitable = 2;
-                }
-            }
-            */
+            
             $revision = $vehicle->revisions()
                                 ->createMany([
                                     [
@@ -73,14 +63,8 @@ class VehicleEvaluationController extends Controller
                 }
                 
             }
-            /*
-            foreach ($request->evals as $eval) {
-                $revision->requirements()
-                        ->attach($eval['idRequirement'], ['valor' => $eval['valor']]);
-            }
-            */
+
             DB::commit();
-            
         } catch (\Throwable $th) {
             throw $th;
 

@@ -12,7 +12,6 @@ class DriverRevision extends Model
      * @var array
      */
     protected $fillable = [
-        'driver_id',
         'requirement_status_id',
         'observacion'
     ];
@@ -22,7 +21,7 @@ class DriverRevision extends Model
      */
     public function requirements()
     {
-        return $this->belongsToMany('App\Models\DriverRequirement', 'driver_evaluations', 'driver_revision_id', 'driver_requirement_id');
+        return $this->belongsToMany('App\Models\DriverRequirement', 'driver_evaluations', 'driver_revision_id', 'driver_requirement_id')->withPivot('valor');
     }
 
     /**

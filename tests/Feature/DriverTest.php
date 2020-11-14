@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Driver;
+use App\Models\DriverRequirement;
+use App\Models\VehicleRequirement;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -74,9 +76,13 @@ class DriverTest extends TestCase
         $response
                 ->assertStatus(200)
                 ->assertJson([
-                    'data' => [
-                        ['name' => 'ANDRES JUNIOR'],
-                        ['name' => 'ANA MARIA']
+                    "active" => 2,
+                    "inactive" => 0,
+                    "drivers" => [
+                        "data" => [
+                            ['name' => 'ANDRES JUNIOR'],
+                            ['name' => 'ANA MARIA']
+                        ]
                     ]
                 ])
                 ->assertJsonMissing([
@@ -357,16 +363,14 @@ class DriverTest extends TestCase
 
         $user->driver()->save($driverdata);
 
+        $DriverRequirements = DriverRequirement::all();
+
         $json = [
             "observacion" => "Hola",
             "evals" => [
                 [
                     "idRequirement" => 1,
                     "valor" => True
-                ],
-                [
-                    "idRequirement" => 2,
-                    "valor" => False
                 ]
             ]
         ];
@@ -386,18 +390,18 @@ class DriverTest extends TestCase
 
         $user1->driver()->save($driverdata1);
 
+        $evals = [];
+
+        foreach ($DriverRequirements as $driver_requirement) {
+            $evals[] = [
+                "idRequirement" => $driver_requirement->id,
+                "valor" => True
+            ];
+        }
+
         $json1 = [
             "observacion" => "Hola",
-            "evals" => [
-                [
-                    "idRequirement" => 1,
-                    "valor" => True
-                ],
-                [
-                    "idRequirement" => 2,
-                    "valor" => True
-                ]
-            ]
+            "evals" => $evals
         ];
 
         $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
@@ -414,21 +418,21 @@ class DriverTest extends TestCase
                     ]
                 ]);
 
+        $VehicleRequirements = VehicleRequirement::all();
+
+        $evals = [];
+        
+        foreach ($VehicleRequirements as $vehicle_requirement) {
+            $evals[] = [
+                "idRequirement" => $vehicle_requirement->id,
+                "valor" => True
+            ];
+        }
 
         $vehicle = $driver->vehicles()->first();
         $json = [
             "observacion" => "Hola",
-            "requirement_status_id" => 1,
-            "evals" => [
-                [
-                    "idRequirement" => 1,
-                    "valor" => True
-                ],
-                [
-                    "idRequirement" => 2,
-                    "valor" => True
-                ]
-            ]
+            "evals" => $evals
         ];
         $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
@@ -465,18 +469,21 @@ class DriverTest extends TestCase
 
         $user->driver()->save($driverdata);
 
+        $VehicleRequirements = VehicleRequirement::all();
+        $DriverRequirements = DriverRequirement::all();
+
+        $evals = [];
+
+        foreach ($DriverRequirements as $driver_requirement) {
+            $evals[] = [
+                "idRequirement" => $driver_requirement->id,
+                "valor" => True
+            ];
+        }
+
         $json = [
             "observacion" => "Hola",
-            "evals" => [
-                [
-                    "idRequirement" => 1,
-                    "valor" => True
-                ],
-                [
-                    "idRequirement" => 2,
-                    "valor" => True
-                ]
-            ]
+            "evals" => $evals
         ];
 
         $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
@@ -493,21 +500,19 @@ class DriverTest extends TestCase
                     ]
                 ]);
 
+        $evals = [];
+        
+        foreach ($VehicleRequirements as $vehicle_requirement) {
+            $evals[] = [
+                "idRequirement" => $vehicle_requirement->id,
+                "valor" => True
+            ];
+        }
 
         $vehicle = $driver->vehicles()->first();
         $json = [
             "observacion" => "Hola",
-            "requirement_status_id" => 1,
-            "evals" => [
-                [
-                    "idRequirement" => 1,
-                    "valor" => True
-                ],
-                [
-                    "idRequirement" => 2,
-                    "valor" => True
-                ]
-            ]
+            "evals" => $evals
         ];
         $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
@@ -524,18 +529,18 @@ class DriverTest extends TestCase
 
         $user1->driver()->save($driverdata1);
 
+        $evals = [];
+
+        foreach ($DriverRequirements as $driver_requirement) {
+            $evals[] = [
+                "idRequirement" => $driver_requirement->id,
+                "valor" => True
+            ];
+        }
+
         $json1 = [
             "observacion" => "Hola",
-            "evals" => [
-                [
-                    "idRequirement" => 1,
-                    "valor" => True
-                ],
-                [
-                    "idRequirement" => 2,
-                    "valor" => True
-                ]
-            ]
+            "evals" => $evals
         ];
 
         $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
@@ -554,24 +559,24 @@ class DriverTest extends TestCase
 
 
         $vehicle = $driver->vehicles()->first();
+
+        $evals = [];
+        
+        foreach ($VehicleRequirements as $vehicle_requirement) {
+            $evals[] = [
+                "idRequirement" => $vehicle_requirement->id,
+                "valor" => True
+            ];
+        }
+
         $json = [
             "observacion" => "Hola",
-            "requirement_status_id" => 1,
-            "evals" => [
-                [
-                    "idRequirement" => 1,
-                    "valor" => True
-                ],
-                [
-                    "idRequirement" => 2,
-                    "valor" => True
-                ]
-            ]
+            "evals" => $evals
         ];
         $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         $response = $this->json('GET','/api/drivers/evaluated');
-
+        
         $response->assertStatus(200)
                     ->assertJsonStructure([
                         "message",
@@ -611,11 +616,11 @@ class DriverTest extends TestCase
             "evals" => [
                 [
                     "idRequirement" => 1,
-                    "valor" => false
+                    "valor" => True
                 ],
                 [
                     "idRequirement" => 2,
-                    "valor" => false
+                    "valor" => True
                 ]
             ]
         ];
@@ -674,7 +679,7 @@ class DriverTest extends TestCase
                 ],
                 [
                     "idRequirement" => 2,
-                    "valor" => false
+                    "valor" => True
                 ]
             ]
         ];
@@ -710,6 +715,85 @@ class DriverTest extends TestCase
             ]
         ];
         $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+
+        $response = $this->json('GET','/api/drivers/evaluated');
+
+        $response->assertStatus(200)
+                    ->assertJsonStructure([
+                        "message",
+                        "suitable",
+                        "unsuitable"
+                    ])
+                    ->assertJsonFragment([
+                        "suitable" => []
+                        ]);
+    }
+
+    /**
+     * A driver chief gets drivers Aptos and no aptos if there are not aptos 
+     *
+     * @return void
+     */
+    public function testDriverChiefGetsSuitableAndUnsuitableDriversIfThereAreNotEvaluatedDrivers()
+    {
+
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
+        $driverdata = new Driver;
+        $driverdata->licenciaConducir = "asfd";
+        $driverdata->constanciaEstadoSalud = "asfdasf";
+        $driverdata->cuentaBancaria = "asfasf";
+        $driverdata->banco = "asdf";
+
+        $user->driver()->save($driverdata);
+
+        $driver = $user->driver()->first();
+
+        $driver->vehicles()
+                ->createMany([
+                    [
+                        'placa' => 'asdfasdf',
+                        'capacidadCarga' => 4124,
+                        'imagen' => 'asfs/asda.jpg',
+                        'idVehicleType' => 1,
+                    ]
+                ]);
+
+
+        $vehicle = $driver->vehicles()->first();
+
+        $user1 = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
+        $driverdata1 = new Driver;
+        $driverdata1->licenciaConducir = "asfd";
+        $driverdata1->constanciaEstadoSalud = "asfdasf";
+        $driverdata1->cuentaBancaria = "asfasf";
+        $driverdata1->banco = "asdf";
+
+        $user1->driver()->save($driverdata1);
+
+        $driver = $user1->driver()->first();
+
+        $driver->vehicles()
+                ->createMany([
+                    [
+                        'placa' => 'asdfasdf',
+                        'capacidadCarga' => 4124,
+                        'imagen' => 'asfs/asda.jpg',
+                        'idVehicleType' => 1,
+                    ]
+                ]);
+
+
+        $vehicle = $driver->vehicles()->first();
 
         $response = $this->json('GET','/api/drivers/evaluated');
 

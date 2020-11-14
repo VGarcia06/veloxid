@@ -24,7 +24,8 @@ class DriverEvaluationController extends Controller
             $revisions = $driver->driver()
                                     ->first()
                                     ->revisions()
-                                    ->with('requirements')
+                                    ->latest()
+                                    ->with('status')
                                     ->get();
                                     
         } catch (\Throwable $th) {
@@ -63,7 +64,7 @@ class DriverEvaluationController extends Controller
                 $id_requirements[] = $eval['idRequirement'];
             }
 
-            if ($driver_requirements->except($id_requirements) !== null) {
+            if ($driver_requirements->except($id_requirements)->count()) {
                 $suitable = 2;
             }
 
@@ -106,12 +107,34 @@ class DriverEvaluationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $driver
+     * @param  int  $evaluation
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($driver, $evaluation)
     {
-        //
+        try {
+
+            $driver = Driver::findOrFail($driver);
+
+            $revision = $driver->driver()
+                                    ->first()
+                                    ->revisions()
+                                    ->findOrFail($evaluation)
+                                    ->load('requirements', 'status');
+                                    
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([
+                'message' => 'Something was wrong'
+            ],400);
+        }
+
+        return response()->json([
+            'message' => True,
+            'revision' => $revision
+        ],200);
     }
 
     /**
