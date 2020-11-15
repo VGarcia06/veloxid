@@ -750,7 +750,7 @@
               type="text"
               class="form-control"
               placeholder="Buscar conductor"
-              @keyup="searchDrivers()"
+              @keyup="searchDriver()"
               aria-describedby="basic-addon2"
               v-model="key_busqueda"
             />
@@ -758,7 +758,7 @@
               <button
                 class="btn btn-outline-primary"
                 type="button"
-                @click="searchDrivers()"
+                @click="searchDriver()"
               >
                 Buscar
               </button>
@@ -988,6 +988,7 @@ export default {
       imagenminiatura: "",
       active: "",
       inactive: "",
+      key_busqueda:null,
     };
   },
   created() {
@@ -1173,12 +1174,6 @@ export default {
           "¿Seguro que deseas eliminar al conductor con dni " + numero + "?"
         )
       ) {
-        //axios.get("api/drivers" + id, {
-        //  params: {
-        //    id: id,
-        //  },
-        //});
-
         axios
           .delete("api/drivers/" + id)
           .then(function (response) {
@@ -1189,6 +1184,13 @@ export default {
             console.log(error);
           });
       }
+    },
+      searchDriver(key_busqueda) {
+      axios
+        .get("api/drivers/search?query=" + key_busqueda)
+        .then((res) => {
+          this.drivers = res.data.drivers.data;
+        });
     },
 
     clearFields() {
