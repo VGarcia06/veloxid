@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User as Driver;
 use App\Models\DriverRequirement;
+use App\Models\DriverRevision;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -158,5 +159,29 @@ class DriverEvaluationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        try {
+
+            $revisions = DriverRevision::orderBy('id', 'desc')
+                                            ->with('driver.user.person', 'status')
+                                            ->paginate(12);
+                                    
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([
+                'message' => 'Something was wrong'
+            ],400);
+        }
+
+        return response()->json($revisions,200);
     }
 }

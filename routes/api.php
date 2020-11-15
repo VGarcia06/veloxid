@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// evaluating
+Route::get('drivers/evaluations', 'DriverEvaluationController@all');
+
 // searching
 Route::get('drivers/{id}/vehicles/search', "VehicleController@search");
 Route::get('drivers/search', "DriverController@search");
@@ -27,8 +30,12 @@ Route::get('drivers/evaluated', "DriverController@getEvaluated");
 
 // api
 Route::apiResource('drivers', DriverController::class);
-
+Route::apiResource('services', ServiceController::class)->only(['store']);
 Route::apiResource('vehicles', VehicleController::class);
+// getting prices
+Route::apiResource('prices', Services\PriceController::class)->only([
+    'index'
+]);
 
 // getting types
 Route::apiResource('vehicletypes', Types\VehicleTypeController::class);
@@ -44,5 +51,4 @@ Route::apiResource('requirements/vehicles', Requirements\VehicleRequirementContr
 Route::apiResource('drivers.vehicles', VehicleController::class);
 
 Route::apiResource('drivers.evaluations', DriverEvaluationController::class);
-
 Route::apiResource('vehicles.evaluations', VehicleEvaluationController::class);

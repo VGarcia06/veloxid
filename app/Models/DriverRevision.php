@@ -30,5 +30,14 @@ class DriverRevision extends Model
     public function status()
     {
         return $this->belongsTo('App\Models\Status\RequirementStatus', 'requirement_status_id');
-    }    
+    }
+
+    /**
+     * One to Many (inverse)
+     * Get the driver that owns the revision.
+     */
+    public function driver()
+    {
+        return $this->belongsTo('App\Models\Driver', 'driver_id');
+    }
 }
