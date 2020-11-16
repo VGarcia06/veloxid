@@ -405,6 +405,7 @@
                 }}</label>
               </div>
             </div>
+            <pdf :src="this.driver.driver.constanciaEstadoSalud"></pdf>
           </div>
         </div>
       </div>
@@ -558,7 +559,10 @@
 </template>
 
 <script>
+import pdf from 'vue-pdf'
+
 export default {
+  
   props: ["id"],
   data() {
     return {
@@ -705,6 +709,9 @@ export default {
     axios.get("api/drivers/" + this.id).then((res) => {
       this.driver = res.data;
     });
+  },
+  components: {
+    pdf
   },
 };
 </script>

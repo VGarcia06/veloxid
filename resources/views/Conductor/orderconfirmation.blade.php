@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <tracking></tracking>
+    <orderconfirmation></orderconfirmation>
 @endsection

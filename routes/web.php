@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Ruta de los modulos para el Menu Lateral
+Route::get('get_menulateral', 'LateralMenuController@get_menulateral');
+
 Route::get('/', function () {
     return view('welcome');
 });
 
+//Jefe de Transporte
 Route::get('/conductoresbuscar', 'HomeController@show')->middleware('auth');
 
 Route::get('/conductores', function () {
@@ -31,6 +35,17 @@ Route::get('/revisiones', function () {
     return view('Jefe_Transporte/revisionHistory');
 })->middleware('auth');
 
+Route::get('/pedidos', function () {
+    return view('Jefe_Transporte/order');
+})->middleware('auth');
+
+
+//Conductor
+Route::get('/confirmacionconductor', function () {
+    return view('Conductor/orderconfirmation');
+})->middleware('auth');
+
+//Cliente
 Route::get('/cotizacion', function () {
     return view('Cliente/cotization');
 })->middleware('auth');
@@ -39,19 +54,12 @@ Route::get('/tracking', function () {
     return view('Cliente/tracking');
 })->middleware('auth');
 
-
-Route::get('/confirmacionconductor', function () {
-    return view('Conductor/orderconfirmation');
-})->middleware('auth');
-
 Auth::routes();
 
+//Vista General
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::apiResource('drivers', DriverController::class);
-Route::apiResource('vehicles', VehicleController::class);
+//Route::get('/cotizacion', 'HomeController@indexcotizacion')->name('cotizacion');
 
 
-//Ruta de los modulos para el Menu Lateral
-Route::get('get_menulateral', 'LateralMenuController@get_menulateral');
+
 

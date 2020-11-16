@@ -3,36 +3,111 @@
     <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Default form</h4>
-                    <p class="card-description"> Basic form layout </p>
+                    <h4 class="card-title">Cotizacion de Pedido</h4>
+             
+
                     <form class="forms-sample">
                       <div class="form-group">
-                        <label for="exampleInputUsername1">Username</label>
-                        <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username">
+
+                    <div class="col-sm-12"><select class="form-control"><option value="" selected="selected" disabled="disabled">
+                      punto de origen 
+                    </option> <option value="1">
+                     ...
+                    </option><option value="2">
+                      ...
+                    </option></select></div>
+
+
+                     <div class="col-sm-12"><select class="form-control"><option value="" selected="selected" disabled="disabled">
+                      punto de origen 
+                    </option> <option value="1">
+                     ...
+                    </option><option value="2">
+                      ...
+                    </option></select></div>
+
+<select class="form-control"><option value="" selected="selected" disabled="disabled">
+                      Tipo de Documento
+                    </option> <option value="1">
+                      DNI
+                    </option><option value="2">
+                      Carnet de Extranjeria
+                    </option></select>
+
+<div class="col-sm-12"><input type="number" placeholder="N° Documento" class="form-control"></div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal-body"><div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-sm-12"><input type="text" placeholder="Nombres" class="form-control"></div></div></div></div> <div class="row"><div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="text" placeholder="Apellido Paterno" class="form-control"></div></div></div> <div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="text" placeholder="Apellido Materno" class="form-control"></div></div></div></div> <div class="row"><div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="number" placeholder="Teléfono" class="form-control"></div></div></div> <div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="email" placeholder="Email" class="form-control"></div></div></div></div> <div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-sm-12"><textarea placeholder="Dirección" row="2" class="form-control"></textarea></div></div></div></div> <div class="row"><div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><select class="form-control"><option value="" selected="selected" disabled="disabled">
+                      Tipo de Documento
+                    </option> <option value="1">
+                      DNI
+                    </option><option value="2">
+                      Carnet de Extranjeria
+                    </option></select></div></div></div> <div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="number" placeholder="N° Documento" class="form-control"></div></div></div></div> <div class="row"><div class="col-md-12"><div class="form-group row"><div class="col-sm-12"><input type="text" placeholder="Licencia de Conducir" class="form-control"></div></div></div></div> <div class="row"><div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="text" placeholder="Banco" class="form-control"></div></div></div> <div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="number" placeholder="Cuenta Bancaria" class="form-control"></div></div></div></div> <div class="row"><div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="text" placeholder="Usuario" class="form-control"></div></div></div> <div class="col-lg-6"><div class="form-group row"><div class="col-sm-12"><input type="password" placeholder="Contraseña" class="form-control"></div></div></div></div> <div class="row"><div class="col-md-12"><div class="form-group row"><label class="col-sm-3 col-form-label">Constancia de Salud</label> <div class="col-sm-9"><input type="file" class="form-control file-upload-info"></div></div></div></div> <div class="row"><div class="col-md-12"><div class="form-group row"><label class="col-sm-3 col-form-label">Subir Fotografía</label> <div class="col-sm-9"><input type="file" class="form-control file-upload-info"></div></div></div></div> <div class="row"><div class="col-md-12"><div class="form-group row"><label class="col-sm-3 col-form-label">Fotografía</label> <div class="col-sm-9"><figure><img with="200" height="200" src="" alt="Foto del Conductor"></figure></div></div></div></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                       </div>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputConfirmPassword1">Confirm Password</label>
-                        <input type="password" class="form-control" id="exampleInputConfirmPassword1" placeholder="Password">
-                      </div>
-                      <div class="form-check form-check-flat form-check-primary">
-                        <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input"> Remember me <i class="input-helper"></i></label>
-                      </div>
-                      <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
-                      <button class="btn btn-light">Cancel</button>
                     </form>
                   </div>
                 </div>
-              </div>
-              </div>
+    </div>
+</div>
+
 </template>
 
 <script>
