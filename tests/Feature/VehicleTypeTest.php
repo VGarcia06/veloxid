@@ -25,8 +25,6 @@ class VehicleTypeTest extends TestCase
 
 
         $response =  $this->Json('GET','/api/vehicletypes', []);
-
-        $response->dump();
         
         $response->assertStatus(200);
     }

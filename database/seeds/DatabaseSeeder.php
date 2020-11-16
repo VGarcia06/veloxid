@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             DocumentTypeSeeder::class,
             DriverRequirementSeeder::class,
             VehicleRequirementSeeder::class,
-            RequirementStatusSeeder::class
+            RequirementStatusSeeder::class,
+            VehicleTypeSeeder::class
             ]);
     }
 }

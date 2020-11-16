@@ -30,7 +30,8 @@ Route::get('drivers/evaluated', "DriverController@getEvaluated");
 
 // api
 Route::apiResource('drivers', DriverController::class);
-Route::apiResource('services', ServiceController::class)->only(['store']);
+Route::apiResource('services/states', ServiceController::class)->only(['index']);
+Route::apiResource('services', ServiceController::class)->only(['index', 'store','show']);
 Route::apiResource('vehicles', VehicleController::class);
 // getting prices
 Route::apiResource('prices', Services\PriceController::class)->only([
