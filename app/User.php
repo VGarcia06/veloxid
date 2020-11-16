@@ -85,6 +85,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the service requests for the user.
+     */
+    public function services()
+    {
+        return $this->hasMany('App\Models\Service', 'user_id');
+    }
+
+    /**
      * Get the user's document type.
      * NOT READY - ANDRES
      */
