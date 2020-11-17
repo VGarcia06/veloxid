@@ -52,4 +52,17 @@ class Allocation extends Model
     {
         return $this->belongsTo('App\Models\Driver', 'driver_id');
     }
+
+    /**
+     * The vehicles that belong to the allocation.
+     */
+    public function vehicles()
+    {
+        return $this->belongsToMany(
+            'App\Models\Vehicle', 
+            'allocation_vehicle',
+            'allocation_id',
+            'vehicle_id'
+        );
+    }
 }

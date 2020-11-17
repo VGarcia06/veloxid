@@ -35,7 +35,10 @@ Route::apiResource('drivers', DriverController::class);
 Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
 Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
 Route::apiResource('services', ServiceController::class)->only(['index', 'store','show']);
-/// auxiliars
+/// allocation vehicles
+Route::apiResource('allocations.vehicles', Services\Allocations\AllocationVehicleController::class)
+                    ->only(['index','store','destroy']);
+/// allocation auxiliars
 Route::apiResource('allocations.auxiliars', Services\Allocations\AllocationAuxiliarController::class)
                     ->only(['index', 'store', 'update', 'destroy']);
 /// allocations

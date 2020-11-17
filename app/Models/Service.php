@@ -30,6 +30,14 @@ class Service extends Model
     /**
      * Get the galleries for the service request.
      */
+    public function allocations()
+    {
+        return $this->hasMany('App\Models\Allocation', 'service_id');
+    } 
+
+    /**
+     * Get the galleries for the service request.
+     */
     public function galleries()
     {
         return $this->hasMany('App\Models\Gallery', 'service_id');
