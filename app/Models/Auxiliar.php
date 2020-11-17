@@ -13,6 +13,25 @@ class Auxiliar extends Model
      */
     protected $fillable = [
         'nombre',
-        'dni'
+        'numero',
+        'document_type_id'
     ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'document_type_id'
+    ];
+
+    /**
+     * One to Many (inverse)
+     * Get the document type that owns the auxiliar.
+     */
+    public function document_type()
+    {
+        return $this->belongsTo('App\Models\DocumentType', 'document_type_id');
+    }
 }
