@@ -42,4 +42,12 @@ class Driver extends Model
     {
         return $this->hasMany('App\Models\Vehicle', 'idDriver');
     } 
+
+    /**
+     * Get the allocations for the driver.
+     */
+    public function allocations()
+    {
+        return $this->hasMany('App\Models\Allocation', 'driver_id');
+    }   
 }

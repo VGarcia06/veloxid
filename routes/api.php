@@ -29,9 +29,16 @@ Route::get('drivers/search', "DriverController@search");
 Route::get('drivers/evaluated', "DriverController@getEvaluated");
 
 // api
+/// drivers
 Route::apiResource('drivers', DriverController::class);
+/// services
+Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
 Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
 Route::apiResource('services', ServiceController::class)->only(['index', 'store','show']);
+/// allocations
+Route::apiResource('allocations', Services\Allocations\AllocationController::class)
+                    ->only(['index','store','update','destroy']);
+/// vehicles
 Route::apiResource('vehicles', VehicleController::class);
 // getting prices
 Route::apiResource('prices', Services\PriceController::class)->only([

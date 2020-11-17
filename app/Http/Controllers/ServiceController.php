@@ -133,4 +133,31 @@ class ServiceController extends Controller
     {
         //
     }
+
+    /**
+     * listing the specified resource.
+     *
+     * @param  int id
+     * @return \Illuminate\Http\Response
+     */
+    public function get_services_from_specified_state($id)
+    {
+        try {
+            $services = Service::where('service_state_id', $id)
+                                ->with(
+                                    'state',
+                                    'products.subcategory.vehicle_type',
+                                    'products.subcategory.category', 
+                                    'distrito_origen.zona', 
+                                    'distrito_destino.zona'
+                                )->paginate(12);
+
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json($services, 200);
+        }
+
+        return response()->json($services, 200);
+    }
 }
