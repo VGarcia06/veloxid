@@ -60,6 +60,8 @@ Route::apiResource('vehicletypes', Types\VehicleTypeController::class);
 Route::apiResource('documenttypes', Types\DocumentTypeController::class);
 // getting categories
 Route::apiResource('category', Products\CategoryController::class)->only(['index']);
+// getting categories
+Route::apiResource('zonas', Places\ZonaController::class)->only(['index']);
 
 // requirements
 //Route::get('drivers/requirements',[Requirements\DriverRequirementController::class, 'index']);
