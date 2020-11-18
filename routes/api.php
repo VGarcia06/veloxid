@@ -59,7 +59,7 @@ Route::apiResource('prices', Services\PriceController::class)->only([
 Route::apiResource('vehicletypes', Types\VehicleTypeController::class);
 Route::apiResource('documenttypes', Types\DocumentTypeController::class);
 // getting categories
-Route::apiResource('category', Products\CategoryController::class)->only(['index']);
+Route::apiResource('categories', Products\CategoryController::class)->only(['index']);
 // getting categories
 Route::apiResource('zonas', Places\ZonaController::class)->only(['index']);
 

@@ -30,7 +30,7 @@ class CategoryTest extends TestCase
                         );
                     });
 
-        $response = $this->json('GET','api/category');
+        $response = $this->json('GET','api/categories');
         
         $response->assertOk()
                     ->assertJsonStructure([
