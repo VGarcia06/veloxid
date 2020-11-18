@@ -40,8 +40,6 @@ class PriceTest extends TestCase
 
         $response = $this->json('GET','api/prices', []);
         
-        $response->dump();
-        
         $response->assertStatus(200);
     }
 }
