@@ -56,6 +56,8 @@ Route::apiResource('prices', Services\PriceController::class)->only([
 // getting types
 Route::apiResource('vehicletypes', Types\VehicleTypeController::class);
 Route::apiResource('documenttypes', Types\DocumentTypeController::class);
+// getting categories
+Route::apiResource('category', Products\CategoryController::class)->only(['index']);
 
 // requirements
 //Route::get('drivers/requirements',[Requirements\DriverRequirementController::class, 'index']);
