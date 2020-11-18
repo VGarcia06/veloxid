@@ -47,6 +47,8 @@ Route::apiResource('allocations.auxiliars', Services\Allocations\AllocationAuxil
 Route::apiResource('allocations', Services\Allocations\AllocationController::class)
                     ->only(['index','store','update','destroy']);
 /// vehicles
+Route::apiResource('vehicles.subcategories', Vehicles\VehicleSubcategoryController::class)
+                ->except(['update', 'show']);
 Route::apiResource('vehicles', VehicleController::class);
 // getting prices
 Route::apiResource('prices', Services\PriceController::class)->only([
