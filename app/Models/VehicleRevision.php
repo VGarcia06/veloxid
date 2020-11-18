@@ -22,7 +22,7 @@ class VehicleRevision extends Model
      */
     public function requirements()
     {
-        return $this->belongsToMany('App\Models\VehicleRequirement', 'vehicle_evaluations', 'vehicle_revision_id', 'vehicle_requirement_id');
+        return $this->belongsToMany('App\Models\VehicleRequirement', 'vehicle_evaluations', 'vehicle_revision_id', 'vehicle_requirement_id')->withPivot('valor');
     }
 
     /**

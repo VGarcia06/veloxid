@@ -81,12 +81,32 @@ class VehicleEvaluationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $evaluation
+     * @param  int  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($vehicle, $evaluation)
     {
-        //
+        try {
+
+            $vehicle = Vehicle::findOrFail($vehicle);
+
+            $revision = $vehicle->revisions()
+                                    ->findOrFail($evaluation)
+                                    ->load('requirements', 'status');
+                                    
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([
+                'message' => 'Something was wrong'
+            ],400);
+        }
+
+        return response()->json([
+            'message' => True,
+            'revision' => $revision
+        ],200);
     }
 
     /**
