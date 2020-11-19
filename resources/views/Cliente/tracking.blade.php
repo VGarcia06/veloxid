@@ -2,4 +2,4 @@
 
 @section('content')
     <tracking></tracking>
-    @endsection
+@endsection

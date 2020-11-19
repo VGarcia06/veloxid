@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VELOXID</title>
-    <!-- <link rel="stylesheet" href="css/fontello.css"> -->
+<!-- <link rel="stylesheet" href="css/fontello.css"> -->
     <link rel="stylesheet" href="template_welcome/assets/css/style.css">
     
 </head>
@@ -15,15 +15,15 @@
         <input type="checkbox" id="menu-bar">
         <label class="fontawesome-align-justify" for="menu-bar"></label>
                 <nav class="menu">
-                    @if (Route::has('login'))    
-                    <a href="#">Inicio</a>        
+                    <a href="">Inicio</a>        
                     <a href="#">Nosotros</a>
                     <a href="#">Servicios</a>
-                    <a href="#">Cotizar</a>
+                    @if (Route::has('login'))    
+                    <a href="{{ route('home') }}">Home</a>
                     @auth
                     @else
+                    <a href="{{ route('cotizacion') }}">Cotizar</a>
                     <a href="{{ route('login') }}">Iniciar Sesión</a>
-
                     @if (Route::has('register'))
                     <a href="{{ route('register') }}" >Registrar</a>
                     @endif

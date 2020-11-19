@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <div>
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Pedidos</h4>
@@ -7,15 +7,21 @@
         <div class="form-group row" style="margin-top: 30px">
           <div class="col-lg-4">
             <label>Filtrar por Estado:</label>
-            <input type="date" class="form-control" />
+            <select class="form-control" v-model="state">
+              <option v-for="item in states" :value="item.id" :key="item.id">
+                {{ item.estado }}
+              </option>
+            </select>
           </div>
           <div class="col-lg-4">
             <label>Filtrar por Fecha:</label>
             <input type="date" class="form-control" />
           </div>
           <div class="col-lg-2">
-              <label></label>
-            <button type="submit" class="form-control btn btn-gradient-primary mr-2">
+            <label></label>
+            <button
+              class="form-control btn btn-gradient-primary mr-2"
+            >
               Filtrar
             </button>
           </div>
@@ -42,17 +48,11 @@
                   <th class="sortStyle unsortStyle">
                     Transportista<i class="mdi mdi-chevron-down"></i>
                   </th>
-                   <th class="sortStyle unsortStyle">
-                  </th>
+                  <th class="sortStyle unsortStyle"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -63,7 +63,22 @@
     </div>
   </div>
 </template>
-
 <script>
-export default {};
+
+export default {
+  data() {
+    return {
+      states: [],
+      services:[],
+    };
+  },
+  created() {
+    axios.get("api/services/states").then((res) => {
+      this.states = res.data;
+    });
+    axios.get("api/services").then((res) => {
+      this.states = res.data;
+    });
+  },
+};
 </script>

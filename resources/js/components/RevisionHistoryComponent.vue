@@ -5,28 +5,19 @@
         <h4 class="card-title">Historial de Revisiones</h4>
 
         <div class="form-group row" style="margin-top: 30px">
-            <div class="col-lg-4">
-                <label>Desde:</label>
-                <input
-                type="date"
-                class="form-control"
-                />
-            </div>
-            <div class="col-lg-4">
-                <label>Hasta:</label>
-                <input
-                type="date"
-                class="form-control"
-                />
-            </div>
-            <div class="col-lg-4" style="margin-top: 23px;">
-              <button
-                type="submit"
-                class="btn btn-gradient-primary"
-              >
-                Filtrar
-              </button>  
-            </div>          
+          <div class="col-lg-4">
+            <label>Desde:</label>
+            <input type="date" class="form-control" v-model="fechaInicio"/>
+          </div>
+          <div class="col-lg-4">
+            <label>Hasta:</label>
+            <input type="date" class="form-control" v-model="fechaFin"/>
+          </div>
+          <div class="col-lg-4" style="margin-top: 23px">
+            <button type="submit" class="btn btn-gradient-primary">
+              Filtrar
+            </button>
+          </div>
         </div>
 
         <div class="row">
@@ -36,31 +27,45 @@
                 <tr style="background-color: #309D4F; color: #fff">
                   <th>#</th>
                   <th class="sortStyle ascStyle">
-                    First Name<i class="mdi mdi-chevron-down"></i>
+                    Nombres<i class="mdi mdi-chevron-down"></i>
                   </th>
                   <th class="sortStyle unsortStyle">
-                    Last Name<i class="mdi mdi-chevron-down"></i>
+                    Apellidos<i class="mdi mdi-chevron-down"></i>
                   </th>
                   <th class="sortStyle unsortStyle">
-                    Product<i class="mdi mdi-chevron-down"></i>
+                    Fecha de Evaluación<i class="mdi mdi-chevron-down"></i>
                   </th>
                   <th class="sortStyle unsortStyle">
-                    Amount<i class="mdi mdi-chevron-down"></i>
+                    Estado<i class="mdi mdi-chevron-down"></i>
                   </th>
                   <th class="sortStyle unsortStyle">
-                    Deadline<i class="mdi mdi-chevron-down"></i>
+                    Detalle<i class="mdi mdi-chevron-down"></i>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr
+                  v-for="item in revisionhistory"
+                  :key="item.id"
                 >
-                  <td></td>
-                  <td>Herman Beck</td>
-                  <td>John</td>
-                  <td>Photoshop</td>
-                  <td>$456.00</td>
-                  <td>12 May 2017</td>
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.driver.user.person.nombre }}</td>
+                  <td>{{ item.driver.user.person.apellidoPaterno }} {{ item.driver.user.person.apellidoMaterno }}</td>
+                  <td>
+                    {{ item.created_at }}
+                  </td>
+                  <td>{{ item.status.estado }}</td>
+                  <td>
+                  <a :href="'/revisionesdetalle?driver='+item.driver.idUser+'&revision='+item.id">
+                      <button
+                        class="btn btn-outline-light text-black btn-sm"
+                        type="button"
+                        title="Ver detalle"
+                      >
+                        <i class="mdi mdi-eye"></i>
+                      </button> 
+                    </a>                 
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -72,16 +77,17 @@
 </template>
 <script>
 export default {
-  data(){
-    return{
-      revisionhistory: []
+  data() {
+    return {
+      revisionhistory: [],
+      fechaInicio: "",
+      fechaFin: ""
     };
   },
-  created(){
-    axios.get("api/drivers/drivers").then((res) => {
-      this.evaluaciondriver = res.data.Requirements;
-    });    
+  created() {
+    axios.get("api/drivers/evaluations").then((res) => {
+      this.revisionhistory = res.data.data;
+    });
   }
-
 };
 </script>

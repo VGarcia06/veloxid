@@ -1,6 +1,62 @@
 <template>
 
 <div>
+
+<!-- MODAL PARA VER DETALLE-->
+<div>
+  
+<div class="modal fade bd-example-modal-lg" id="exampleModalTrackingDetalle" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+          
+          
+  <div class="card">
+  <div class="card-body">
+ <h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Detalle de pedido</font></font></h1>
+
+<table class="table table-light">
+  <thead class="thead-green">
+    <tr>
+      <th scope="col">Conductor</th>
+      <th scope="col">Documento</th>
+      <th scope="col">Auxiliar</th>
+      <th scope="col">Documento</th>
+      <th scope="col">Placa de vehículo</th>      
+      <th scope="col">Producto</th>      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      
+      <td>Diego Velasquez</td>
+      <td>76221565</td>      
+      <td>David Osorio</td>
+      <td>70261445</td>    
+      <td>AFK947</td>    
+      <td>Juego de sala 3-2-1 Zack Vintage</td>
+      
+     
+    </tr>    
+
+
+
+  </tbody>
+</table>
+</div>
+</div>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+<!-- FIN -->
+
   <div class="card">
   <div class="card-body">
  <h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Solicitudes</font></font></h1>
@@ -59,7 +115,7 @@
       <td>Comas</td>
       <td>Surquillo</td >      
       <td><label class="badge badge-primary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></label></td>
-      <td><button type="button" class="btn btn-success">Ver detalle</button>
+      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalTrackingDetalle">Ver detalle</button></td>  
 </td>
     </tr>
 
