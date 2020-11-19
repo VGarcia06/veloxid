@@ -566,7 +566,7 @@ export default {
   props: ["id"],
   data() {
     return {
-      driver: [],
+      driver: {},
       vehicles: [],
       placa: "",
       capacidadCarga: "",

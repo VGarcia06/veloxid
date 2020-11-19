@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ServiceStateSeeder extends Seeder
 {
@@ -12,17 +11,6 @@ class ServiceStateSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('service_states')->insert([
-            'estado' => 'pendiente',
-        ]);
-        DB::table('service_states')->insert([
-            'estado' => 'aceptado',
-        ]);
-        DB::table('service_states')->insert([
-            'estado' => 'en tránsito',
-        ]);
-        DB::table('service_states')->insert([
-            'estado' => 'entregado',
-        ]);
+        //
     }
 }

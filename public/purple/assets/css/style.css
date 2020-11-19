@@ -3422,9 +3422,9 @@ select.form-control:focus::-ms-value {
   padding-bottom: 0.94rem;
   margin-bottom: 0;
   line-height: 1;
-  color: #309D4F;
+  color: #212529;
   background-color: transparent;
-  border: #309D4F;
+  border: solid transparent;
   border-width: 1px 0; }
   .form-control-plaintext.form-control-sm, .form-control-plaintext.form-control-lg {
     padding-right: 0;
@@ -3435,16 +3435,14 @@ select.form-control:focus::-ms-value {
   padding: 0.5rem 0.81rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  border-color: #309D4F;
   border-radius: 0.2rem; }
 
 .form-control-lg {
-  height: 1rem;
+  height: 3.175rem;
   padding: 0.94rem 1.94rem;
   font-size: 1.25rem;
   line-height: 1.5;
-  border-color: #309D4F;
-  border-radius: 3.2rem; }
+  border-radius: 0.3rem; }
 
 select.form-control[size], select.form-control[multiple] {
   height: auto; }
@@ -10523,8 +10521,8 @@ code {
     height: 6px; }
 
 .bg-gradient-primary {
-  background: -webkit-gradient(linear, left top, right top, from(#36BC43), to(#309D4F)) !important;
-  background: linear-gradient(to right, #36BC43, #309D4F) !important; }
+  background: -webkit-gradient(linear, left top, right top, from(#007bff), to(#0056b3)) !important;
+  background: linear-gradient(to right, #007bff, #0056b3) !important; }
 
 .bg-gradient-secondary {
   background: -webkit-gradient(linear, left top, right top, from(#e7ebf0), to(#868e96)) !important;
@@ -12251,12 +12249,10 @@ code {
     outline: none; }
 
 select.form-control {
-  border-color: #309D4F;
-    padding: .4375rem .75rem;
-    border: 0;
-    background: #309D4C;
-    /* outline: 1px solid #ccc; */
-    color: #FFFFFF; }
+  padding: .4375rem .75rem;
+  border: 0;
+  outline: 1px solid #ccc;
+  color: #c9c8c8; }
   select.form-control:focus {
     outline: 1px solid #ccc; }
   select.form-control.border-primary {

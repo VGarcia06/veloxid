@@ -1,6 +1,6 @@
 <template>
 <div >
-   <li class="nav-item" v-for="item in menus" >
+   <li class="nav-item" v-for="item in menus">
     <a class="nav-link" :href="item.href">
       <span class="menu-title">{{item.nombre}}</span>
       <i :class="item.icon"></i>
@@ -10,7 +10,8 @@
 </div>
 </template>
 <script>
-export default {
+    export default {
+
   data() {
 
       return {

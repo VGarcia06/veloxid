@@ -645,8 +645,9 @@
                       class="form-control"
                       v-model="placa"
                       placeholder="Placa"
+                      title="Ingresar la placa actual del vehículo."
+                      data-toggle="tooltip" data-placement="right"
                     />
-                    <code>Ingresar placa actual del vehículo.</code>
                   </div>
                 </div>
               </div>
@@ -664,8 +665,9 @@
                       class="form-control"
                       v-model="capacidadCarga"
                       placeholder="Capacidad de Carga"
-                    />
-                    <h5 class="card-description">Ingresar la capacidad máxima del vehículo.</h5>
+                      title="Ingresar la capacidad máxima del vehículo."
+                      data-toggle="tooltip" data-placement="right"
+                    >
                   </div>
                 </div>
               </div>
@@ -698,7 +700,6 @@
                       class="form-control file-upload-info"
                       @change="subirImagen"
                     />
-                    <h5 class="card-description">Subir fotografía del vehículo.</h5>
                   </div>
                 </div>
               </div>
@@ -891,7 +892,7 @@
                           class="btn btn-danger btn-sm"
                           type="button"
                           @click="deleteDrivers(item.id)"
-                          title="Desactivar conductor"
+                          title="Eliminar"
                         >
                           <i class="mdi mdi-delete"></i>
                         </button>
