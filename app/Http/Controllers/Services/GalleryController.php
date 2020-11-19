@@ -2,39 +2,83 @@
 
 namespace App\Http\Controllers\Services;
 
+use App\Http\Controllers\Controller;
 use App\Models\Gallery;
+use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  int  $service_id
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($service_id)
     {
-        //
+        try {
+            $galleries_group_by_state = Service::findOrFail($service_id)
+                                                        ->galleries()
+                                                        ->get()
+                                                        ->groupBy('service_state_id');
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([], 400);
+        }
+
+        return response()->json($galleries_group_by_state,200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int $service_id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $service_id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $service = Service::findOrFail($service_id);
+
+            $array = [];
+            
+            foreach ($request->all() as $image) {
+                if ($request->hasFile('*.imagen')) {
+                    $image['imagen'] = Storage::url(Storage::disk('public')->put('services/' . $service->id . '/galleries/' . $service->service_state_id, $image['imagen']));
+                }
+                $array[] = [
+                    'imagen' => $image['imagen'],
+                    'service_state_id' => $service->service_state_id
+                ];
+            }
+
+            $service->galleries()->createMany($array);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            throw $th;
+
+            DB::rollBack();
+            return response()->json([], 400);
+        }
+
+        return response()->json([], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Gallery  $gallery
+     * @param  int  $service_id
+     * @param  int  $gallery_id
      * @return \Illuminate\Http\Response
      */
-    public function show(Gallery $gallery)
+    public function show($service_id, $gallery_id)
     {
         //
     }
@@ -54,11 +98,23 @@ class GalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Gallery  $gallery
+     * @param  int  $service_id
+     * @param  int  $gallery_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Gallery $gallery)
+    public function destroy($service_id, $gallery_id)
     {
-        //
+        try {
+            Service::findOrFail($service_id)
+                            ->galleries()
+                            ->findOrFail($gallery_id)
+                            ->delete();
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([], 400);
+        }
+
+        return response()->json([],204);
     }
 }

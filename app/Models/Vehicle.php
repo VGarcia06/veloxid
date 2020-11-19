@@ -38,4 +38,17 @@ class Vehicle extends Model
     {
         return $this->belongsTo('App\Models\VehicleType', 'idVehicleType');
     }
+
+    /**
+     * The subcategories that belong to the vehicle.
+     */
+    public function subcategories()
+    {
+        return $this->belongsToMany(
+            'App\Models\Product\Subcategory', 
+            'vehicle_subcategory',
+            'vehicle_id',
+            'subcategory_id'
+        );
+    }
 }

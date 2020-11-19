@@ -32,6 +32,8 @@ Route::get('drivers/evaluated', "DriverController@getEvaluated");
 /// drivers
 Route::apiResource('drivers', DriverController::class);
 /// services
+Route::apiResource('services.images', Services\GalleryController::class)
+                    ->only(['index','store','destroy']);
 Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
 Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
 Route::apiResource('services', ServiceController::class)->only(['index', 'store','show']);
@@ -45,6 +47,8 @@ Route::apiResource('allocations.auxiliars', Services\Allocations\AllocationAuxil
 Route::apiResource('allocations', Services\Allocations\AllocationController::class)
                     ->only(['index','store','update','destroy']);
 /// vehicles
+Route::apiResource('vehicles.subcategories', Vehicles\VehicleSubcategoryController::class)
+                ->except(['update', 'show']);
 Route::apiResource('vehicles', VehicleController::class);
 // getting prices
 Route::apiResource('prices', Services\PriceController::class)->only([
@@ -54,6 +58,10 @@ Route::apiResource('prices', Services\PriceController::class)->only([
 // getting types
 Route::apiResource('vehicletypes', Types\VehicleTypeController::class);
 Route::apiResource('documenttypes', Types\DocumentTypeController::class);
+// getting categories
+Route::apiResource('categories', Products\CategoryController::class)->only(['index']);
+// getting categories
+Route::apiResource('zonas', Places\ZonaController::class)->only(['index']);
 
 // requirements
 //Route::get('drivers/requirements',[Requirements\DriverRequirementController::class, 'index']);
