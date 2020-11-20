@@ -49,5 +49,13 @@ class Driver extends Model
     public function allocations()
     {
         return $this->hasMany('App\Models\Allocation', 'driver_id');
-    }   
+    }
+
+    /**
+     * Get the revisions for the driver.
+     */
+    public function general_revisions()
+    {
+        return $this->hasMany('App\Models\Revision', 'driver_id');
+    }    
 }

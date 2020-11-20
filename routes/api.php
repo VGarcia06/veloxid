@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // evaluating
+Route::apiResource('revisions', RevisionController::class)->only(['index', 'show']);
 Route::get('drivers/evaluations', 'DriverEvaluationController@all');
 
 // searching

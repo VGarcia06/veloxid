@@ -51,4 +51,13 @@ class Vehicle extends Model
             'subcategory_id'
         );
     }
+
+    /**
+     * One to Many (inverse)
+     * Get the driver table that owns the vehicle.
+     */
+    public function driver()
+    {
+        return $this->belongsTo('App\Models\Driver', 'idDriver');
+    }
 }

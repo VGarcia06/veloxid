@@ -40,4 +40,13 @@ class DriverRevision extends Model
     {
         return $this->belongsTo('App\Models\Driver', 'driver_id');
     }
+
+    /**
+     * Many to Many (Morph)
+     * Get all of the revisions for the driver revision.
+     */
+    public function general_revisions()
+    {
+        return $this->morphToMany('App\Models\Revision', 'revisionable');
+    }
 }
