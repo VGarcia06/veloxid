@@ -142,14 +142,12 @@
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group row">
-                  <div class="col-sm-12">
-                    <td>
+                  <div class="col-sm-12">                    
                       <select class="form-control form-control-sm" id="exampleFormControlSelect3">                              
                           <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DNI</font></font></option>
                           <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PASAPORTE</font></font></option>                
                           <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CE</font></font></option>                
-                      </select>            
-                    </td>      
+                      </select>                                
                   </div>
                 </div>
               </div>
@@ -225,7 +223,9 @@
       <td>12/11/2020</td>      
       <td>    <select class="form-control form-control-sm" id="exampleFormControlSelect3">                              
                 <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptar</font></font></option>
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar </font></font></option>                
+                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
+                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>                
+                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
               </select>
             
         </td>      
@@ -249,7 +249,9 @@
       <td>13/11/2020</td>      
       <td>    <select class="form-control form-control-sm" id="exampleFormControlSelect3">                              
                 <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptar</font></font></option>
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar </font></font></option>                
+                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
+                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>                
+                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
               </select>
             
         </td>      

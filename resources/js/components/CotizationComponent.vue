@@ -1,6 +1,6 @@
 <template>
   <div class="content-wrapper" style="padding-bottom: 0px;">
-    <div class="row flex-grow">
+    <div class="row">
       <div class="col-12 grid-margin">
         <div class="card">
           <div class="card-body">
@@ -11,8 +11,9 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Punto de Origen</label>
                   <div class="col-sm-9">
-                    <select class="form-control">
-                      <option>Opcion 1</option>
+                    <select class="form-control" v-model="zonaorigen">
+                      <option value="" selected disabled>--Seleccionar Zona--</option>
+                      <option v-for="item in zonas">{{item.zona}}</option>
                     </select>
                   </div>
                 </div>
@@ -21,8 +22,9 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Punto de Destino</label>
                   <div class="col-sm-9">
-                    <select class="form-control">
-                      <option>Opcion 1</option>
+                    <select class="form-control" v-model="zonadestino">
+                      <option value="" selected disabled>--Seleccionar Zona--</option>
+                      <option v-for="item in zonas">{{item.zona}}</option>
                     </select>
                   </div>
                 </div>
@@ -33,11 +35,9 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Distrito Origen</label>
                   <div class="col-sm-9">
-                    <select class="form-control">
-                      <option>Opcion 1</option>
-                      <option>Opcion 2</option>
-                      <option>Opcion 3</option>
-                      <option>Opcion 4</option>
+                    <select class="form-control" v-model="distritoorigen">
+                      <option value="" selected disabled>--Seleccionar Distrito--</option>
+                      <option v-for="item in zonas">{{item.distrito}}</option>
                     </select>
                   </div>
                 </div>
@@ -46,18 +46,19 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Distrito Destino</label>
                   <div class="col-sm-9">
-                    <select class="form-control">
-                      <option>Opcion 1</option>
-                      <option>Opcion 2</option>
-                      <option>Opcion 3</option>
-                      <option>Opcion 4</option>
+                     <select class="form-control" v-model="distritodestino">
+                      <option value="" selected disabled>--Seleccionar Distrito--</option>
+                      <option v-for="item in zonas">{{item.distrito}}</option>
                     </select>
+                  </div>
                   </div>
                 </div>
               </div>
             </div>
+
+
             <h4 class="card-title">Registrar Producto </h4>
-              <div class="row">
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Descripción</label>
@@ -66,29 +67,38 @@
                   </div>
                 </div>
               </div>
-            </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Categoria</label>
-                    <div class="col-sm-9">
-                      <select class="form-control">
-                        <option>Categoria 1</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Subcategoria</label>
-                    <div class="col-sm-9">
-                      <select class="form-control">
-                        <option>subcategoria 1</option>
-                      </select>
-                    </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Cantidad</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" placeholder="Nombre del Producto">
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Categoria</label>
+                  <div class="col-sm-9">
+                    <select class="form-control">
+                      <option>Categoria 1</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Subcategoria</label>
+                  <div class="col-sm-9">
+                    <select class="form-control">
+                      <option>subcategoria 1</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
           
             <div class="row">
               <div class="col-md-6">
@@ -112,6 +122,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="col-md-4">
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Altura</label>
@@ -120,6 +131,7 @@
                   </div>
                 </div>
               </div>
+              
               <div class="col-md-4">
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Ancho</label>
@@ -130,7 +142,6 @@
               </div>
             </div>
 
-        <div style="float: right;">
         <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
         <button
         v-if="update == 0"
@@ -155,8 +166,11 @@
       >
         Cancelar
       </button>
-    </div>
+   
 
+  <br><br><br>
+
+<!--Tabla de Productos-->
     <div class="row">
       <div class="table-sorter-wrapper col-lg-12 table-responsive">
         <table id="sortable-table-2" class="table table-striped">
@@ -164,19 +178,22 @@
             <tr style="background-color: #309D4F; color: #fff">
               <th>#</th>
               <th class="sortStyle ascStyle">
-                Nombres<i class="mdi mdi-chevron-down"></i>
+                Desripción<i class="mdi mdi-chevron-down"></i>
               </th>
               <th class="sortStyle unsortStyle">
-                Apellidos<i class="mdi mdi-chevron-down"></i>
+                Categoría<i class="mdi mdi-chevron-down"></i>
               </th>
               <th class="sortStyle unsortStyle">
-                Fecha de Evaluación<i class="mdi mdi-chevron-down"></i>
+                Subcategoria<i class="mdi mdi-chevron-down"></i>
               </th>
               <th class="sortStyle unsortStyle">
-                Estado<i class="mdi mdi-chevron-down"></i>
+                Peso<i class="mdi mdi-chevron-down"></i>
               </th>
               <th class="sortStyle unsortStyle">
-                Detalle<i class="mdi mdi-chevron-down"></i>
+                Altura<i class="mdi mdi-chevron-down"></i>
+              </th>
+              <th class="sortStyle unsortStyle">
+                Ancho<i class="mdi mdi-chevron-down"></i>
               </th>
             </tr>
           </thead>
@@ -188,17 +205,6 @@
               <td></td>
               <td></td>
               <td></td>
-              <td>
-              <a :href="'/revisionesdetalle?driver='+item.driver.idUser+'&revision='+item.id">
-                  <button
-                    class="btn btn-outline-light text-black btn-sm"
-                    type="button"
-                    title="Ver detalle"
-                  >
-                    <i class="mdi mdi-eye"></i>
-                  </button> 
-                </a>                 
-              </td>
             </tr>
           </tbody>
         </table>
@@ -244,10 +250,30 @@
     data() {
       return {
         update:0,
+        zonas:[],
+        distritos:[],
+        zonaorigen:"",
+        zonadestino:"",
+        distritoorigen:"",
+        distritodestino:"",
       };
     },
 
-    created(){
-    },
+    created() {
+    axios.get("api/zonas").then((res) => {
+      this.zonas = res.data;
+      this.distritos = res.data.distritos;
+    });
+
+    axios.get("api/vehicletypes").then((res) => {
+      this.vehicletypes = res.data.VehicleTypes;
+    });
+
+    axios.get("api/documenttypes").then((res) => {
+      this.documenttypes = res.data.DocumentTypes;
+    });
+  },
+
+
   };
 </script>

@@ -5,8 +5,9 @@
 <!-- MODAL PARA VER DETALLE-->
 <div>
   
-<div class="modal fade bd-example-modal-lg" id="exampleModalTrackingDetalle" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+
+<div class="modal fade bd-example-modal-md" id="exampleModalTrackingDetalle" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
           
           
@@ -18,29 +19,30 @@
   <thead class="thead-green">
     <tr>
       <th scope="col">Conductor</th>
+      <td>Diego Velasquez</td>
+    </tr>
+    <tr>
       <th scope="col">Documento</th>
+      <td>76221565</td>
+    </tr>
+    <tr>
       <th scope="col">Auxiliar</th>
+      <td>David Osorio</td>
+    </tr>
+    <tr>
       <th scope="col">Documento</th>
+      <td>70261445</td>
+    </tr>
+    <tr>
       <th scope="col">Placa de vehículo</th>      
+      <td>AFK947</td>
+    </tr>
+    <tr>
       <th scope="col">Producto</th>      
+      <td>Juego de sala 3-2-1 Zack Vintage</td>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      
-      <td>Diego Velasquez</td>
-      <td>76221565</td>      
-      <td>David Osorio</td>
-      <td>70261445</td>    
-      <td>AFK947</td>    
-      <td>Juego de sala 3-2-1 Zack Vintage</td>
-      
-     
-    </tr>    
 
-
-
-  </tbody>
 </table>
 </div>
 </div>
@@ -79,7 +81,7 @@
       <td>Villa el Salvador</td>
       <td>San Borja</td>      
       <td><label class="badge badge-danger"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pendiente</font></font></label></td>
-      <td><button type="button" class="btn btn-success">Ver detalle</button>
+      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalTrackingDetalle">Ver detalle</button></td>  
 </td>
     </tr>
     <tr>
@@ -87,7 +89,7 @@
       <td>Chorrillos</td>
       <td>San Borja</td >      
       <td><label class="badge badge-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Entregado</font></font></label></td>
-      <td><button type="button" class="btn btn-success">Ver detalle</button>
+      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalTrackingDetalle">Ver detalle</button></td>  
 </td>
     </tr>
 
@@ -96,7 +98,7 @@
       <td>La Victoria</td>
       <td>Centro de Lima</td >      
       <td><label class="badge badge-warning"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptado</font></font></label></td>
-      <td><button type="button" class="btn btn-success">Ver detalle</button>
+      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalTrackingDetalle">Ver detalle</button></td>  
 </td>
     </tr>
 
@@ -106,7 +108,7 @@
       <td>Los Olivos</td>
       <td>San Isidro</td >      
       <td><label class="badge badge-info"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></label></td>
-      <td><button type="button" class="btn btn-success">Ver detalle</button>
+      <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalTrackingDetalle">Ver detalle</button></td>  
 </td>
     </tr>
 

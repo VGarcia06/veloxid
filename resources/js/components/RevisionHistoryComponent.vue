@@ -51,9 +51,7 @@
                   <td>{{ item.id }}</td>
                   <td>{{ item.driver.user.person.nombre }}</td>
                   <td>{{ item.driver.user.person.apellidoPaterno }} {{ item.driver.user.person.apellidoMaterno }}</td>
-                  <td>
-                    {{ item.created_at }}
-                  </td>
+                  <td>{{ item.created_at | timeformat }} </td>
                   <td>{{ item.status.estado }}</td>
                   <td>
                   <a :href="'/revisionesdetalle?driver='+item.driver.idUser+'&revision='+item.id">
@@ -76,18 +74,26 @@
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      revisionhistory: [],
-      fechaInicio: "",
-      fechaFin: ""
+  import moment from 'moment'
+
+    export default {
+      data() {
+        return {
+          revisionhistory: [],
+          fecha: "",
+          fechaInicio: "",
+          fechaFin: ""
+        };
+      },
+      created() {
+        axios.get("api/drivers/evaluations").then((res) => {
+          this.revisionhistory = res.data.data;
+        });
+      },
+      filters: {
+        timeformat: function (arg) {
+          return moment(arg).subtract(10, 'days').calendar()
+        }
+      }
     };
-  },
-  created() {
-    axios.get("api/drivers/evaluations").then((res) => {
-      this.revisionhistory = res.data.data;
-    });
-  }
-};
 </script>

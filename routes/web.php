@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 //Jefe de Transporte
 Route::get('/conductoresbuscar', 'HomeController@show')->middleware('auth');
+Route::get('/revisionesdetalle', 'HomeController@detail')->middleware('auth');
 
 Route::get('/conductores', function () {
     return view('Jefe_Transporte/driver');
@@ -58,7 +59,7 @@ Auth::routes();
 
 //Vista General
 Route::get('/home', 'HomeController@index')->name('home');
-//Route::get('/cotizacion', 'HomeController@indexcotizacion')->name('cotizacion');
+Route::get('/cotizacion', 'HomeController@indexcotizacion')->name('cotizacion');
 
 
 

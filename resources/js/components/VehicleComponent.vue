@@ -405,7 +405,11 @@
                 }}</label>
               </div>
             </div>
-            <pdf :src="this.driver.driver.constanciaEstadoSalud"></pdf>
+     <!--     <a
+            :href="this.driver.driver.constanciaEstadoSalud"
+            v-text="item.label"
+            @click.prevent="downloadItem(item)" />-->
+         <!--   <pdf :src="this.driver.driver.constanciaEstadoSalud"></pdf> -->
           </div>
         </div>
       </div>
@@ -701,6 +705,19 @@ export default {
       this.idDriver = "";
       this.update = 0;
     },
+
+    downloadItem ({ url, label }) {
+    Axios.get(url, { responseType: 'blob' })
+      .then(response => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.download = label
+        link.click()
+        URL.revokeObjectURL(link.href)
+      }).catch(console.error)
+  },
+
   },
 
   mounted() {
