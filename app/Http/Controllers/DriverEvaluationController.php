@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User as Driver;
 use App\Models\DriverRequirement;
 use App\Models\DriverRevision;
+use App\Models\Revision;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -88,6 +90,34 @@ class DriverEvaluationController extends Controller
                         ->attach($driver_requirement['id'], ['valor' => 0]);
                 }
                 
+            }
+
+            /**
+             * Storing the driver revision in a general revision of the day.
+             */
+            $today = Carbon::today('America/Lima');
+
+            $last_general_revision = $driver->driver()->first()->general_revisions()->latest()->first();
+            
+            // if a last general revision exists
+            if ($last_general_revision != null) {
+                // if the last revision is in date (today)
+                if ($last_general_revision->created_at->greaterThanOrEqualTo($today)) {
+                    # adding the driver revision to the existing general revision
+                    $revision->general_revisions()->attach($last_general_revision->id);
+                } else {
+                    # creating a new general revision for the driver
+                    $new_general_revision = $driver->driver()->first()->general_revisions()->saveMany([
+                                                new Revision()
+                                            ])[0];
+                    $revision->general_revisions()->attach($new_general_revision->id);
+                }
+            } else {
+                # creating the first general revision for the driver
+                $first_general_revision = $driver->driver()->first()->general_revisions()->saveMany([
+                                                new Revision()
+                                            ])[0];
+                $revision->general_revisions()->attach($first_general_revision->id);
             }
 
             DB::commit();

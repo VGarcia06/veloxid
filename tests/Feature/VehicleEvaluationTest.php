@@ -63,7 +63,7 @@ class VehicleEvaluationTest extends TestCase
 
         $response = $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
-        $response->assertStatus(201);
+        $response->assertCreated();
     }
 
     /**

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Revision;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\VehicleRequirement;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class VehicleEvaluationController extends Controller
@@ -62,6 +64,37 @@ class VehicleEvaluationController extends Controller
                         ->attach($vehicle_requirement['id'], ['valor' => 0]);
                 }
                 
+            }
+
+            // get driver
+            $driver = $vehicle->driver()->first()->user()->first();
+
+            /**
+             * Storing the driver revision in a general revision of the day.
+             */
+            $today = Carbon::today('America/Lima');
+
+            $last_general_revision = $driver->driver()->first()->general_revisions()->latest()->first();
+            
+            // if a last general revision exists
+            if ($last_general_revision != null) {
+                // if the last revision is in date (today in America/Lima)
+                if ($last_general_revision->created_at->greaterThanOrEqualTo($today)) {
+                    # adding the vehicle revision to the existing general revision
+                    $revision->general_revisions()->attach($last_general_revision->id);
+                } else {
+                    # creating a new general revision for the vehicle
+                    $new_general_revision = $driver->driver()->first()->general_revisions()->saveMany([
+                                                new Revision()
+                                            ])[0];
+                    $revision->general_revisions()->attach($new_general_revision->id);
+                }
+            } else {
+                # creating the first general revision for the vehicle
+                $first_general_revision = $driver->driver()->first()->general_revisions()->saveMany([
+                                                new Revision()
+                                            ])[0];
+                $revision->general_revisions()->attach($first_general_revision->id);
             }
 
             DB::commit();

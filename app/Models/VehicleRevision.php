@@ -32,4 +32,22 @@ class VehicleRevision extends Model
     {
         return $this->belongsTo('App\Models\Status\RequirementStatus', 'requirement_status_id');
     }
+
+    /**
+     * Many to Many (Morph)
+     * Get all of the revisions for the vehicle revision.
+     */
+    public function general_revisions()
+    {
+        return $this->morphToMany('App\Models\Revision', 'revisionable');
+    }
+
+    /**
+     * One to Many (inverse)
+     * Get the vehicle revisions that owns the vehicle.
+     */
+    public function vehicle()
+    {
+        return $this->belongsTo('App\Models\Vehicle', 'vehicle_id');
+    }
 }

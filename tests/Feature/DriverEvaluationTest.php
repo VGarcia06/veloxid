@@ -68,7 +68,7 @@ class DriverEvaluationTest extends TestCase
         ];
         $response = $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
-        $response->assertStatus(201);
+        $response->assertCreated();
     }
 
     /**
@@ -276,7 +276,7 @@ class DriverEvaluationTest extends TestCase
         $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $response = $this->json('GET', '/api/drivers/evaluations');
-        $response->dump();
+        
         $response->assertStatus(200)
                     ->assertJsonStructure([
                         "data" => [
