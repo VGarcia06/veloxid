@@ -61,8 +61,9 @@ Route::apiResource('vehicletypes', Types\VehicleTypeController::class);
 Route::apiResource('documenttypes', Types\DocumentTypeController::class);
 // getting categories
 Route::apiResource('categories', Products\CategoryController::class)->only(['index']);
-// getting categories
+// getting places
 Route::apiResource('zonas', Places\ZonaController::class)->only(['index']);
+Route::apiResource('distritos', Places\DistritoController::class)->only(['index']);
 
 // requirements
 //Route::get('drivers/requirements',[Requirements\DriverRequirementController::class, 'index']);
