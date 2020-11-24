@@ -15,7 +15,7 @@ class CreateDriverRevisionsTable extends Migration
     {
         Schema::create('driver_revisions', function (Blueprint $table) {
             $table->id();
-            $table->text('observacion');
+            $table->text('observacion')->nullable();
 
             // foreign keys
             $table->foreignId('driver_id');

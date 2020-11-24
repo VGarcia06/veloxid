@@ -15,7 +15,7 @@ class CreateVehicleRevisionsTable extends Migration
     {
         Schema::create('vehicle_revisions', function (Blueprint $table) {
             $table->id();
-            $table->text('observacion');
+            $table->text('observacion')->nullable();
 
             // foreign keys
             $table->foreignId('vehicle_id');
