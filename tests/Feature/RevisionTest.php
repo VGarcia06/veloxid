@@ -836,7 +836,7 @@ class RevisionTest extends TestCase
             'from' => '2020-10-10',
             'to' => ''
         ];
-
+        
         $response = $this->json('GET','api/revisions',$json);
         
         $response->assertOk()
@@ -1043,7 +1043,7 @@ class RevisionTest extends TestCase
 
         $this->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
 
-        $response = $this->json('GET','api/revisions/1');
+        $response = $this->json('GET','api/revisions/2');
         
         $response->assertOk()
                     ->assertJsonStructure([
@@ -1075,6 +1075,9 @@ class RevisionTest extends TestCase
                                 ]
                             ]
                         ]
+                    ])
+                    ->assertJson([
+                        'id' => 2
                     ]);
     }
 }

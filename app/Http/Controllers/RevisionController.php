@@ -76,22 +76,22 @@ class RevisionController extends Controller
     public function show($id)
     {
         try {
-            $revisions = Revision::findOrFail($id)
-                                    ->with(
+            $revision = Revision::findOrFail($id)
+                                    ->load(
                                         'driver.user.person', 
                                         'driver_revisions.status',
                                         'driver_revisions.requirements',
                                         'vehicle_revisions.vehicle', 
                                         'vehicle_revisions.status',
                                         'vehicle_revisions.requirements'
-                                    )->first();
+                                    );
         } catch (\Throwable $th) {
             throw $th;
 
             return response()->json([], 400);
         }
 
-        return response()->json($revisions, 200);
+        return response()->json($revision, 200);
     }
 
     /**
