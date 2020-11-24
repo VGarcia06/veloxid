@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Requirements;
 use App\Http\Controllers\Controller;
 use App\Models\DriverRequirement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DriverRequirementController extends Controller
 {
@@ -40,7 +41,22 @@ class DriverRequirementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            foreach ($request->all() as $driver_requirement) {
+                DriverRequirement::create($driver_requirement);
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            throw $th;
+
+            DB::rollBack();
+            return response()->json([], 400);
+        }
+
+        return response()->json([], 201);
     }
 
     /**
