@@ -644,9 +644,9 @@
                       type="text"
                       class="form-control"
                       v-model="placa"
-                      placeholder="Placa"
+                      placeholder="Placas"
                     />
-                    <code>Ingresar placa actual del vehículo.</code>
+                    <code style="color: #9c9fa6;">Ingresar placa actual del vehículo.</code>
                   </div>
                 </div>
               </div>
@@ -665,7 +665,7 @@
                       v-model="capacidadCarga"
                       placeholder="Capacidad de Carga"
                     />
-                    <h5 class="card-description">Ingresar la capacidad máxima del vehículo.</h5>
+                    <code style="color: #9c9fa6;">Ingresar la capacidad máxima del vehículo.</code>
                   </div>
                 </div>
               </div>
@@ -698,7 +698,7 @@
                       class="form-control file-upload-info"
                       @change="subirImagen"
                     />
-                    <h5 class="card-description">Subir fotografía del vehículo.</h5>
+                    <code style="color: #9c9fa6;">Subir fotografía del vehículo.</code>
                   </div>
                 </div>
               </div>

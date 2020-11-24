@@ -7,14 +7,14 @@
         <div class="form-group row" style="margin-top: 30px">
           <div class="col-lg-4">
             <label>Desde:</label>
-            <input type="date" class="form-control" v-model="fechaInicio"/>
+            <input type="date" class="form-control" v-model="from"/>
           </div>
           <div class="col-lg-4">
             <label>Hasta:</label>
-            <input type="date" class="form-control" v-model="fechaFin"/>
+            <input type="date" class="form-control" v-model="to"/>
           </div>
           <div class="col-lg-4" style="margin-top: 23px">
-            <button type="submit" class="btn btn-gradient-primary">
+            <button type="submit" class="btn btn-gradient-primary" @click="filtrar()">
               Filtrar
             </button>
           </div>
@@ -35,9 +35,9 @@
                   <th class="sortStyle unsortStyle">
                     Fecha de Evaluación<i class="mdi mdi-chevron-down"></i>
                   </th>
-                  <th class="sortStyle unsortStyle">
+         <!--     <th class="sortStyle unsortStyle">
                     Estado<i class="mdi mdi-chevron-down"></i>
-                  </th>
+                  </th>-->
                   <th class="sortStyle unsortStyle">
                     Detalle<i class="mdi mdi-chevron-down"></i>
                   </th>
@@ -52,9 +52,8 @@
                   <td>{{ item.driver.user.person.nombre }}</td>
                   <td>{{ item.driver.user.person.apellidoPaterno }} {{ item.driver.user.person.apellidoMaterno }}</td>
                   <td>{{ item.created_at | timeformat }} </td>
-                  <td>{{ item.status.estado }}</td>
                   <td>
-                  <a :href="'/revisionesdetalle?driver='+item.driver.idUser+'&revision='+item.id">
+                  <a :href="'/revisionesdetalle?revision='+item.id">
                       <button
                         class="btn btn-outline-light text-black btn-sm"
                         type="button"
@@ -80,19 +79,41 @@
       data() {
         return {
           revisionhistory: [],
-          fecha: "",
-          fechaInicio: "",
-          fechaFin: ""
+          from: "",
+          to: ""
         };
       },
       created() {
-        axios.get("api/drivers/evaluations").then((res) => {
+        //Es post la ruta, para listar todo deben estar vacíos los campos (to =="" AND from =="")
+        axios.post("api/revisions", {
+          from : "",
+          to: ""
+        })
+        .then((res) => {
           this.revisionhistory = res.data.data;
         });
       },
+      methods: {
+        filtrar() {
+          axios.post("api/revisions", {
+            from: this.from,
+            to: this.to
+          })
+          .then((res) => {
+            console.log(res.data.data);
+            this.revisionhistory=res.data.data;
+             
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
+      },
       filters: {
         timeformat: function (arg) {
-          return moment(arg).subtract(10, 'days').calendar()
+          // return moment(arg).subtract(10, 'days').calendar()
+          moment.locale('es');
+          return moment(arg).format('LLL');
         }
       }
     };

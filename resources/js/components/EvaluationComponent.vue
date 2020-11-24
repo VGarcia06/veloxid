@@ -55,7 +55,7 @@
                               class="checkbox"
                               type="checkbox"
                               v-model="requerimentdriver"
-                              :value="{ idRequirement: item.id, valor: 1 }" />{{
+                              :value="{ idRequirement: item.id, valor: 0 }" />{{
                               item.requerimiento
                             }}
                             <i class="input-helper"></i
@@ -114,7 +114,7 @@
                               class="checkbox"
                               type="checkbox"
                               v-model="requerimentvehicle"
-                              :value="{ idRequirement: item.id, valor: 1 }" />{{
+                              :value="{ idRequirement: item.id, valor: 0 }" />{{
                               item.requerimiento
                             }}
                             <i class="input-helper"></i

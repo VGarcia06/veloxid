@@ -13,7 +13,7 @@
                   <div class="col-sm-9">
                     <select class="form-control" v-model="zonaorigen">
                       <option value="" selected disabled>--Seleccionar Zona--</option>
-                      <option v-for="item in zonas">{{item.zona}}</option>
+                      <option v-for="item in zonas" :value="item">{{item.zona}}</option>
                     </select>
                   </div>
                 </div>
@@ -24,7 +24,7 @@
                   <div class="col-sm-9">
                     <select class="form-control" v-model="zonadestino">
                       <option value="" selected disabled>--Seleccionar Zona--</option>
-                      <option v-for="item in zonas">{{item.zona}}</option>
+                      <option v-for="item in zonas" :value="item">{{item.zona}}</option>
                     </select>
                   </div>
                 </div>
@@ -35,9 +35,9 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Distrito Origen</label>
                   <div class="col-sm-9">
-                    <select class="form-control" v-model="distritoorigen">
+                    <select class="form-control" v-model="distritoorigen" v-if="zonaorigen != -1">
                       <option value="" selected disabled>--Seleccionar Distrito--</option>
-                      <option v-for="item in zonas">{{item.distrito}}</option>
+                      <option v-for="item in zonaorigen.distritos" :value="item">{{item.distrito}}</option>
                     </select>
                   </div>
                 </div>
@@ -46,15 +46,15 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Distrito Destino</label>
                   <div class="col-sm-9">
-                     <select class="form-control" v-model="distritodestino">
+                     <select class="form-control" v-model="distritodestino" v-if="zonadestino != -1">
                       <option value="" selected disabled>--Seleccionar Distrito--</option>
-                      <option v-for="item in zonas">{{item.distrito}}</option>
+                      <option v-for="item in zonadestino.distritos" :value="item">{{item.distrito}}</option>
                     </select>
                   </div>
                   </div>
                 </div>
               </div>
-            </div>
+            
 
 
             <h4 class="card-title">Registrar Producto </h4>
@@ -71,7 +71,7 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Cantidad</label>
                   <div class="col-sm-9">
-                    <input class="form-control" placeholder="Nombre del Producto">
+                    <input type="number" class="form-control" placeholder="Nombre del Producto">
                   </div>
                 </div>
               </div>
@@ -236,7 +236,7 @@
           </div>
         </div>
       </div>
-            
+            </div>
           </div>
         </div>
       </div>
@@ -251,7 +251,6 @@
       return {
         update:0,
         zonas:[],
-        distritos:[],
         zonaorigen:"",
         zonadestino:"",
         distritoorigen:"",
@@ -262,7 +261,6 @@
     created() {
     axios.get("api/zonas").then((res) => {
       this.zonas = res.data;
-      this.distritos = res.data.distritos;
     });
 
     axios.get("api/vehicletypes").then((res) => {

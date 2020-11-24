@@ -43,10 +43,6 @@ class HomeController extends Controller
 
     public function detail(Request $request)
     {
-        $detail = [
-            ['driver' => $request->driver],
-            ['revision' => $request->revision]
-        ];
-       return view('Jefe_Transporte/revisionDetail', compact('detail'));
+       return view('Jefe_Transporte/revisionDetail')->with(['revision' => $request->revision]);
     }
 }

@@ -29,14 +29,13 @@ class RevisionController extends Controller
                                             ->orderBy('id', 'desc')
                                             ->with('driver.user.person')
                                             ->paginate(12);
-                    
                     return response()->json($revisions, 200);
                 } else {
                     if ($request->from == "" AND $request->to == "") {
                         $revisions = Revision::orderBy('id', 'desc')
                                                 ->with('driver.user.person')
                                                 ->paginate(12);
-                    
+                        
                         return response()->json($revisions, 200);
                     }
                 }
@@ -47,6 +46,7 @@ class RevisionController extends Controller
                                     ->orderBy('id', 'desc')
                                     ->with('driver.user.person')
                                     ->paginate(12);
+                                    
         } catch (\Throwable $th) {
             throw $th;
 

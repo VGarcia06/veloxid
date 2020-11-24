@@ -36,8 +36,8 @@
                       v-model="placa"
                       placeholder="Placa"
                       title="Ingresar la placa actual del vehículo."
-                      data-toggle="tooltip" data-placement="right"
                     />
+                    <code style="color: #9c9fa6;">Ingresar placa actual del vehículo.</code>                    
                   </div>
                 </div>
               </div>
@@ -55,10 +55,9 @@
                       class="form-control"
                       v-model="capacidadCarga"
                       placeholder="Capacidad de Carga"
-                      title="Ingresar la capacidad máxima del vehículo."
-                      data-toggle="tooltip" data-placement="right"
                     />
-                  </div>
+                  <code style="color: #9c9fa6;">Ingresar la capacidad máxima del vehículo.</code>                        
+                  </div>              
                 </div>
               </div>
             </div>
@@ -90,6 +89,7 @@
                       class="form-control file-upload-info"
                       @change="subirImagen"
                     />
+                    <code style="color: #9c9fa6;">Subir fotografía del vehículo.</code>                    
                   </div>
                 </div>
               </div>
@@ -262,7 +262,6 @@
     <!-- FIN -->
 
     <!--DATOS DEL CONDUCTOR-->
-    <div class="col-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Conductor</h4>
@@ -413,10 +412,10 @@
           </div>
         </div>
       </div>
-    </div>
+
     <!--FIN DATOS DEL CONDUCTOR-->
 
-    <div class="form-group">
+    <div class="form-group" style="padding-top: 24px;">
       <div class="row">
         <div class="col-lg-8">
           <div class="input-group mb-3">
