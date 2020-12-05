@@ -56,6 +56,7 @@ Route::apiResource('vehicles', VehicleController::class);
 Route::apiResource('prices', Services\PriceController::class)->only([
     'index'
 ]);
+Route::post('prices/cotizar', 'ServiceController@cotizar');
 
 // getting types
 Route::apiResource('vehicletypes', Types\VehicleTypeController::class);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Revision;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RevisionController extends Controller
@@ -17,7 +18,11 @@ class RevisionController extends Controller
     {
         try {
             if ($request->from == "" AND $request->to != "") {
-                $revisions = Revision::whereDate('created_at', '<=', $request->to)
+                $to = new Carbon($request->to, 'America/Lima');
+                $to->tz = date_default_timezone_get();
+                $to->addDay();
+                
+                $revisions = Revision::whereDate('created_at', '<=', $to)
                                         ->orderBy('id', 'desc')
                                         ->with('driver.user.person')
                                         ->paginate(12);
@@ -25,7 +30,9 @@ class RevisionController extends Controller
                 return response()->json($revisions, 200);
             } else {
                 if ($request->from != "" AND $request->to == "") {
-                    $revisions = Revision::whereDate('created_at','>=',$request->from)
+                    $from = new Carbon($request->from, 'America/Lima'); 
+                    $from->tz = date_default_timezone_get();
+                    $revisions = Revision::whereDate('created_at','>=',$from)
                                             ->orderBy('id', 'desc')
                                             ->with('driver.user.person')
                                             ->paginate(12);
@@ -41,8 +48,14 @@ class RevisionController extends Controller
                 }
                 
             }
-            $revisions = Revision::whereDate('created_at','>=',$request->from)
-                                    ->whereDate('created_at', '<=', $request->to)
+            $from = new Carbon($request->from, 'America/Lima'); 
+            $from->tz = date_default_timezone_get();
+            $to = new Carbon($request->to, 'America/Lima'); 
+            $to->tz = date_default_timezone_get();
+            $to->addDay();
+
+            $revisions = Revision::whereDate('created_at','>=',$from)
+                                    ->whereDate('created_at', '<=', $to)
                                     ->orderBy('id', 'desc')
                                     ->with('driver.user.person')
                                     ->paginate(12);
