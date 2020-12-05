@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Price;
+use App\Models\Places\Distrito;
+use App\Models\Product\Subcategory;
 use App\Models\States\ServiceState;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +51,8 @@ class ServiceController extends Controller
             DB::beginTransaction();
 
             $input = $request->all();
+
+            
 
             $service = Service::create([
                 'direccion_origen' => $input['direccion_origen'],
@@ -159,5 +164,29 @@ class ServiceController extends Controller
         }
 
         return response()->json($services, 200);
+    }
+
+    /**
+     * listing the specified resource.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function cotizar(Request $request)
+    {
+        try {
+            
+            $price = Price::where('zona_origen_id', Distrito::find($request->distrito_origen_id)->zona()->first()->id)
+                                ->where('zona_destino_id', Distrito::find($request->distrito_destino_id)->zona()->first()->id)
+                                ->where('vehicle_type_id', Subcategory::find($request->subcategory_id)->vehicle_type()->first()->id)
+                                ->first()['price'];
+            
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([], 200);
+        }
+
+        return response()->json($price, 200);
     }
 }
