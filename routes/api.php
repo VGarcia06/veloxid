@@ -68,10 +68,12 @@ Route::apiResource('distritos', Places\DistritoController::class)->only(['index'
 
 // requirements
 //Route::get('drivers/requirements',[Requirements\DriverRequirementController::class, 'index']);
-Route::apiResource('requirements/drivers', Requirements\DriverRequirementController::class);
+Route::apiResource('requirements/drivers', Requirements\DriverRequirementController::class)->only([
+    'index', 'store'
+])->middleware('auth');
 Route::apiResource('requirements/vehicles', Requirements\VehicleRequirementController::class)->only([
-    'index'
-]);
+    'index', 'store'
+])->middleware('auth');
 
 Route::apiResource('drivers.vehicles', VehicleController::class);
 
