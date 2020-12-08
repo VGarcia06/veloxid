@@ -43,17 +43,24 @@
                     Fecha de Recogo<i class="mdi mdi-chevron-down"></i>
                   </th>
                   <th class="sortStyle unsortStyle">
-                    Estado<i class="mdi mdi-chevron-down"></i>
+                    Fecha de Entrega<i class="mdi mdi-chevron-down"></i>
                   </th>
                   <th class="sortStyle unsortStyle">
-                    Transportista<i class="mdi mdi-chevron-down"></i>
+                    Estado<i class="mdi mdi-chevron-down"></i>
                   </th>
-                  <th class="sortStyle unsortStyle"></th>
+                  <!-- <th class="sortStyle unsortStyle">
+                    Transportista<i class="mdi mdi-chevron-down"></i>
+                  </th> -->
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
+                <tr v-for="item in services" :key="item.id">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.distrito_origen.distrito }}</td>
+                  <td>{{ item.distrito_destino.distrito }}</td>
+                  <td>{{ item.fecha_recojo | timeformat}}</td>
+                  <td>{{ item.fecha_entrega | timeformat}}</td>
+                  <td>{{ item.state.estado }}</td>
                 </tr>
               </tbody>
             </table>
@@ -64,6 +71,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 
 export default {
   data() {
@@ -76,9 +84,15 @@ export default {
     axios.get("api/services/states").then((res) => {
       this.states = res.data;
     });
-    axios.get("api/services").then((res) => {
-      this.states = res.data;
+    axios.get("api/services/all").then((res) => {
+      this.services = res.data.data;
     });
   },
+    filters: {
+      timeformat: function (arg) {
+        moment.locale('es');
+        return moment(arg).subtract(10, 'days').calendar();;
+      }
+    }  
 };
 </script>
