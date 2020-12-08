@@ -15,6 +15,7 @@ class Product extends Model
         'alto',
         'ancho',
         'largo',
+        'peso',
         'precio_unitario',
         'cantidad',
         'descripcion',
