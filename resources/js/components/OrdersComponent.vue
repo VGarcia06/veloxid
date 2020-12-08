@@ -48,12 +48,24 @@
                   <th class="sortStyle unsortStyle">
                     Transportista<i class="mdi mdi-chevron-down"></i>
                   </th>
-                  <th class="sortStyle unsortStyle"></th>
+                  <!-- <th class="sortStyle unsortStyle"></th> -->
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
+                <tr v-for="item in services.data">
+                  <td>{{item.id}}</td>
+                  <td>{{item.direccion_origen}} - {{item.distrito_origen.distrito}} </td>
+                  <td>{{item.direccion_destino}} - {{item.distrito_destino.distrito}}</td>
+                  <td>{{ item.fecha_recojo}}</td>
+                  <td>{{ item.state.estado}}</td>
+                  <td>
+                    <select v-model="driver_id" ref="driver" class="form-select" aria-label="Default select example">
+                      <option >Seleccione a un Conductor</option>
+                      <option v-for="item in drivers" :value="item.id" :key="item.id">{{ item.name }}</option>
+                    </select>
+                    <a href="#"  @click.prevent="assign(driver_id,item.id)" >Asignar</a>
+                  </td>
+                  
                 </tr>
               </tbody>
             </table>
@@ -64,21 +76,61 @@
   </div>
 </template>
 <script>
+import Vue from "vue";
+import VueSimpleAlert from "vue-simple-alert";
+Vue.use(VueSimpleAlert);
 
 export default {
+  
   data() {
     return {
-      states: [],
+      state:"",
+      states: "",
       services:[],
+      drivers: [],
     };
   },
   created() {
+    
     axios.get("api/services/states").then((res) => {
       this.states = res.data;
     });
-    axios.get("api/services").then((res) => {
-      this.states = res.data;
+    axios.get("api/services/all").then((res) => {
+      this.services = res.data;
+    });
+    axios.get("api/drivers/evaluated").then((res) => {
+      this.drivers = res.data.suitable;
     });
   },
+  methods: {
+    assign(driver_id,service_id){
+      if (driver_id==undefined) {
+        this.$fire({
+          title: "Error",
+          text: "Seleccione a un Conductor" ,
+          type: "error",
+          showConfirmButton: false,
+          timer: 3000
+        })
+      }
+
+       axios.post("api/allocations",{
+        service_id: service_id,
+        driver_id: driver_id
+      }).then((res) => {
+        this.$fire({
+          title: "Servicio asignado",
+          text: "Se ha asignado el Servicio" ,
+          type: "success",
+          showConfirmButton: false,
+          timer: 3000
+        })
+
+        axios.get("api/services/all").then((res) => {
+          this.services = res.data;
+        });
+      })
+    } 
+  }
 };
 </script>
