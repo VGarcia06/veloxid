@@ -4343,110 +4343,9 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/OrdersComponent.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      states: [],
-      services: []
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    axios.get("api/services/states").then(function (res) {
-      _this.states = res.data;
-    });
-    axios.get("api/services/all").then(function (res) {
-      _this.services = res.data.data;
-    });
-  },
-  filters: {
-    timeformat: function timeformat(arg) {
-      moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('es');
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(arg).subtract(10, 'days').calendar();
-      ;
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\laragon\\www\\veloxid\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1330\n    at JSON.parse (<anonymous>)\n    at C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:57:20\n    at C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\utils.js:36:12\n    at Generator.next (<anonymous>)\n    at Function.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:26:3)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:84:14)\n    at sync (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:66:25)\n    at sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:177:19)\n    at onFirstPause (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:204:19)\n    at Generator.next (<anonymous>)\n    at cachedFunction (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\caching.js:68:46)\n    at cachedFunction.next (<anonymous>)\n    at findPackageData (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:33:18)\n    at findPackageData.next (<anonymous>)\n    at buildRootChain (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\config-chain.js:113:92)\n    at buildRootChain.next (<anonymous>)\n    at loadPrivatePartialConfig (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\partial.js:101:62)\n    at loadPrivatePartialConfig.next (<anonymous>)\n    at Function.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\partial.js:140:25)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:84:14)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\index.js:43:61)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:151:26)\n    at Generator.next (<anonymous>)\n    at asyncGeneratorStep (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:3:103)\n    at _next (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:194)\n    at C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:364\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:97)\n    at Object.loader (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:64:18)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:59:12)");
 
 /***/ }),
 
@@ -4455,96 +4354,9 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RequestComponent.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['serviceq', 'user'],
-  data: function data() {
-    return {
-      service: this.serviceq
-    };
-  },
-  created: function created() {},
-  methods: {
-    makeRequest: function makeRequest() {
-      this.service.user = this.user;
-      axios.post('api/services', this.service).then(function (res) {
-        console.log(res);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\laragon\\www\\veloxid\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1330\n    at JSON.parse (<anonymous>)\n    at C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:57:20\n    at C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\utils.js:36:12\n    at Generator.next (<anonymous>)\n    at Function.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:26:3)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:84:14)\n    at sync (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:66:25)\n    at sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:177:19)\n    at onFirstPause (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:204:19)\n    at Generator.next (<anonymous>)\n    at cachedFunction (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\caching.js:68:46)\n    at cachedFunction.next (<anonymous>)\n    at findPackageData (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:33:18)\n    at findPackageData.next (<anonymous>)\n    at buildRootChain (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\config-chain.js:113:92)\n    at buildRootChain.next (<anonymous>)\n    at loadPrivatePartialConfig (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\partial.js:101:62)\n    at loadPrivatePartialConfig.next (<anonymous>)\n    at Function.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\partial.js:140:25)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:84:14)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\index.js:43:61)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:151:26)\n    at Generator.next (<anonymous>)\n    at asyncGeneratorStep (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:3:103)\n    at _next (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:194)\n    at C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:364\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:97)\n    at Object.loader (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:64:18)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:59:12)");
 
 /***/ }),
 
@@ -104069,6 +103881,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._v(
+      "\r\n      " + _vm._s(_vm.service) + " " + _vm._s(_vm.user) + "\r\n    "
+    ),
     _c(
       "div",
       {
@@ -104084,14 +103899,6 @@ var render = function() {
                   _vm._v("Confirmación de Pedido ")
                 ]),
                 _vm._v(" "),
-                _c("p", { staticClass: "card-description" }),
-                _vm._v(
-                  "\r\n\r\n    " +
-                    _vm._s(_vm.service) +
-                    " " +
-                    _vm._s(_vm.user) +
-                    "\r\n    "
-                ),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "form-group row" }, [
@@ -122308,15 +122115,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!****************************************************************!*\
   !*** ./resources/js/components/CotizacionRequestComponent.vue ***!
   \****************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CotizacionRequestComponent_vue_vue_type_template_id_6ef9c606___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CotizacionRequestComponent.vue?vue&type=template&id=6ef9c606& */ "./resources/js/components/CotizacionRequestComponent.vue?vue&type=template&id=6ef9c606&");
 /* harmony import */ var _CotizacionRequestComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CotizacionRequestComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CotizacionRequestComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _CotizacionRequestComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _CotizacionRequestComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -122346,7 +122152,7 @@ component.options.__file = "resources/js/components/CotizacionRequestComponent.v
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/CotizacionRequestComponent.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
