@@ -197,7 +197,14 @@ class ServiceController extends Controller
     public function all()
     {
         try {
-            $services = Service::where('service_state_id',1)->paginate(12);
+            $services = Service::where('service_state_id',1)
+                                ->with(
+                                    'state',
+                                    'products.subcategory.vehicle_type',
+                                    'products.subcategory.category', 
+                                    'distrito_origen.zona', 
+                                    'distrito_destino.zona'
+                                )->paginate(12);
         } catch (\Throwable $th) {
             //throw $th;
 
