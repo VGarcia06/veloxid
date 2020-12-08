@@ -4343,9 +4343,110 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/OrdersComponent.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\laragon\\www\\veloxid\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1330\n    at JSON.parse (<anonymous>)\n    at C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:57:20\n    at C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\utils.js:36:12\n    at Generator.next (<anonymous>)\n    at Function.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:26:3)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:84:14)\n    at sync (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:66:25)\n    at sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:177:19)\n    at onFirstPause (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:204:19)\n    at Generator.next (<anonymous>)\n    at cachedFunction (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\caching.js:68:46)\n    at cachedFunction.next (<anonymous>)\n    at findPackageData (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:33:18)\n    at findPackageData.next (<anonymous>)\n    at buildRootChain (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\config-chain.js:113:92)\n    at buildRootChain.next (<anonymous>)\n    at loadPrivatePartialConfig (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\partial.js:101:62)\n    at loadPrivatePartialConfig.next (<anonymous>)\n    at Function.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\partial.js:140:25)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:84:14)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\index.js:43:61)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:151:26)\n    at Generator.next (<anonymous>)\n    at asyncGeneratorStep (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:3:103)\n    at _next (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:194)\n    at C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:364\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:97)\n    at Object.loader (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:64:18)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:59:12)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      states: [],
+      services: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get("api/services/states").then(function (res) {
+      _this.states = res.data;
+    });
+    axios.get("api/services/all").then(function (res) {
+      _this.services = res.data.data;
+    });
+  },
+  filters: {
+    timeformat: function timeformat(arg) {
+      moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('es');
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(arg).subtract(10, 'days').calendar();
+      ;
+    }
+  }
+});
 
 /***/ }),
 
@@ -4354,9 +4455,104 @@ throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/RequestComponent.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\laragon\\www\\veloxid\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1330\n    at JSON.parse (<anonymous>)\n    at C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:57:20\n    at C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\utils.js:36:12\n    at Generator.next (<anonymous>)\n    at Function.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:26:3)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:84:14)\n    at sync (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\gensync-utils\\async.js:66:25)\n    at sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:177:19)\n    at onFirstPause (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:204:19)\n    at Generator.next (<anonymous>)\n    at cachedFunction (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\caching.js:68:46)\n    at cachedFunction.next (<anonymous>)\n    at findPackageData (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\files\\package.js:33:18)\n    at findPackageData.next (<anonymous>)\n    at buildRootChain (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\config-chain.js:113:92)\n    at buildRootChain.next (<anonymous>)\n    at loadPrivatePartialConfig (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\partial.js:101:62)\n    at loadPrivatePartialConfig.next (<anonymous>)\n    at Function.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\partial.js:140:25)\n    at Generator.next (<anonymous>)\n    at evaluateSync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:244:28)\n    at Function.sync (C:\\laragon\\www\\veloxid\\node_modules\\gensync\\index.js:84:14)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\@babel\\core\\lib\\config\\index.js:43:61)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:151:26)\n    at Generator.next (<anonymous>)\n    at asyncGeneratorStep (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:3:103)\n    at _next (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:194)\n    at C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:364\n    at new Promise (<anonymous>)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:5:97)\n    at Object.loader (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:64:18)\n    at Object.<anonymous> (C:\\laragon\\www\\veloxid\\node_modules\\babel-loader\\lib\\index.js:59:12)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['serviceq', 'user'],
+  data: function data() {
+    return {
+      service: this.serviceq,
+      confirmacion: ""
+    };
+  },
+  created: function created() {},
+  methods: {
+    makeRequest: function makeRequest() {
+      this.service.user = this.user;
+      axios.post('api/services', this.service).then(function (res) {
+        console.log(res);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -4813,9 +5009,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      services: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    //Listado de Pedidos
+    axios.get("api/services/all").then(function (res) {
+      _this.services = res.data.data;
+    }); //Detalle de Pedido
   }
 });
 
@@ -103876,245 +104100,8 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._v(
-      "\r\n      " + _vm._s(_vm.service) + " " + _vm._s(_vm.user) + "\r\n    "
-    ),
-    _c(
-      "div",
-      {
-        staticClass: "content-wrapper",
-        staticStyle: { "padding-bottom": "0px" }
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12 grid-margin" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("h2", { staticClass: "card-title" }, [
-                  _vm._v("Confirmación de Pedido ")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Dirección exacta de origen")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.service.direccion_origen,
-                              expression: "service.direccion_origen"
-                            }
-                          ],
-                          attrs: { rows: "4", type: "text" },
-                          domProps: { value: _vm.service.direccion_origen },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.service,
-                                "direccion_origen",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Direccion exacta de destino")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.service.direccion_destino,
-                              expression: "service.direccion_destino"
-                            }
-                          ],
-                          attrs: { rows: "4", type: "text" },
-                          domProps: { value: _vm.service.direccion_destino },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.service,
-                                "direccion_destino",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Fecha recojo")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.service.fecha_recojo,
-                              expression: "service.fecha_recojo"
-                            }
-                          ],
-                          attrs: { type: "date" },
-                          domProps: { value: _vm.service.fecha_recojo },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.service,
-                                "fecha_recojo",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Fecha entrega")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.service.fecha_entrega,
-                              expression: "service.fecha_entrega"
-                            }
-                          ],
-                          attrs: { type: "date" },
-                          domProps: { value: _vm.service.fecha_entrega },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.service,
-                                "fecha_entrega",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "form-group row" }, [
-                      _c("label", { staticClass: "col-sm-3 col-form-label" }, [
-                        _vm._v("Términos y Condiciones")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-9" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.confirmacion,
-                              expression: "confirmacion"
-                            }
-                          ],
-                          attrs: { type: "checkbox" },
-                          domProps: {
-                            checked: Array.isArray(_vm.confirmacion)
-                              ? _vm._i(_vm.confirmacion, null) > -1
-                              : _vm.confirmacion
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$a = _vm.confirmacion,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    (_vm.confirmacion = $$a.concat([$$v]))
-                                } else {
-                                  $$i > -1 &&
-                                    (_vm.confirmacion = $$a
-                                      .slice(0, $$i)
-                                      .concat($$a.slice($$i + 1)))
-                                }
-                              } else {
-                                _vm.confirmacion = $$c
-                              }
-                            }
-                          }
-                        })
-                      ])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.makeRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("Aceptar")]
-                )
-              ])
-            ])
-          ])
-        ])
-      ]
-    )
-  ])
-}
+var render = function () {}
 var staticRenderFns = []
-render._withStripped = true
 
 
 
@@ -104709,13 +104696,27 @@ var render = function() {
                       return _c("tr", { key: item.id }, [
                         _c("td", [_vm._v(_vm._s(item.id))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.id))]),
+                        _c("td", [
+                          _vm._v(_vm._s(item.distrito_origen.distrito))
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.id))]),
+                        _c("td", [
+                          _vm._v(_vm._s(item.distrito_destino.distrito))
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.id) + " ")]),
+                        _c("td", [_vm._v(_vm._s(item.state.estado) + " ")]),
                         _vm._v(" "),
-                        _c("td")
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "/revisionesdetalle?revision=" + item.id
+                              }
+                            },
+                            [_vm._m(2, true)]
+                          )
+                        ])
                       ])
                     }),
                     0
@@ -104788,7 +104789,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("table", { staticClass: "table table-light" }, [
-          _vm._m(2),
+          _vm._m(3),
           _vm._v(" "),
           _c("tbody", [
             _c("tr", [
@@ -104807,20 +104808,17 @@ var render = function() {
                       "font",
                       { staticStyle: { "vertical-align": "inherit" } },
                       [
-                        _c(
-                          "font",
-                          { staticStyle: { "vertical-align": "inherit" } },
-                          [_vm._v("Pendiente")]
+                        _vm._v(
+                          "\r\n                    Pendiente\r\n                "
                         )
-                      ],
-                      1
+                      ]
                     )
                   ],
                   1
                 )
               ]),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(4)
             ]),
             _vm._v(" "),
             _c("tr", [
@@ -104852,7 +104850,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(4)
+              _vm._m(5)
             ])
           ])
         ])
@@ -104914,8 +104912,6 @@ var staticRenderFns = [
         "tr",
         { staticStyle: { "background-color": "#309D4F", color: "#fff" } },
         [
-          _c("th", [_vm._v("#")]),
-          _vm._v(" "),
           _c("th", { staticClass: "sortStyle ascStyle" }, [
             _vm._v("\r\n                  Código"),
             _c("i", { staticClass: "mdi mdi-chevron-down" })
@@ -104932,12 +104928,30 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("th", { staticClass: "sortStyle unsortStyle" }, [
+            _vm._v("\r\n                  Estado"),
+            _c("i", { staticClass: "mdi mdi-chevron-down" })
+          ]),
+          _vm._v(" "),
+          _c("th", { staticClass: "sortStyle unsortStyle" }, [
             _vm._v("\r\n                  Acciones"),
             _c("i", { staticClass: "mdi mdi-chevron-down" })
           ])
         ]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-outline-light text-black btn-sm",
+        attrs: { type: "button", title: "Ver detalle" }
+      },
+      [_c("i", { staticClass: "mdi mdi-eye" })]
+    )
   },
   function() {
     var _vm = this

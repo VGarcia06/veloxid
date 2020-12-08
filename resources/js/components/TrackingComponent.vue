@@ -67,7 +67,6 @@
           <table id="sortable-table-2" class="table table-striped">
             <thead>
               <tr style="background-color: #309D4F; color: #fff">
-                <th>#</th>
                 <th class="sortStyle ascStyle">
                   Código<i class="mdi mdi-chevron-down"></i>
                 </th>
@@ -76,6 +75,9 @@
                 </th>
                 <th class="sortStyle unsortStyle">
                   Destino<i class="mdi mdi-chevron-down"></i>
+                </th>
+                <th class="sortStyle unsortStyle">
+                  Estado<i class="mdi mdi-chevron-down"></i>
                 </th>
                 <th class="sortStyle unsortStyle">
                   Acciones<i class="mdi mdi-chevron-down"></i>
@@ -88,10 +90,20 @@
                 :key="item.id"
               >
                 <td>{{ item.id }}</td>
-                <td>{{ item.id }}</td>
-                <td>{{ item.id }}</td>
-                <td>{{ item.id }} </td>
-                <td></td>
+                <td>{{ item.distrito_origen.distrito }}</td>
+                <td>{{ item.distrito_destino.distrito }}</td>
+                <td>{{ item.state.estado }} </td>
+                <td>
+                  <a :href="'/revisionesdetalle?revision='+item.id">
+                    <button
+                      class="btn btn-outline-light text-black btn-sm"
+                      type="button"
+                      title="Ver detalle"
+                    >
+                      <i class="mdi mdi-eye"></i>
+                    </button> 
+                  </a>                 
+                </td>
               </tr>
             </tbody>
           </table>
@@ -131,7 +143,13 @@
             <th scope="row">1</th>
             <td>Villa el Salvador</td>
             <td>San Borja</td>      
-            <td><label class="badge badge-danger"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pendiente</font></font></label></td>
+            <td>
+              <label class="badge badge-danger">
+                <font style="vertical-align: inherit;">
+                    Pendiente
+                </font>
+              </label>
+            </td>
             <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalTrackingDetalle">Ver detalle</button></td>
           </tr>
           <tr>
@@ -152,9 +170,17 @@
 
 export default { 
   data() { 
-    return{};
+    return{
+      services:[],
+    };  
+  },
+  created(){
+    //Listado de Pedidos
+    axios.get("api/services/all").then((res) => {
+      this.services = res.data.data;
+    });
     
-    
-    }
+    //Detalle de Pedido
+  }
 }
 </script>
