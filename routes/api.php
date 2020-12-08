@@ -36,6 +36,7 @@ Route::apiResource('drivers', DriverController::class);
 /// services
 Route::apiResource('services.images', Services\GalleryController::class)
                     ->only(['index','store','destroy']);
+Route::get('services/all','ServiceController@all');
 Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
 Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
 Route::get('services/{user_id}','ServiceController@index');

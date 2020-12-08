@@ -193,4 +193,17 @@ class ServiceController extends Controller
 
         return response()->json($price, 200);
     }
+
+    public function all()
+    {
+        try {
+            $services = Service::where('service_state_id',1)->paginate(12);
+        } catch (\Throwable $th) {
+            //throw $th;
+
+            return response()->json([],400);
+        }
+
+        return response()->json($services,200);
+    }
 }
