@@ -29,6 +29,7 @@ class ServiceController extends Controller
             $services = $user
                             ->services()
                             ->with(
+                                'state',
                                 'products.subcategory.vehicle_type',
                                 'products.subcategory.category', 
                                 'distrito_origen.zona', 
