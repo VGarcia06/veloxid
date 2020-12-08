@@ -69,7 +69,7 @@
 <br>
 <body>
     <div id="app">
-            <cotization></cotization>
+            <cotization home-route="{{ url('request') }}"></cotization>
     </div>
 <footer>
     <div class="contenedor">

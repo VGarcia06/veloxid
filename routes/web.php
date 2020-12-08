@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +51,16 @@ Route::get('/confirmacionconductor', function () {
 //Cliente
 Route::get('/cotizacion', function () {
     return view('Cliente/cotization');
-})->middleware('auth');
+})->name('cotizacion');
+
+Route::post('/request', function (Request $request) {
+    $service_decode = json_decode($request->service,true);
+    $user = Auth::user();
+    return view('Cliente/request')->with([
+        'service_req' => $service_decode,
+        'user' => $user
+    ]);
+})->middleware('auth')->name('request');
 
 Route::get('/tracking', function () {
     return view('Cliente/tracking');
@@ -59,7 +70,7 @@ Auth::routes();
 
 //Vista General
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/cotizacion', 'HomeController@indexcotizacion')->name('cotizacion');
+//Route::get('/cotizacion', 'HomeController@indexcotizacion')->name('cotizacion');
 
 
 

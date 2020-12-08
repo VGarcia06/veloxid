@@ -82,3 +82,7 @@ Route::apiResource('drivers.vehicles', VehicleController::class);
 
 Route::apiResource('drivers.evaluations', DriverEvaluationController::class);
 Route::apiResource('vehicles.evaluations', VehicleEvaluationController::class);
+
+Route::apiResource('products', ProductController::class)->only([
+    'update'
+]);

@@ -1075,7 +1075,7 @@ export default {
         .then(function (response) {
           alert("Se registró correctamente el vehículo.");
           me.getDrivers(); //llamamos al metodo getVehicles(); para que refresque nuestro array y muestro los nuevos datos
-          me.clearFields(); //Limpiamos los campos e inicializamos la variable update a 0
+          me.clearFieldsV(); //Limpiamos los campos e inicializamos la variable update a 0
         })
         .catch(function (error) {
           console.log(error);
@@ -1151,6 +1151,7 @@ export default {
       formData.append("constanciaEstadoSalud", this.constanciaEstadoSalud);
       formData.append("name", this.name);
       formData.append("password", this.password);
+      formData.append("imagen", this.imagen);
       formData.append("_method", "put");
       let url = "api/drivers/" + this.update; //Ruta que hemos creado para enviar una tarea y guardarla
       axios
@@ -1209,6 +1210,11 @@ export default {
       this.name = "";
       this.password = "";
       this.imagen = "";
+      this.update = 0;
+    },
+
+    clearFieldsV() {
+      /*Limpia los campos e inicializa la variable update a 0*/
       this.placa = "";
       this.capacidadCarga = "";
       this.idDriver = "";

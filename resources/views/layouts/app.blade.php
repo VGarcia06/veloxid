@@ -66,7 +66,10 @@
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
+                  @auth
                   <p class="mb-1 text-black">{{ Auth::user()->name }}</p>
+                  @endauth
+                  
                 </div>
               </a>
 
@@ -94,7 +97,7 @@
                 <i class="mdi mdi-power"></i>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
-                                    </form>
+                                    </form><title>Cerrar sesión</title>
               </a>
             </li>
           </ul>
@@ -117,8 +120,11 @@
                   <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
+                  @auth
                   <span class="font-weight-bold mb-2 text-truncate">{{ Auth::user()->name }}</span>
                   <span class="text-secondary text-small">{{ Auth::user()->rol }}</span>
+                  @endauth
+                  
                 </div>
                 <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
               </a>
@@ -145,18 +151,16 @@
     </div>
 
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-  <!--js de purple-->
+<!--js de purple-->
   <!-- plugins:js -->
-  {{-- <script src="purple/assets/vendors/js/vendor.bundle.base.js"></script> --}}
+  <script src="purple/assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="purple/assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="purple/assets/js/jq.tablesort.js"></script>
-
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="purple/assets/js/off-canvas.js"></script>
@@ -166,12 +170,9 @@
     <!-- Custom js for this page -->
     <script src="purple/assets/js/dashboard.js"></script>
     <script src="purple/assets/js/todolist.js"></script>
+    <!-- End custom js for this page -->
     <script src="purple/assets/js/tooltips.js"></script>
     <script src="purple/assets/js/tablesorter.js"></script>
-    
-    
-    {{-- <script src="purple/assets/js/popover.js"></script> --}}
-
     <!-- End custom js for this page -->
 <!--js de purple-->
 
