@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Models\Service;
 use App\Models\Price;
 use App\Models\Places\Distrito;
@@ -19,10 +20,13 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
         try {
-            $services = Auth::user()
+            
+            $user = User::findOrFail($user_id);
+
+            $services = $user
                             ->services()
                             ->with(
                                 'products.subcategory.vehicle_type',
@@ -46,7 +50,7 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         try {
             DB::beginTransaction();
 
@@ -63,7 +67,7 @@ class ServiceController extends Controller
                 'fecha_entrega' => $input['fecha_entrega'],
                 'total' => $input['total'],
                 'transaction_id' => $input['transaction_id'],
-                'user_id' => Auth::user()->id,
+                'user_id' => $input['user']['id'],
                 'service_state_id' => 1 // Initial
             ]);
 

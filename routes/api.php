@@ -38,7 +38,8 @@ Route::apiResource('services.images', Services\GalleryController::class)
                     ->only(['index','store','destroy']);
 Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
 Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
-Route::apiResource('services', ServiceController::class)->only(['index', 'store','show']);
+Route::get('services/{user_id}','ServiceController@index');
+Route::apiResource('services', ServiceController::class)->only(['store','show']);
 /// allocation vehicles
 Route::apiResource('allocations.vehicles', Services\Allocations\AllocationVehicleController::class)
                     ->only(['index','store','destroy']);
