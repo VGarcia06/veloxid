@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Services\Allocations;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use App\Models\Allocation;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -16,10 +17,12 @@ class AllocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($driver_id)
     {
         try {
-            $allocations = Auth::user()
+            $driver = User::findOrFail($driver_id);
+
+            $allocations = $driver
                                     ->driver()
                                     ->first()
                                     ->allocations()
