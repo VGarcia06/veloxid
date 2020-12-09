@@ -28,6 +28,7 @@ class ServiceController extends Controller
 
             $services = $user
                             ->services()
+                            ->orderBy('id', 'desc')
                             ->with(
                                 'state',
                                 'products.subcategory.vehicle_type',
@@ -155,6 +156,7 @@ class ServiceController extends Controller
     {
         try {
             $services = Service::where('service_state_id', $id)
+                                ->orderBy('id', 'desc')
                                 ->with(
                                     'state',
                                     'products.subcategory.vehicle_type',
@@ -200,6 +202,7 @@ class ServiceController extends Controller
     {
         try {
             $services = Service::where('service_state_id',1)
+                                ->orderBy('id', 'desc')
                                 ->with(
                                     'state',
                                     'products.subcategory.vehicle_type',
