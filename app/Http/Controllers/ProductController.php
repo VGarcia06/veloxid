@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -56,7 +57,7 @@ class ProductController extends Controller
 
             $path = $product->imagen;
             if ($request->hasFile('imagen')) {
-                $path = Storage::disk('public')->put('products', $request->file('imagen'));
+                $path = Storage::url(Storage::disk('public')->put('products', $request->file('imagen')));
             }
 
             $product->alto = $request->alto;
