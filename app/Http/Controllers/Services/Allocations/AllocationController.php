@@ -26,6 +26,7 @@ class AllocationController extends Controller
                                     ->driver()
                                     ->first()
                                     ->allocations()
+                                    ->orderBy('id', 'desc')
                                     ->with('service')
                                     ->paginate(12);
         } catch (\Throwable $th) {
