@@ -48,9 +48,10 @@ class AllocationController extends Controller
         try {
             DB::beginTransaction();
 
+            $user = User::findOrFail($request->input('driver_id'));
             // creating allocation 
             Allocation::create([
-                'driver_id' => $request->input('driver_id'),
+                'driver_id' => $user->driver()->first()->id,
                 'service_id' => $request->input('service_id'),
                 'estado' => 0 // not accepted yet
             ]);

@@ -34,7 +34,8 @@ class ServiceController extends Controller
                                 'products.subcategory.category', 
                                 'distrito_origen.zona', 
                                 'distrito_destino.zona'
-                            )->paginate(12);
+                            )
+                            ->paginate(12);
 
         } catch (\Throwable $th) {
             throw $th;
