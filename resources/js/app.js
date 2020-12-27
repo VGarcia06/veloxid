@@ -31,9 +31,14 @@ Vue.component('tracking', require('./components/TrackingComponent.vue').default)
 Vue.component('revision', require('./components/RevisionHistoryComponent.vue').default);
 Vue.component('revisiondetail', require('./components/RevisionDetailComponent.vue').default);
 Vue.component('orderconfirmation', require('./components/OrderConfirmationComponent.vue').default);
-Vue.component('order', require('./components/OrdersComponent.vue').default);
+//Vue.component('order', require('./components/OrdersComponent.vue').default);
+//..... 
+Vue.component('orders', require('./components/OrderComponent.vue').default);
 Vue.component('request', require('./components/RequestComponent.vue').default);
 Vue.component('cotizacion-request', require('./components/CotizacionRequestComponent.vue').default);
+
+
+Vue.component('prueba', require('./components/PruebaComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -39,7 +39,7 @@ Route::apiResource('services.images', Services\GalleryController::class)
 Route::get('services/all','ServiceController@all');
 Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
 Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
-Route::get('services/{id}','ServiceController@index');
+Route::get('servicesall/{id}','ServiceController@index');
 Route::apiResource('services', ServiceController::class)->only(['store','show']);
 
 //payments

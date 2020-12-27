@@ -1,59 +1,113 @@
 <template>
 
 <div>
-<!-- MODAL VER DETALLE DE PEDIDO - CONDUCTOR -->
-  <div>
+<!-- MODAL PARA VER DETALLE-->
+  <div class="modal fade bd-example-modal-md" id="exampleModalDetallePedidoConductor" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
 
+        <div class="card px-2">
+          <div class="card-body">
+            <div class="container-fluid">
+              <h3 class="text-left my-1">Detalle de Servicio</h3>
+              <hr>
+            </div>
 
+            <div class="container-fluid d-flex justify-content-between">
+              <div class="col-lg-6 pl-0">
+                <p class="mb-2 mt-3"><b>Datos Generales</b></p>
+                <p>
+                  Código : {{ detail.id }}<br>
+                  Fecha de Solicitud : {{ detail.created_at }} <br>
+           <!--   Estado del Servicio : {{ detail.service_state_id }} -->
+                </p>
+              </div>
+            </div>
 
-<div class="modal fade bd-example-modal-lg" id="exampleModalDetallePedidoConductor" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-          
-          
-  <div class="card">
-  <div class="card-body">
- <h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Detalle de pedido</font></font></h1>
+            <div class="container-fluid d-flex justify-content-between">
+              <div class="col-lg-5 pl-0">
+                <p class="mt-2 mb-2"><b>Datos para Recojo</b></p>
+                <p>
+                  Distrito : {{ distRecojo }} <br>
+                  Zona : {{ zonaRecojo }}<br>
+                  Dirección :  {{ detail.direccion_origen }}
+                </p>
+              </div>
+              <div class="col-lg-5 pr-0">
+                <p class="mt-2 mb-2"><b>Datos para Entrega</b></p>
+                <p>
+                  Distrito : {{ distEntrega }} <br>
+                  Zona : {{ zonaEntrega }}<br>
+                  Dirección : {{ detail.direccion_destino }}
+                </p>
+              </div>
+            </div>           
 
-<table class="table table-light">
-  <thead class="thead-green">
-    <tr>
-      <th scope="col">Dirección</th>
-      <th scope="col">Categoría</th>
-      <th scope="col">Sub categoría</th>
-      <th scope="col">Producto</th>
-      <th scope="col">Fotografía</th>      
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      
-      <td>Av pastor sevilla 1352</td>
-      <td>Salas</td>      
-      <td>Juego de sala</td>
-      <td>Juego de sala 3-2-1 Zack Vintage</td>      
-      <td><div class="col-sm-9">
-                    <figure>
-                      <img
-                        with="250"
-                        height="250"
-                        :src="img"
-                        alt="Foto del Producto"
-                      />
-                    </figure>
-                  </div>                  
-      </td>          
-    </tr>    
-  </tbody>
-</table>
-</div>
-</div>
+            <div class="container-fluid d-flex justify-content-between">
+              <div class="col-lg-6 pl-0">
+                <p class="mb-2 mt-2"><b>Productos</b></p>
+              </div>
+            </div>
+            <div class="container-fluid mt-2 d-flex justify-content-center w-100">             
+              <div class="table-responsive w-100">
+                <table class="table">
+                  <thead>
+                    <tr style="background-color: #309D4F; color: #fff">
+                      <th>#</th>
+                      <th>Descripción</th>
+                      <th class="text-right">Peso</th>
+                      <th class="text-right">Alto</th>
+                      <th class="text-right">Ancho</th>
+                      <th class="text-right">Largo</th>
+                      <th class="text-right">Cantidad</th>
+                      <th class="text-right">Precio/u</th>
+
+       
+                      <th class="text-right"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr 
+                      class="text-right"
+                      v-for="item in products"
+                      :key="item.id"
+                    >
+                      <td class="text-left">{{ item.id }}</td>
+                      <td class="text-left">{{ item.descripcion }}</td>
+                      <td>{{ item.peso }}g</td>
+                      <td>{{ item.alto }}</td>
+                      <td>{{ item.ancho }}</td>
+                      <td>{{ item.largo }}</td>
+                      <td>{{ item.cantidad }}</td>
+     
+   
+ </td>
+                    <td>       </td>
+                    
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="container-fluid mt-3 w-100">
+              <!-- <p class="text-right mb-2">Sub - Total amount: $12,348</p> -->
+              <!-- <p class="text-right">IGV (8%) : S/.<p> -->
+  
+              <hr>
+            </div>
+            <div class="container-fluid w-100">
+              <!-- <a href="#" class="btn btn-primary float-right mt-2 ml-2"><i class="mdi mdi-printer mr-1"></i>Print</a> -->
+              <a href="#" class="btn btn-secondary float-right mt-2" data-dismiss="modal">
+                <!-- <i class="mdi mdi-telegram mr-1"></i> -->
+               Cerrar
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
-</div> 
-  
-  </div>
-
 <!-- FIN -->
 
 <!-- MODAL AGREGAR AUXILIAR -->
@@ -143,10 +197,10 @@
               <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-sm-12">                    
-                      <select class="form-control form-control-sm" id="exampleFormControlSelect3">                              
-                          <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DNI</font></font></option>
-                          <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PASAPORTE</font></font></option>                
-                          <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CE</font></font></option>                
+                      <select v-model="document_type" class="form-control form-control-sm" id="exampleFormControlSelect3">                              
+                          <option value="1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DNI</font></font></option>
+                          <option value="2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Carnet de Extrangeria</font></font></option>                
+             
                       </select>                                
                   </div>
                 </div>
@@ -171,7 +225,7 @@
           <div class="modal-footer">
             <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
             <button
-              
+               @click="addAuxiliar()"
               class="btn btn-gradient-primary mr-2"
             >
               Registrar
@@ -194,83 +248,64 @@
 </div>
 <!-- FIN -->
 
-  <div class="card">
-  <div class="card-body">
- <h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pedidos</font></font></h1>
-<div class="input-group mb-3"><input type="text" placeholder="Buscar por código de pedido" aria-describedby="basic-addon2" class="form-control"> <div class="input-group-append"><button type="button" class="btn btn-outline-primary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-              Buscar
-            </font></font></button></div></div>
-<table class="table table-light">
-  <thead class="thead-green">
-    <tr>
-      <th scope="col">Código</th>
-      <th scope="col">Origen</th>
-      <th scope="col">Destino</th>      
-      <th scope="col">Cotización</th>
-      <th scope="col">Fecha</th>
-      <th scope="col">Confirmación</th>
-      <th scope="col">Evidenciar</th>
-      <th scope="col">Detalle</th>
-      <th scope="col">Auxiliar</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Villa el Salvador</td>
-      <td>San Borja</td>            
-      <td>60</td>      
-      <td>12/11/2020</td>      
-      <td>    <select class="form-control form-control-sm" id="exampleFormControlSelect3">                              
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptar</font></font></option>
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>                
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
-              </select>
-            
-        </td>      
-      <td>
-                            <div class="file-field">
-                              <a class="btn-floating purple-gradient mt-0 float-left">
-                                <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-                                <input type="file">
-                              </a>    
-                            </div>
-      </td>
-    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalDetallePedidoConductor">Ver detalle</button></td>  
-    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalRegistrarAuxiliar">Agregar</button></td>
-    </tr>
-    
-    <tr>
-      <th scope="row">2</th>
-      <td>Chorrillos</td>
-      <td>San Isidro</td>            
-      <td>70</td>      
-      <td>13/11/2020</td>      
-      <td>    <select class="form-control form-control-sm" id="exampleFormControlSelect3">                              
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptar</font></font></option>
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>                
-                <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
-              </select>
-            
-        </td>      
-      <td>
-        
-        <div class="file-field">
-                                <a class="btn-floating purple-gradient mt-0 float-left">
-                                  <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-                                  <input type="file">
-                                </a>    
-        </div>
-      </td>
-</td>
+<div class="card">
+<div class="card-body">
 
-<td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalDetallePedidoConductor">Ver detalle</button></td>  
-<td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalRegistrarAuxiliar">Agregar</button></td>
-    </tr>
-  </tbody>
-</table>
+  <h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pedidos</font></font></h1>
+
+  <div class="input-group mb-3"><input type="text" placeholder="Buscar por código de pedido" aria-describedby="basic-addon2" class="form-control"> <div class="input-group-append"><button type="button" class="btn btn-outline-primary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                Buscar
+              </font></font></button></div></div>
+<div class="table-sorter-wrapper col-lg-12 table-responsive">
+  <table id="sortable-table-2" class="table table-striped">
+    <thead>
+      <tr style="background-color: #309D4F; color: #fff">
+        <th class="sortStyle ascStyle">Código</th>
+        <th class="sortStyle unsortStyle">Origen</th>
+        <th class="sortStyle unsortStyle">Destino</th>      
+        <th class="sortStyle unsortStyle">Cotización</th>
+        <th class="sortStyle unsortStyle">Fecha</th>
+        <th class="sortStyle unsortStyle">Confirmación</th>
+        <th class="sortStyle unsortStyle">Evidenciar</th>
+        <th class="sortStyle unsortStyle">Detalle</th>
+        <th class="sortStyle unsortStyle">Auxiliar</th>
+      </tr>
+    </thead>
+    <tbody>
+          
+      <tr v-for="item in services" >
+        <th scope="row">{{item.service.id}}</th>
+        <td>{{item.service.direccion_origen}}</td>
+        <td>{{item.service.direccion_destino}}</td>            
+        <td>{{item.service.total*0.60}}</td>      
+        <td>{{item.service.fecha_recojo}}</td>      
+    
+        <td>    <select @click="cambio_estado(item.id,estado_id)" v-model="estado_id" class="form-control form-control-sm" id="exampleFormControlSelect3">                              
+                  <option value="1" ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptar</font></font></option>
+                  <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
+                  <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>                
+                  <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
+                </select>
+              
+          </td>      
+        <td>
+          
+          <div class="file-field">
+                                  <a class="btn-floating purple-gradient mt-0 float-left">
+                                    <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                                    <input type="file">
+                                  </a>    
+              </div>
+            </td>
+      </td>
+
+        <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalDetallePedidoConductor" @click="getDetalle(item.service.id)">Ver detalle</button></td>  
+        <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalRegistrarAuxiliar" @click="set_id(item.id)" >Agregar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 </div>
 </div>
 </div>
@@ -279,8 +314,84 @@
 
 
 <script>
-export default { data()
-{ return{};}
-    
+import Vue from "vue";
+import VueSimpleAlert from "vue-simple-alert";
+Vue.use(VueSimpleAlert);
+export default { 
+  data() {
+        return {
+          services:[],
+          nombre:"",
+          apellidoPaterno:"",
+          apellidoMaterno:"",
+          numero:"",
+          document_type:"",
+          id_servicio:0,
+
+   
+      detail:[],
+
+      imagenminiatura:"",
+      imagen:"",
+      distRecojo:"",
+      zonaRecojo:"",
+      distEntrega:"",
+      zonaEntrega:""
+
+        }
+        },
+        created(){
+          //Listado de Pedidos
+          axios.get("api/allocations/26").then((res) => {
+            this.services = res.data.data;
+            console.log(this.services)
+          });
+  
+        },
+        methods: {
+          cambio_estado(id_service,estado){
+            if(estado==1){
+              axios.patch('/api/allocations/'+id_service)
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+            }
+            
+
+          },
+          set_id(id_service){
+            this.id_servicio=id_service
+          },
+          addAuxiliar(){
+            axios.post("api/allocations/"+this.id_servicio+"/auxiliars",{
+              nombre : this.nombre+" "+this.apellidoPaterno+" "+this.apellidoMaterno,
+              numero : this.numero,
+              document_type_id : this.document_type
+            }).then(function (response) {
+                this.$fire({
+                  title: "Auxiliar Agregado",
+                  text: "Se ha agregado al auxiliar" ,
+                  type: "success",
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+              })
+          },
+          //Detalle de Pedido
+          getDetalle(arg) { 
+            axios.get("api/services/"+arg).then((res) => {
+              this.detail = res.data;
+              this.distRecojo = this.detail.distrito_origen.distrito;
+              this.zonaRecojo = this.detail.distrito_origen.zona.zona;
+              this.distEntrega = this.detail.distrito_destino.distrito;
+              this.zonaEntrega = this.detail.distrito_destino.zona.zona;
+              this.products = this.detail.products;
+            });
+          },
+
+        }
 }
 </script>

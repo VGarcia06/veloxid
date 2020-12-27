@@ -42,6 +42,10 @@ Route::get('/pedidos', function () {
     return view('Jefe_Transporte/order');
 })->middleware('auth');
 
+Route::get('/pedidoss', function () {
+    return view('Jefe_Transporte/orders');
+})->middleware('auth');
+
 
 //Conductor
 Route::get('/confirmacionconductor', function () {
@@ -60,10 +64,13 @@ Route::post('/request', function (Request $request) {
         'service_req' => $service_decode,
         'user' => $user
     ]);
-})->middleware('auth')->name('request');
+})->middleware('auth:web')->name('request');
 
 Route::get('/tracking', function () {
-    return view('Cliente/tracking');
+    $user = Auth::user();
+    return view('Cliente/tracking')->with([
+        'user' => $user
+    ]);
 })->middleware('auth');
 
 Auth::routes();
@@ -71,6 +78,11 @@ Auth::routes();
 //Vista General
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/cotizacion', 'HomeController@indexcotizacion')->name('cotizacion');
+
+//Prueba
+Route::get('/prueba', function () {
+    return view('Jefe_Transporte/prueba');
+});
 
 
 

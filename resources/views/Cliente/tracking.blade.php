@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <tracking></tracking>
+<tracking :user="{{ json_encode($user) }}"></tracking>
 @endsection

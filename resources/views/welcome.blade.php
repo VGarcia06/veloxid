@@ -19,13 +19,13 @@
                     <a href="#">Nosotros</a>
                     <a href="#">Servicios</a>
                     @if (Route::has('login'))    
-                    <a href="{{ route('home') }}">Home</a>
                     @auth
+                    <a href="{{ route('home') }}">Home</a>
                     @else
                     <a href="{{ route('cotizacion') }}">Cotizar</a>
                     <a href="{{ route('login') }}">Iniciar Sesión</a>
                     @if (Route::has('register'))
-                    <a href="{{ route('register') }}" >Registrar</a>
+                    <a href="{{ route('register') }}" >Registrarse</a>
                     @endif
 
                     @endif
@@ -48,7 +48,7 @@
                 <div class="contenedor">
                     <h2>Reparto de Paquetes en todo Lima </h2>
                     <p>Veloxid es una empresa que te acompaña en toda tu experiencia de transporte en cualquier material que necesites mover. Cuenta con un grupo de transportistas capaces de cuidar tus bienes desde el punto de recojo hasta el punto de entrega. </p>
-                    <a href="#" class="boton">¡Calcula tu Envío Ahora!</a>
+                    <a href="{{ route('cotizacion') }}" class="boton">¡Calcula tu Envío Ahora!</a>
                 </div>
             </section>
             

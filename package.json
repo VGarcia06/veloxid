@@ -28,6 +28,7 @@
         "timezone": "^1.0.23",
         "vue-pdf": "^4.2.0",
         "vue-route-laravel": "^1.0.4",
-        "vue-router": "^3.4.9"
+        "vue-router": "^3.4.9",
+        "vue-simple-alert": "^1.1.1"
     }
 }

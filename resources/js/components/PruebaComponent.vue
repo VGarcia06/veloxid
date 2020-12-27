@@ -47,9 +47,8 @@
       </div>
     </div>
   </div>
-  <!-- FIN -->
-
-
+   <!-- FIN -->
+   
   <div class="content-wrapper" style="padding-bottom: 0px;">
     <div class="row">
       <div class="col-12 grid-margin">
@@ -61,7 +60,7 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Dirección exacta de origen</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" v-model="service.direccion_origen" placeholder="Dirección" required>
+                    <!-- <input type="text" class="form-control" v-model="service.direccion_origen" placeholder="Dirección" required> -->
                   </div>
                 </div>
               </div>
@@ -69,7 +68,7 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Direccion exacta de destino</label>
                   <div class="col-sm-9">
-                    <input type="text" v-model="service.direccion_destino" class="form-control"  placeholder="Dirección" required>
+                    <!-- <input type="text" v-model="service.direccion_destino" class="form-control"  placeholder="Dirección" required> -->
                   </div>
                 </div>
               </div>
@@ -80,7 +79,7 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Fecha recojo</label>
                   <div class="col-sm-9">
-                    <input type="date" class="form-control" v-model="service.fecha_recojo" required>
+                    <!-- <input type="date" class="form-control" v-model="service.fecha_recojo" required> -->
                   </div>
                 </div>
               </div>
@@ -88,7 +87,7 @@
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Fecha entrega</label>
                   <div class="col-sm-9">
-                    <input type="date" v-model="service.fecha_entrega" class="form-control" required>
+                    <!-- <input type="date" v-model="service.fecha_entrega" class="form-control" required> -->
                   </div>
                 </div>
               </div>
@@ -111,12 +110,11 @@
                       </i>                
               </div>
               <button  v-if="terminos == false" class="btn btn-secondary mr-2" disabled>Pagar</button>              
-              <button v-else class="btn btn-primary mr-2" @click="makeRequest()">Pagar</button>
+              <button v-else class="btn btn-primary mr-2">Pagar</button>
           </div>
         </div>
-
     </div>
-    
+    <!-- <button class="btn btn-gradient-primary mr-2" @click="makeRequest()">Pagar</button> -->
     </div>
     </div>
     </div>
@@ -130,9 +128,10 @@ export default {
     props:['serviceq', 'user'],
     data() {
         return {
-          service:this.serviceq,
-          confirmacion:"",
-          terminos:false
+            service:this.serviceq,
+            confirmacion:"",
+            terminos:false,
+            
         }
     },
     created() {
@@ -140,9 +139,9 @@ export default {
     methods: {
         makeRequest: function(){
 
-          // if(service.direccion_origen==null){
-          //    alert ("Es necesario que complete todos los campos.");
-          // }
+          if(service.direccion_origen==null){
+             alert ("Es necesario que complete todos los campos.");
+          }
           
           axios.post('api/checkout',{price:this.service.total})
             .then((res) => {
@@ -161,7 +160,7 @@ export default {
             .catch((error) => {
                 console.log(error);
             });
-        }
+        },
     },
 }
 </script>
