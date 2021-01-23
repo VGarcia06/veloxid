@@ -73,6 +73,13 @@ Route::get('/tracking', function () {
     ]);
 })->middleware('auth');
 
+Route::get('/vehiculos', function () {
+    $user = Auth::user();
+    return view('Conductor/detailvehicle')->with([
+        'user' => $user
+    ]);
+})->middleware('auth');
+
 Auth::routes();
 
 //Vista General

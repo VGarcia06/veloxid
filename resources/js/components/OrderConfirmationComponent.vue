@@ -60,7 +60,7 @@
                       <th class="text-right">Ancho</th>
                       <th class="text-right">Largo</th>
                       <th class="text-right">Cantidad</th>
-                      <th class="text-right">Precio/u</th>
+
 
        
                       <th class="text-right"></th>
@@ -242,6 +242,102 @@
       </div>
     </div>
     <!-- FIN -->
+    
+
+
+
+</div>
+<!-- FIN -->
+
+<!-- MODAL AGREGAR EVIDENCIA-->
+<div>
+
+<div
+      class="modal fade"
+      id="exampleModalSubirEvidencia"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5
+              class="modal-title text-primary"
+              id="exampleModalLabel"
+            >
+              REGISTRAR EVIDENCIA
+            </h5>
+
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              @click="clearFields()"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+           <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label"
+                    >Subir Fotografía</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      type="file"
+                      class="form-control file-upload-info"
+                      @change="subirImagen"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Fotografía</label>
+                  <div class="col-sm-9">
+                    <figure>
+                      <img
+                        with="200"
+                        height="200"
+                        :src="img"
+                        alt="Foto de la Entrega"
+                      />
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <!-- Botón que añade los datos del formulario, solo se muestra si la variable update es igual a 0-->
+            <button
+               @click="addAuxiliar()"
+              class="btn btn-gradient-primary mr-2"
+            >
+              Registrar
+            </button>
+            <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
+            <button
+              
+              class="btn btn-danger btn-fw" data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FIN -->
+    
 
 
 
@@ -256,7 +352,7 @@
   <div class="input-group mb-3"><input type="text" placeholder="Buscar por código de pedido" aria-describedby="basic-addon2" class="form-control"> <div class="input-group-append"><button type="button" class="btn btn-outline-primary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
                 Buscar
               </font></font></button></div></div>
-<div class="table-sorter-wrapper col-lg-12 table-responsive">
+<div class="table-sorter-wrapper col-lg-12 table-responsive" style="padding-left: 0px; padding-right: 0px;">
   <table id="sortable-table-2" class="table table-striped">
     <thead>
       <tr style="background-color: #309D4F; color: #fff">
@@ -264,7 +360,8 @@
         <th class="sortStyle unsortStyle">Origen</th>
         <th class="sortStyle unsortStyle">Destino</th>      
         <th class="sortStyle unsortStyle">Cotización</th>
-        <th class="sortStyle unsortStyle">Fecha</th>
+        <th class="sortStyle unsortStyle">Fecha Recojo</th>
+        <th class="sortStyle unsortStyle">Fecha Entrega</th>
         <th class="sortStyle unsortStyle">Confirmación</th>
         <th class="sortStyle unsortStyle">Evidenciar</th>
         <th class="sortStyle unsortStyle">Detalle</th>
@@ -274,32 +371,33 @@
     <tbody>
           
       <tr v-for="item in services" >
-        <th scope="row">{{item.service.id}}</th>
+        <td>{{item.service.id}}</td>
         <td>{{item.service.direccion_origen}}</td>
         <td>{{item.service.direccion_destino}}</td>            
         <td>{{item.service.total*0.60}}</td>      
-        <td>{{item.service.fecha_recojo}}</td>      
+        <td>{{item.service.fecha_recojo | timeformat}}</td>      
+        <td>{{item.service.fecha_entrega | timeformat}}</td>      
     
         <td>    <select @click="cambio_estado(item.id,estado_id)" v-model="estado_id" class="form-control form-control-sm" id="exampleFormControlSelect3">                              
                   <option value="1" ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptar</font></font></option>
-                  <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
-                  <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>                
-                  <option><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
+                  <option value="2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
+                  <option value="3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>                
+                  <option value="4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
                 </select>
               
           </td>      
         <td>
-          
-          <div class="file-field">
-                                  <a class="btn-floating purple-gradient mt-0 float-left">
-                                    <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-                                    <input type="file">
-                                  </a>    
-              </div>
-            </td>
-      </td>
+         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalSubirEvidencia" @click="get_id(item.service.id)" >Evidenciar entrega</button>
+        </td>
 
-        <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalDetallePedidoConductor" @click="getDetalle(item.service.id)">Ver detalle</button></td>  
+        <td>
+                            <button
+                    type="button"
+                     class="btn btn-outline-light text-black btn-sm" data-toggle="modal" data-target="#exampleModalDetallePedidoConductor" @click="getDetalle(item.service.id)"
+                  >
+                    <i class="mdi mdi-eye"></i>
+                  </button> 
+                  </td>  
         <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalRegistrarAuxiliar" @click="set_id(item.id)" >Agregar</button></td>
       </tr>
     </tbody>
@@ -315,83 +413,136 @@
 
 <script>
 import Vue from "vue";
+import moment from "moment";
+
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(VueSimpleAlert);
-export default { 
+export default {
   data() {
-        return {
-          services:[],
-          nombre:"",
-          apellidoPaterno:"",
-          apellidoMaterno:"",
-          numero:"",
-          document_type:"",
-          id_servicio:0,
+    return {
+      services: [],
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      numero: "",
+      document_type: "",
+      imagenminiatura: "",
+      id_servicio: 0,
 
-   
-      detail:[],
+      detail: [],
 
-      imagenminiatura:"",
-      imagen:"",
-      distRecojo:"",
-      zonaRecojo:"",
-      distEntrega:"",
-      zonaEntrega:""
-
-        }
-        },
-        created(){
-          //Listado de Pedidos
-          axios.get("api/allocations/26").then((res) => {
-            this.services = res.data.data;
-            console.log(this.services)
+      imagenminiatura: "",
+      imagen: "",
+      distRecojo: "",
+      zonaRecojo: "",
+      distEntrega: "",
+      zonaEntrega: "",
+    };
+  },
+  created() {
+    //Listado de Pedidos
+    axios.get("api/allocations/26").then((res) => {
+      this.services = res.data.data;
+      console.log(this.services);
+    });
+  },
+  methods: {
+    cambio_estado(id_service, estado) {
+      if (estado == 1) {
+        axios
+          .patch("/api/allocations/" + id_service)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
           });
-  
-        },
-        methods: {
-          cambio_estado(id_service,estado){
-            if(estado==1){
-              axios.patch('/api/allocations/'+id_service)
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-            }
-            
+      }
+    },
 
-          },
-          set_id(id_service){
-            this.id_servicio=id_service
-          },
-          addAuxiliar(){
-            axios.post("api/allocations/"+this.id_servicio+"/auxiliars",{
-              nombre : this.nombre+" "+this.apellidoPaterno+" "+this.apellidoMaterno,
-              numero : this.numero,
-              document_type_id : this.document_type
-            }).then(function (response) {
-                this.$fire({
-                  title: "Auxiliar Agregado",
-                  text: "Se ha agregado al auxiliar" ,
-                  type: "success",
-                  showConfirmButton: false,
-                  timer: 3000
-                })
-              })
-          },
-          //Detalle de Pedido
-          getDetalle(arg) { 
-            axios.get("api/services/"+arg).then((res) => {
-              this.detail = res.data;
-              this.distRecojo = this.detail.distrito_origen.distrito;
-              this.zonaRecojo = this.detail.distrito_origen.zona.zona;
-              this.distEntrega = this.detail.distrito_destino.distrito;
-              this.zonaEntrega = this.detail.distrito_destino.zona.zona;
-              this.products = this.detail.products;
-            });
-          },
+    get_id(id_service){
+      this.id_servicio=id_service;
+    },
 
-        }
-}
+    subir_evidencia() {
+      const config = { headers: { "content-type": "multipart/form-data" } };
+      let me = this;
+      let formData = new FormData();
+      formData.append("imagen", this.imagen);
+      let url = "api/services/" +this.id_servicio+ "/"+ this.imagen;
+      axios
+        .post(url, formData, config)
+        .then(function (response) {
+          alert("Se registró correctamente la evidencia.");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+        subirImagen(e) {
+      let file = e.target.files[0];
+      this.imagen = file;
+      this.mostrarImagen(file);
+      console.log(this.imagen);
+    },
+
+    mostrarImagen(file) {
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.imagenminiatura = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    set_id(id_service) {
+      this.id_servicio = id_service;
+    },
+    addAuxiliar() {
+      axios
+        .post("api/allocations/" + this.id_servicio + "/auxiliars", {
+          nombre:
+            this.nombre +
+            " " +
+            this.apellidoPaterno +
+            " " +
+            this.apellidoMaterno,
+          numero: this.numero,
+          document_type_id: this.document_type,
+        })
+        .then(function (response) {
+          this.$fire({
+            title: "Auxiliar Agregado",
+            text: "Se ha agregado al auxiliar",
+            type: "success",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        });
+    },
+    //Detalle de Pedido
+    getDetalle(arg) {
+      axios.get("api/services/" + arg).then((res) => {
+        this.detail = res.data;
+        this.distRecojo = this.detail.distrito_origen.distrito;
+        this.zonaRecojo = this.detail.distrito_origen.zona.zona;
+        this.distEntrega = this.detail.distrito_destino.distrito;
+        this.zonaEntrega = this.detail.distrito_destino.zona.zona;
+        this.products = this.detail.products;
+      });
+    },
+  },
+
+    computed: {
+    img() {
+      return this.imagenminiatura;
+    },
+  },
+
+  filters: {
+    timeformat: function (arg) {
+      return moment(arg).format('L');
+    },
+  },
+};
 </script>

@@ -30,7 +30,7 @@ class PaymentController extends Controller
 				"back_urls"=> array ( 
 					"failure"=> "",
 					"pending"=> "",
-					"success"=> "http://34.95.149.225/api/completed"
+					"success"=> "http://3.133.199.133/api/completed"
 				)
              
           

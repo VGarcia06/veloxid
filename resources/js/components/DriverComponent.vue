@@ -830,7 +830,7 @@
             </p>
             <p class="card-text">
               <small class="text-muted"
-                >Ultima actualizacion {{ item.updated_at }}</small
+                >Última actualización {{ item.updated_at }}</small
               >
             </p>
 

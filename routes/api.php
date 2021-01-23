@@ -14,10 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
- */
 
 // evaluating
 Route::post('revisions', 'RevisionController@index');
@@ -93,10 +92,15 @@ Route::apiResource('vehicles.evaluations', VehicleEvaluationController::class);
 Route::apiResource('products', ProductController::class)->only([
     'update'
 ]);
-        
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@authenticate');
+
+Route::group(['middleware' => []],function(){
+
+    Route::post('/auth/login', 'UserController@authenticate');
+    //Route::post('/auth/register', 'UserController@register');
+
+});
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     /*AÑADE AQUI LAS RUTAS QUE QUIERAS PROTEGER CON JWT*/
+    
 });

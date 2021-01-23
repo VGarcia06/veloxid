@@ -159,7 +159,20 @@
                 <td>{{ item.id }}</td>
                 <td>{{ item.distrito_origen.distrito }}</td>
                 <td>{{ item.distrito_destino.distrito }}</td>
-                <td>{{ item.state.estado }}</td>
+                <td>
+                  <div v-if="item.state.estado=='aceptado'">
+                    <label class="badge badge-info">Aceptado</label>
+                    </div>
+                  <div v-if="item.state.estado=='pendiente'">
+                    <label class="badge badge-warning">Pendiente</label>
+                    </div>
+                    <div v-if="item.state.estado=='en tránsito'">
+                    <label class="badge badge-danger">En Tránsito</label>
+                    </div>
+                    <div v-if="item.state.estado=='entregado'">
+                    <label class="badge badge-success">Entregado</label>
+                    </div>
+                    </td>
                 <td>
                   <button
                     class="btn btn-outline-light text-black btn-sm"
@@ -173,17 +186,17 @@
                   </button>             
                 </td>     
                 <td> 
-                 <div v-for ="item1, key in item.products ">
-                  <div v-if="item1.imagen==null && key==1">
-                  <i  
+                 <div v-for ="item1 in item.products" >
+                  <div v-if="item1.imagen==null"></div>
+                 </div>
+                 <div v-if="alert=='true'">
+                   <i  
                       class="mdi mdi-alert-circle"
-                      data-original-title="Es necesario que registre fotos referenciales del producto."
                       data-toggle="tooltip"
                       data-placement="right"
                       title="Es necesario que registre fotos referenciales del producto."
                     >
                     </i>
-                 </div>
                  </div>
                 </td>
               </tr>
@@ -213,8 +226,8 @@ export default {
       distRecojo:"",
       zonaRecojo:"",
       distEntrega:"",
-      zonaEntrega:""
-
+      zonaEntrega:"",
+      alert:"true",
     };  
   },
   created(){
@@ -222,10 +235,11 @@ export default {
     axios.get("api/servicesall/"+this.user.id).then((res) => {
       this.services = res.data.data;
     });
-  
+
   },
 
   methods:{
+
     //Detalle de Pedido
     getDetalle(arg) { 
       axios.get("api/services/"+arg).then((res) => {
@@ -235,6 +249,7 @@ export default {
         this.distEntrega = this.detail.distrito_destino.distrito;
         this.zonaEntrega = this.detail.distrito_destino.zona.zona;
         this.products = this.detail.products;
+
       });
     },
 
@@ -271,6 +286,9 @@ export default {
       };
       reader.readAsDataURL(file);
     },
+    
+
+    
     
   },
 

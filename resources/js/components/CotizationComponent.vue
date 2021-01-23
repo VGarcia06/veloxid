@@ -36,8 +36,7 @@
                   <label class="col-sm-3 col-form-label">Distrito Origen</label>
                   <div class="col-sm-9">
                     <select class="form-control" v-model="distritoorigen">
-                      <option value="" selected disabled>--Seleccionar Distrito--</option>
-                      <option v-for="item in distritos" :value="item">{{item.distrito}}</option>
+                      <option v-for="item in distritos" :value="item" :key="item.id">{{item.distrito}}</option>
                     </select>
                   </div>
                 </div>
@@ -47,8 +46,7 @@
                   <label class="col-sm-3 col-form-label">Distrito Destino</label>
                   <div class="col-sm-9">
                      <select class="form-control" v-model="distritodestino">
-                      <option value="" selected disabled>--Seleccionar Distrito--</option>
-                      <option v-for="item in distritos" :value="item">{{item.distrito}}</option>
+                      <option v-for="item in distritos" :value="item" :key="item.id">{{item.distrito}}</option>
                     </select>
                   </div>
                   </div>
@@ -83,7 +81,6 @@
                   <label class="col-sm-3 col-form-label">Categoria</label>
                   <div class="col-sm-9">
                     <select class="form-control" v-model="categorie">
-                      <option value="" selected disabled>--Seleccionar Categoria--</option>
                       <option v-for="item in categories" :value="item">{{item.nombre}}</option>
                     </select>
                   </div>
@@ -91,10 +88,9 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Subcategoria</label>
+                  <label class="col-sm-3 col-form-label">Subcategoría</label>
                   <div class="col-sm-9">
                      <select class="form-control" v-model="producto.subcategory">
-                      <option value="" selected disabled>--Seleccionar Subcategoria--</option>
                       <option v-for="item in categorie.subcategories" :value="item">{{item.nombre}}</option>
                     </select>
                   </div>
@@ -244,7 +240,7 @@
           <thead>
             <tr style="background-color: #309D4F; color: #fff">
               <th class="sortStyle ascStyle">
-                Desripción<i class="mdi mdi-chevron-down"></i>
+                Descripción<i class="mdi mdi-chevron-down"></i>
               </th>
               <th class="sortStyle unsortStyle">
                 Peso<i class="mdi mdi-chevron-down"></i>
@@ -293,7 +289,7 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Total de Cotización</label>
+            <label class="col-sm-3 col-form-label">Total De Cotización</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" v-model="service.total" disabled>
             </div>
@@ -307,7 +303,7 @@
               <input type="hidden" name="service" :value="JSON.stringify(service)">
             <button type="submit"
               class="btn btn-gradient-primary mr-2">
-              Contratar 
+              Contratar
             </button>
             
           </form>
@@ -322,8 +318,6 @@
         
       </div>
     </div>
-    
-  </div>
 </template>
 
 <script>
@@ -336,17 +330,16 @@
         cotizar: true,
         distritos:[],
         categories:[],
-        distritoorigen: 1,
-        distritodestino: 1,
+        distritoorigen: "",
+        distritodestino: "",
         categorie:"",
         producto: {
-          imagen:"",
           cantidad: 1,
         },
 
         service:{
-            distrito_origen_id : 1,
-            distrito_destino_id :1,
+            distrito_origen_id : "",
+            distrito_destino_id :"",
             direccion_origen : null,
             direccion_destino : null,
             fecha_recojo : null,
@@ -398,9 +391,6 @@
             this.producto.precio_unitario = res.data;
             this.producto.subcategory_id = this.producto.subcategory.id;
 
-            /// borrando atributo subcategoría
-            delete this.producto.subcategory;
-
             /// Concatenando alto
             this.producto.alto = this.producto.alto + this.producto.altoM;
             delete this.producto.altoM;
@@ -420,11 +410,12 @@
             //Sumar
             this.producto.subtotal=this.producto.cantidad*this.producto.precio_unitario;
             this.service.total += this.producto.subtotal;
-            
+            this.service.distrito_origen_id=this.distritoorigen.id;
+            this.service.distrito_destino_id=this.distritodestino.id;
             this.service.products.push(producto);
 
             this.clearFields();
-            alert("Se agregó correctamente los datos del producto.");
+           alert("Se agregó correctamente los datos del producto.");
           }).catch((error) => {
             console.log(error);
             alert("Tu producto no encuentra un precio.");
@@ -433,8 +424,8 @@
       },
 
 
-      clearFields() {
-      /*Limpia los campos e inicializa la variable update a 0*/
+    clearFields() {
+      //Limpia los campos e inicializa la variable update a 0
       this.producto = {
         cantidad : 1,
         categorie: "",

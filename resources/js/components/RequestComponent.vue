@@ -59,17 +59,17 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Dirección exacta de origen</label>
+                  <label class="col-sm-3 col-form-label">Dirección de origen</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" v-model="service.direccion_origen" placeholder="Dirección" required>
+                    <input type="text" class="form-control" v-model="service.direccion_origen" placeholder="Escribir Dirección" required>
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Direccion exacta de destino</label>
+                  <label class="col-sm-3 col-form-label">Direccion de destino</label>
                   <div class="col-sm-9">
-                    <input type="text" v-model="service.direccion_destino" class="form-control"  placeholder="Dirección" required>
+                    <input type="text" v-model="service.direccion_destino" class="form-control"  placeholder="Escribir Dirección" required>
                   </div>
                 </div>
               </div>
@@ -78,7 +78,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Fecha recojo</label>
+                  <label class="col-sm-3 col-form-label">Fecha de recojo</label>
                   <div class="col-sm-9">
                     <input type="date" class="form-control" v-model="service.fecha_recojo" required>
                   </div>
@@ -86,7 +86,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Fecha entrega</label>
+                  <label class="col-sm-3 col-form-label">Fecha de entrega</label>
                   <div class="col-sm-9">
                     <input type="date" v-model="service.fecha_entrega" class="form-control" required>
                   </div>

@@ -77,7 +77,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Fecha recojo</label>
+                  <label class="col-sm-3 col-form-label">Fecha de recojo</label>
                   <div class="col-sm-9">
                     <!-- <input type="date" class="form-control" v-model="service.fecha_recojo" required> -->
                   </div>

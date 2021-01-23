@@ -1,6 +1,6 @@
 <template>
-  <div>
-     <!-- MODAL REGISTRAR -->
+    <div>
+             <!-- MODAL REGISTRAR -->
     <div
       class="modal fade"
       id="exampleModalRegistrar"
@@ -133,7 +133,7 @@
     </div>
     <!-- FIN -->
 
-    <!-- MODAL ACTUALIZAR -->
+     <!-- MODAL ACTUALIZAR -->
     <div
       class="modal fade"
       id="exampleModalActualizar"
@@ -261,159 +261,6 @@
     </div>
     <!-- FIN -->
 
-    <!--DATOS DEL CONDUCTOR-->
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Conductor</h4>
-          <br />
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
-                  >Nombres</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.person.nombre
-                }}</label>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label
-                  class="col-sm-4 font-weight-bold"
-                  for="exampleInputEmail3"
-                  >Apellido Paterno</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.person.apellidoPaterno
-                }}</label>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label
-                  class="col-sm-4 font-weight-bold"
-                  for="exampleInputPassword4"
-                  >Apellido Materno</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.person.apellidoMaterno
-                }}</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label
-                  class="col-sm-4 font-weight-bold"
-                  for="exampleSelectGender"
-                  >Teléfono</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.person.telefono
-                }}</label>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label
-                  class="col-sm-4 font-weight-bold"
-                  for="exampleSelectGender"
-                  >Email</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.email
-                }}</label>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label class="col-sm-4 font-weight-bold" for="exampleInputCity1"
-                  >Dirección</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.person.direccion
-                }}</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
-                  >Tipo de Documento</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.person.document_type.tipo
-                }}</label>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
-                  >Número de Documento</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.person.numero
-                }}</label>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
-                  >Licencia de Conducir</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.driver.licenciaConducir
-                }}</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
-                  >Banco</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.driver.banco
-                }}</label>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
-                  >Número de Cuenta Bancaria</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.driver.cuentaBancaria
-                }}</label>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group row">
-                <label class="col-sm-4 font-weight-bold" for="exampleInputName1"
-                  >Usuario</label
-                >
-                <label class="col-sm-8" for="exampleInputName1">{{
-                  this.driver.name
-                }}</label>
-              </div>
-            </div>
-     <!--     <a
-            :href="this.driver.driver.constanciaEstadoSalud"
-            v-text="item.label"
-            @click.prevent="downloadItem(item)" />-->
-         <!--   <pdf :src="this.driver.driver.constanciaEstadoSalud"></pdf> -->
-          </div>
-        </div>
-      </div>
-
-    <!--FIN DATOS DEL CONDUCTOR-->
 
     <div class="form-group" style="padding-top: 24px;">
       <div class="row">
@@ -452,7 +299,7 @@
       </div>
     </div>
 
-    <div class="row">
+        <div class="row">
       <div class="col-lg-4" v-for="item in vehicles.data" :key="item.id">
         <div class="card">
           <div class="card-body">
@@ -514,7 +361,7 @@
         </div>
       </div>
     </div>
-    <br />
+        <br />
     <div class="row">
       <div class="col-sm-12 col-md-5"></div>
       <div class="col-sm-12 col-md-7">
@@ -558,7 +405,7 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -566,7 +413,7 @@ import pdf from 'vue-pdf'
 
 export default {
   
-  props: ["id"],
+  props: ["user"],
   data() {
     return {
       driver: [],
@@ -590,7 +437,7 @@ export default {
   methods: {
     getVehicles(num_page) {
       axios
-        .get("api/drivers/" + this.id + "/vehicles", {
+        .get("api/drivers/" + this.user.id + "/vehicles", {
           params: {
             page: num_page,
           },

@@ -37,6 +37,8 @@ Vue.component('orders', require('./components/OrderComponent.vue').default);
 Vue.component('request', require('./components/RequestComponent.vue').default);
 Vue.component('cotizacion-request', require('./components/CotizacionRequestComponent.vue').default);
 
+Vue.component('detail-vehicle', require('./components/DetailVehicleComponent.vue').default);
+
 
 Vue.component('prueba', require('./components/PruebaComponent.vue').default);
 /**

@@ -70,24 +70,24 @@
                   <input type="checkbox" class="custom-control-input" id="customCheck1">
                   <label class="custom-control-label" for="customCheck1">Recordarme</label>
                 </div>
-                <a href="#!" class="forgot-password-link">Olvide mi contraseña</a>
+                <a href="#!" class="forgot-password-link">Olvidé mi contraseña</a>
               </div>
 
               <button name="login" id="login" class="btn btn-block login-btn" type="submit" class="btn btn-primary" >  {{ __('Ingresar') }} </button>
               @if (Route::has('password.request'))
               <center>
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Olvidaste tu Contraseña?') }}
+                                        {{ __('¿Olvidaste tu Contraseña?') }}
                                     </a>
                                 @endif
               </center>
             </form>
-            <p class="login-wrapper-footer-text">¡No tienes cuenta? <a href="{{ route('register') }}" class="text-reset">Registrate aqui</a></p>
+            <p class="login-wrapper-footer-text">¿No tienes cuenta? <a href="{{ route('register') }}" class="text-reset">Registrate aquí</a></p>
             <nav class="social-links">
-              <a href="#!"><i class="mdi mdi-facebook-box"></i></a>
+              <a href="https://www.facebook.com/Veloxidperu/"><i class="mdi mdi-facebook-box"></i></a>
               <a href="#!"><i class="mdi mdi-twitter"></i></a>
               <a href="#!"><i class="mdi mdi-instagram"></i></a>
-              <a href="#!"><i class="mdi mdi-dribbble"></i></a>
+
             </nav>
           </div>
         </div>

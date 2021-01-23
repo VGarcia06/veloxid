@@ -51,8 +51,6 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-
-
     /**
      * The model's default values for attributes.
      *
