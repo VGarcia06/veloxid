@@ -61,7 +61,6 @@ class DriverController extends Controller
         // Validate the request...
         try {
             $driver = new Driver;
-
             /**
              * If you would like to begin a transaction manually and have 
              * complete control over rollbacks and commits, you may use the 
