@@ -92,5 +92,84 @@ Route::get('/prueba', function () {
 });
 
 
+//RUTAS API
 
+// evaluating
+Route::post('api/revisions', 'RevisionController@index');
+Route::apiResource('api/revisions', RevisionController::class)->only(['show']);
+Route::get('api/drivers/evaluations', 'DriverEvaluationController@all');
+
+// searching
+Route::get('api/drivers/{id}/vehicles/search', "VehicleController@search");
+Route::get('api/drivers/search', "DriverController@search");
+
+// getting suitable and unsuitable drivers
+Route::get('api/drivers/evaluated', "DriverController@getEvaluated");
+
+// api
+/// drivers
+Route::apiResource('api/drivers', DriverController::class);
+/// services
+Route::apiResource('api/services.images', Services\GalleryController::class)
+                    ->only(['index','store','destroy']);
+Route::get('api/services/all','ServiceController@all');
+Route::get('api/services/states/{id}', 'ServiceController@get_services_from_specified_state');
+Route::apiResource('api/services/states', Services\ServiceStateController::class)->only(['index']);
+Route::get('api/servicesall/{id}','ServiceController@index');
+Route::apiResource('api/services', ServiceController::class)->only(['store','show']);
+
+//payments
+Route::post('api/checkout','Services\PaymentController@checkout');
+Route::get('api/completed','Services\PaymentController@completed');
+
+/// allocation vehicles
+Route::apiResource('api/allocations.vehicles', Services\Allocations\AllocationVehicleController::class)
+                    ->only(['index','store','destroy']);
+/// allocation auxiliars
+Route::apiResource('api/allocations.auxiliars', Services\Allocations\AllocationAuxiliarController::class)
+                    ->only(['index', 'store', 'update', 'destroy']);
+/// allocations
+Route::get('api/allocations/{driver_id}', 'Services\Allocations\AllocationController@index');
+Route::apiResource('api/allocations', Services\Allocations\AllocationController::class)
+                    ->only(['store','update','destroy']);
+/// vehicles
+Route::apiResource('api/vehicles.subcategories', Vehicles\VehicleSubcategoryController::class)
+                ->except(['update', 'show']);
+Route::apiResource('api/vehicles', VehicleController::class);
+// getting prices
+Route::apiResource('api/prices', Services\PriceController::class)->only([
+    'index'
+]);
+Route::post('api/prices/cotizar', 'ServiceController@cotizar');
+
+// getting types
+Route::apiResource('api/vehicletypes', Types\VehicleTypeController::class);
+Route::apiResource('api/documenttypes', Types\DocumentTypeController::class);
+// getting categories
+Route::apiResource('api/categories', Products\CategoryController::class)->only(['index']);
+// getting places
+Route::apiResource('api/zonas', Places\ZonaController::class)->only(['index']);
+Route::apiResource('api/distritos', Places\DistritoController::class)->only(['index']);
+
+// requirements
+//Route::get('drivers/requirements',[Requirements\DriverRequirementController::class, 'index']);
+Route::apiResource('api/requirements/drivers', Requirements\DriverRequirementController::class)->only([
+    'index', 'store'
+]);
+Route::apiResource('api/requirements/vehicles', Requirements\VehicleRequirementController::class)->only([
+    'index', 'store'
+]);
+
+Route::apiResource('api/drivers.vehicles', VehicleController::class);
+
+Route::apiResource('api/drivers.evaluations', DriverEvaluationController::class);
+Route::apiResource('api/vehicles.evaluations', VehicleEvaluationController::class);
+
+Route::apiResource('api/products', ProductController::class)->only([
+    'update'
+]);
+
+
+
+//rutas api FIN
 
