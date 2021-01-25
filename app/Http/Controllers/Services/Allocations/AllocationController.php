@@ -101,7 +101,7 @@ class AllocationController extends Controller
             // changing service state to the service
             $allocation = Allocation::findOrFail( (int) $id);
 
-            $allocation->estado = 1; // accepted
+            $allocation->estado = $request->id_status_internal; // accepted
 
             $allocation->save();
 

@@ -370,24 +370,24 @@
     </thead>
     <tbody>
           
-      <tr v-for="item in services" >
-        <td>{{item.service.id}}</td>
+      <tr v-for="item in services" :key="item.id" >
+        <td>{{item.service.id +" "+ item.estado}}</td>
         <td>{{item.service.direccion_origen}}</td>
         <td>{{item.service.direccion_destino}}</td>            
         <td>{{item.service.total*0.60}}</td>      
         <td>{{item.service.fecha_recojo | timeformat}}</td>      
-        <td>{{item.service.fecha_entrega | timeformat}}</td>      
+        <td>{{item.service.fecha_entrega | timeformat}} </td>      
     
-        <td>    <select @click="cambio_estado(item.id,estado_id)" v-model="estado_id" class="form-control form-control-sm" id="exampleFormControlSelect3">                              
-                  <option value="1" ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptar</font></font></option>
-                  <option value="2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
-                  <option value="3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>                
-                  <option value="4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
+        <td>    <select @click="cambio_estado(item.id,item.estado)" v-model="item.estado" :disabled="item.estado==4 || item.estado==6" class="form-control form-control-sm" id="exampleFormControlSelect3">                              
+                  <option value="2"  :disabled="item.estado!=0 " ><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aceptar</font></font></option>
+                  <option value="6"  :disabled="item.estado!=0 "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rechazar</font></font></option>                
+                  <option value="3"  :disabled="item.estado==0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En tránsito</font></font></option>    
+                  <option value="4"  disabled=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Entregado</font></font></option>             
+                  <option value="5" :disabled="item.estado==0 "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Falso flete</font></font></option>                
                 </select>
-              
           </td>      
         <td>
-         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalSubirEvidencia" @click="get_id(item.service.id)" >Evidenciar entrega</button>
+         <button :disabled="item.estado!=3" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalSubirEvidencia" @click="get_id(item.service.id)" >Evidenciar entrega</button>
         </td>
 
         <td>
@@ -398,7 +398,7 @@
                     <i class="mdi mdi-eye"></i>
                   </button> 
                   </td>  
-        <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalRegistrarAuxiliar" @click="set_id(item.id)" >Agregar</button></td>
+        <td><button type="button" :disabled="item.estado!=2" class="btn btn-success" data-toggle="modal" data-target="#exampleModalRegistrarAuxiliar" @click="set_id(item.id)" >Agregar</button></td>
       </tr>
     </tbody>
   </table>
@@ -448,16 +448,18 @@ export default {
   },
   methods: {
     cambio_estado(id_service, estado) {
-      if (estado == 1) {
+    
         axios
-          .patch("/api/allocations/" + id_service)
+          .patch("/api/allocations/" + id_service,{
+            id_status_internal:estado
+          })
           .then(function (response) {
             console.log(response);
           })
           .catch(function (error) {
             console.log(error);
           });
-      }
+      
     },
 
     get_id(id_service){
