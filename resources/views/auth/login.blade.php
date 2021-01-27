@@ -86,7 +86,7 @@
             <nav class="social-links">
               <a href="https://www.facebook.com/Veloxidperu/"><i class="mdi mdi-facebook-box"></i></a>
               <a href="#!"><i class="mdi mdi-twitter"></i></a>
-              <a href="#!"><i class="mdi mdi-instagram"></i></a>
+              <a href="https://www.instagram.com/veloxidperu/"><i class="mdi mdi-instagram"></i></a>
 
             </nav>
           </div>

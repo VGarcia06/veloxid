@@ -11329,8 +11329,8 @@ code {
   .btn-success:not(.btn-light):hover, .btn-success:not(.btn-light):focus, .btn-success:not(.btn-light):active {
     color: #ffffff; }
   .btn-success:not(.btn-light):focus, .btn-success:not(.btn-light):active {
-    background: #1bcfb4;
-    border-color: #1bcfb4; }
+    background: #309D4F;
+    border-color: #309D4F; }
 
 .btn-outline-success:hover, .btn-outline-success:focus, .btn-outline-success:active {
   background: -webkit-gradient(linear, left top, right top, from(#84d9d2), to(#07cdae));
@@ -12251,7 +12251,7 @@ code {
     outline: none; }
 
 select.form-control {
-  border-color: #309D4F;
+  border-color: #ebedf2;
     padding: .4375rem .75rem;
     border: 0;
     background: #309D4C;

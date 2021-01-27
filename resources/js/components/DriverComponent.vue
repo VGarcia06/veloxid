@@ -959,7 +959,7 @@ export default {
   data() {
     return {
       drivers: [],
-      current_page: "",
+      current_page: 1,
       id: "",
       name: "",
       password: "",
@@ -995,7 +995,7 @@ export default {
       this.drivers = res.data.drivers.data;
       this.active = res.data.active;
       this.inactive = res.data.inactive;
-      this.current_page = res.data.drivers.current_page;
+      
     });
 
     axios.get("api/vehicletypes").then((res) => {
@@ -1016,6 +1016,7 @@ export default {
         })
         .then((res) => {
           this.drivers = res.data.drivers.data;
+          this.current_page = res.data.drivers.current_page;
           console.log(this.drivers);
         })
         .catch(function (error) {

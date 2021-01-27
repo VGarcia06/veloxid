@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <orderconfirmation></orderconfirmation>
+    <orderconfirmation :user="{{ json_encode($user) }}"></orderconfirmation>
 @endsection

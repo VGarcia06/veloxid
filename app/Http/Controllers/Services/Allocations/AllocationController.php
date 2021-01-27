@@ -28,7 +28,7 @@ class AllocationController extends Controller
                                     ->allocations()
                                     ->orderBy('id', 'desc')
                                     ->with('service')
-                                    ->paginate(12);
+                                    ->paginate(10);
         } catch (\Throwable $th) {
             throw $th;
 

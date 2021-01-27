@@ -15,12 +15,12 @@
         <input type="checkbox" id="menu-bar">
         <label class="fontawesome-align-justify" for="menu-bar"></label>
                 <nav class="menu">
-                    <a href="">Inicio</a>        
+                    <a href="/">Inicio</a>        
                     <a href="#">Nosotros</a>
                     <a href="#">Servicios</a>
                     @if (Route::has('login'))    
                     @auth
-                    <a href="{{ route('home') }}">Home</a>
+                   <a href="{{ route('home') }}">Home</a>
                     @else
                     <a href="{{ route('cotizacion') }}">Cotizar</a>
                     <a href="{{ route('login') }}">Iniciar Sesión</a>

@@ -30,7 +30,7 @@
                 </div>
               </div>
             </div> -->
-            <div class="row">
+            <div class="row" v-if="service.products==''">
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Distrito Origen</label>
@@ -52,7 +52,29 @@
                   </div>
                 </div>
               </div>
-            
+
+            <div class="row" v-if="service.products!=''">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Distrito Origen</label>
+                  <div class="col-sm-9">
+                    <select class="form-control" v-model="distritoorigen" disabled>
+                      <option v-for="item in distritos" :value="item" :key="item.id">{{item.distrito}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Distrito Destino</label>
+                  <div class="col-sm-9">
+                     <select class="form-control" v-model="distritodestino" disabled>
+                      <option v-for="item in distritos" :value="item" :key="item.id">{{item.distrito}}</option>
+                    </select>
+                  </div>
+                  </div>
+                </div>
+              </div>
 
 
             <h4 class="card-title">Registrar Producto </h4>
@@ -297,16 +319,16 @@
         </div>
         <div class="col-md-6">
           <div class="form-group row">
-          <form v-bind:action="homeRoute" method="POST" enctype="multipart/form-data">
+        <!-- <form v-bind:action="homeRoute" method="POST">-->
           
-              <input type="hidden" name="_token" :value="csrf">
-              <input type="hidden" name="service" :value="JSON.stringify(service)">
-            <button type="submit"
+          <!--  <input type="hidden" name="_token" :value="csrf">-->
+          <!--  <input type="hidden" name="service" :value="JSON.stringify(service)"> -->
+            <a type="button" @click="saveService()" :href="'/request'"
               class="btn btn-gradient-primary mr-2">
               Contratar
-            </button>
+            </a>
             
-          </form>
+         <!-- </form> -->
           </div>
         </div>
       </div>
@@ -322,10 +344,8 @@
 
 <script>
   export default {
-    props: ['homeRoute'],
     data() {
       return {
-        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         update:0,
         cotizar: true,
         distritos:[],
@@ -335,8 +355,8 @@
         categorie:"",
         producto: {
           cantidad: 1,
+          subtotal: 0,
         },
-
         service:{
             distrito_origen_id : "",
             distrito_destino_id :"",
@@ -346,7 +366,8 @@
             fecha_entrega : null,
             transaction_id : 0,
             total : 0,
-            products : []
+            products : [
+            ]
         },
       };
     },
@@ -438,9 +459,10 @@
     this.service.total = this.service.total-this.producto.subtotal;
     },
 
-
-    makeRequest: function() {
-      this.$router.push({ path: '/request', query: { service: this.service } })
+    saveService() {
+      const parsed = JSON.stringify(this.service);
+      localStorage.setItem('service', parsed);
+       
     },
 
   },
@@ -451,7 +473,16 @@
     },
   },
 
-
-
+  mounted() {
+    if (localStorage.getItem('service')) {
+      try {
+        this.service = JSON.parse(localStorage.getItem('service'));
+      } catch(e) {
+        localStorage.removeItem('service');
+      }
+    }
+  }
   };
+
+
 </script>

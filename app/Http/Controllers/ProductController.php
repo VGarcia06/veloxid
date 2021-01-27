@@ -14,9 +14,18 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($product_id)
     {
-        //
+        try {
+            $galleries= Product::findOrFail($product_id)
+                                            ->get();
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()->json([], 400);
+        }
+
+        return response()->json($galleries,200);
     }
 
     /**

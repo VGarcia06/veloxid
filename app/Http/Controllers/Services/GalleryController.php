@@ -22,8 +22,7 @@ class GalleryController extends Controller
         try {
             $galleries_group_by_state = Service::findOrFail($service_id)
                                                         ->galleries()
-                                                        ->get()
-                                                        ->groupBy('service_state_id');
+                                                        ->get();
         } catch (\Throwable $th) {
             throw $th;
 
@@ -45,20 +44,22 @@ class GalleryController extends Controller
         try {
             DB::beginTransaction();
             $service = Service::findOrFail($service_id);
+            $service->service_state_id= 4;
 
-            $array = [];
-            
-            foreach ($request->all() as $image) {
-                if ($request->hasFile('*.imagen')) {
-                    $image['imagen'] = Storage::url(Storage::disk('public')->put('services/' . $service->id . '/galleries/' . $service->service_state_id, $image['imagen']));
-                }
-                $array[] = [
-                    'imagen' => $image['imagen'],
-                    'service_state_id' => $service->service_state_id
-                ];
+            $path_imagen = "";
+            if ($request->hasFile('imagen')) {
+                $path_imagen = Storage::disk('public')->put('services', $request->file('imagen'));
             }
 
-            $service->galleries()->createMany($array);
+            $services = new Gallery;
+
+            $services->imagen= $path_imagen;
+            $services->service_state_id = 4;
+            $services->service_id = $service_id;
+
+            $services->save(); 
+
+            $service->save(); 
 
             DB::commit();
         } catch (\Throwable $th) {

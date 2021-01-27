@@ -68,6 +68,51 @@
             </table>
           </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-5"></div>
+            <div class="col-sm-12 col-md-7">
+                <div
+                class="dataTables_paginate paging_simple_numbers"
+                id="order-listing_paginate"
+                >
+                  <ul class="pagination">
+                      <li id="order-listing_previous">
+                      <button
+                          aria-controls="order-listing"
+                          data-dt-idx="0"
+                          tabindex="0"
+                          class="page-link"
+                          @click="getPedidos(current_page- 1)"
+                      >
+                          Anterior
+                      </button>
+                      </li>
+                      <li class="paginate_button page-item active">
+                      <a
+                          aria-controls="order-listing"
+                          data-dt-idx="0"
+                          tabindex="0"
+                          class="page-link"
+                          >{{ current_page }}</a
+                      >
+                      </li>
+                      <li id="order-listing_next">
+                      <button
+                          aria-controls="order-listing"
+                          data-dt-idx="0"
+                          tabindex="0"
+                          class="page-link"
+                          @click="getPedidos(current_page+ 1)"
+                      >
+                          Siguiente
+                      </button>
+                      </li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -80,7 +125,8 @@
         return {
           revisionhistory: [],
           from: "",
-          to: ""
+          to: "",
+          current_page: 1,
         };
       },
       created() {
@@ -94,6 +140,23 @@
         });
       },
       methods: {
+        // Paginación
+        getPedidos(num_page) {
+          axios.post("api/revisions"+"?page="+num_page, {
+              from : "",
+              to: "",        
+            })
+            .then((res) => {
+              this.revisionhistory = res.data.data;
+              this.current_page = res.data.current_page;
+              console.log(this.services);
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            });
+        },
+
         filtrar() {
           axios.post("api/revisions", {
             from: this.from,

@@ -85,4 +85,5 @@ class Service extends Model
     {
         return $this->belongsTo('App\Models\Places\Distrito', 'distrito_destino_id');
     }
+
 }

@@ -54,6 +54,7 @@ Route::apiResource('allocations.auxiliars', Services\Allocations\AllocationAuxil
                     ->only(['index', 'store', 'update', 'destroy']);
 /// allocations
 Route::get('allocations/{driver_id}', 'Services\Allocations\AllocationController@index');
+
 Route::apiResource('allocations', Services\Allocations\AllocationController::class)
                     ->only(['store','update','destroy']);
 /// vehicles

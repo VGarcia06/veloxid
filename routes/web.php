@@ -39,17 +39,16 @@ Route::get('/revisiones', function () {
 })->middleware('auth');
 
 Route::get('/pedidos', function () {
-    return view('Jefe_Transporte/order');
-})->middleware('auth');
-
-Route::get('/pedidoss', function () {
-    return view('Jefe_Transporte/orders');
+    return view('Jefe_Transporte/pedidos');
 })->middleware('auth');
 
 
 //Conductor
 Route::get('/confirmacionconductor', function () {
-    return view('Conductor/orderconfirmation');
+    $user = Auth::user();
+    return view('Conductor/orderconfirmation')->with([
+        'user' => $user
+    ]);
 })->middleware('auth');
 
 //Cliente
@@ -57,14 +56,15 @@ Route::get('/cotizacion', function () {
     return view('Cliente/cotization');
 })->name('cotizacion');
 
-Route::post('/request', function (Request $request) {
-    $service_decode = json_decode($request->service,true);
+Route::get('/request', function () {
     $user = Auth::user();
+    if( Auth::guest() ){
+    return view('Auth/login');
+    }else{
     return view('Cliente/request')->with([
-        'service_req' => $service_decode,
         'user' => $user
-    ]);
-})->middleware('auth:web')->name('request');
+    ]);}
+})->middleware('auth');
 
 Route::get('/tracking', function () {
     $user = Auth::user();

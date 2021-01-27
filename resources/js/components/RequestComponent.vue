@@ -122,15 +122,15 @@
     </div>
     </div>
     </div>
-</div>
+
 </template>
 
 <script>
 export default {
-    props:['serviceq', 'user'],
+    props:[ 'user'],
     data() {
         return {
-          service:this.serviceq,
+          service:[],
           confirmacion:"",
           terminos:false
         }
@@ -151,7 +151,7 @@ export default {
               this.service.transaction_id=res.data.id
                 axios.post('api/services', this.service)
                 .then((res) => {
-                  
+                localStorage.removeItem('service');
                 })
                 .catch((error) => {
                   
@@ -163,5 +163,18 @@ export default {
             });
         }
     },
+
+  mounted() {
+    if (localStorage.getItem('service')) {
+      try {
+        this.service = JSON.parse(localStorage.getItem('service'));
+        console.log(this.service);
+      } catch(e) {
+        localStorage.removeItem('service');
+      }
+    }
+  }
+    
+    
 }
 </script>

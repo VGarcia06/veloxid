@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -23,13 +24,33 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(Auth::user()->idUserType==3){
+          return view('home');
+        }
+        if(Auth::user()->idUserType==1){
+            $user = Auth::user();
+        return view('Cliente/tracking')->with([
+        'user' => $user
+        ]);
+        };
+        if(Auth::user()->idUserType==2){
+            $user = Auth::user();
+         return view('Conductor/orderconfirmation')->with([
+        'user' => $user
+        ]);
+        };
     }
 
     public function indexcotizacion()
     {
         return view('Cliente/cotization');
     }
+
+    public function homecliente()
+    {
+        return view('homeclient');
+    }
+
 
     /**
      * Show the application dashboard.

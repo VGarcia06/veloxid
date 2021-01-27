@@ -49,11 +49,12 @@
         <label class="fontawesome-align-justify" for="menu-bar"></label>
                 <nav class="menu">
                     @if (Route::has('login'))    
-                    <a href="#">Inicio</a>        
+                    <a href="/">Inicio</a>        
                     <a href="#">Nosotros</a>
                     <a href="#">Servicios</a>
                     <a href="{{ route('cotizacion') }}">Cotizar</a>
                     @auth
+                    <a href="{{ route('home') }}">Home</a>
                     @else
                     <a href="{{ route('login') }}">Iniciar Sesión</a>
 

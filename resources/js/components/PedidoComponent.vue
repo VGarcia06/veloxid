@@ -1,18 +1,20 @@
 <template>
-<div>
-<cotizacion  v-if="service!=''"></cotizacion>
-<div v-else>
-<!-- MODAL PARA VER DETALLE-->
-  <div class="modal fade bd-example-modal-md" id="exampleModalTrackingDetalle" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+  <div>
+  <!-- MODAL PARA VER DETALLE-->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
-
-        <div class="card px-2">
-          <div class="card-body">
-            <div class="container-fluid">
-              <h3 class="text-left my-1">Detalle de Servicio</h3>
-              <hr>
-            </div>
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <div class="container-fluid">
+            <h3>Detalle de Servicio</h3>
+          </div>
+          <button @click="clear()" type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
 
             <div class="container-fluid d-flex justify-content-between">
               <div class="col-lg-6 pl-0">
@@ -31,7 +33,7 @@
             </div>
 
             <div class="container-fluid d-flex justify-content-between">
-              <div class="col-lg-5 pl-0">
+              <div class="col-lg-4 pl-0">
                 <p class="mt-2 mb-2"><b>Datos para Recojo</b></p>
                 <p>
                   Distrito : {{ distRecojo }} <br>
@@ -39,7 +41,7 @@
                   Dirección :  {{ detail.direccion_origen }}
                 </p>
               </div>
-              <div class="col-lg-5 pr-0">
+              <div class="col-lg-4 pr-0">
                 <p class="mt-2 mb-2"><b>Datos para Entrega</b></p>
                 <p>
                   Distrito : {{ distEntrega }} <br>
@@ -47,7 +49,16 @@
                   Dirección : {{ detail.direccion_destino }}
                 </p>
               </div>
-            </div>           
+                <div class="col-lg-4 pr-0">
+                <p class="mt-2 mb-2"><b>Evidencia de Entrega</b></p>
+                <p>
+                <img
+                :src="'storage/'+imagenevidence.imagen"
+                style="width: 180px; height: 170px"
+              />
+                </p>
+              </div>
+            </div>         
 
             <div class="container-fluid d-flex justify-content-between">
               <div class="col-lg-6 pl-0">
@@ -68,8 +79,7 @@
                       <th class="text-right">Cantidad</th>
                       <th class="text-right">Precio/u</th>
                       <th class="text-right">Subtotal</th>
-                      <th colspan="2" class="text-center">Imagen</th>
-                      <th> Acciones</th>
+                      <th class="text-center">Imagen</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -87,9 +97,10 @@
                       <td>{{ item.cantidad }}</td>
                       <td>{{ item.precio_unitario }}</td>
                       <td>{{ item.cantidad*item.precio_unitario  }}</td>
-                      <td><div class="file-field"><a class="btn-floating purple-gradient mt-0 float-left"><i aria-hidden="true" class="fas fa-cloud-upload-alt"></i> <input type="file" @change="subirImagen"></a></div>
-                      </td>
-                      <td>
+                      <!-- <td>
+                        <div class="file-field"><a class="btn-floating purple-gradient mt-0 float-left"><i aria-hidden="true" class="fas fa-cloud-upload-alt"></i> <input type="file" @change="subirImagen"></a></div>
+                      </td> -->
+                      <td class="text-center">
                         <figure>
                           <img
                             with="200"
@@ -99,14 +110,15 @@
                           />
                         </figure>
                       </td>
-                      <td>        
+                      <!-- <td>        
                         <button
+                          v-if="img != '' "
                           @click="updateProduct(item.id)"
                           class="btn btn-gradient-primary mr-2"
                             >
                             Guardar
                         </button>
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -116,71 +128,91 @@
               <!-- <p class="text-right mb-2">Sub - Total amount: $12,348</p> -->
               <!-- <p class="text-right">IGV (8%) : S/.<p> -->
               <h4 class="text-right mb-3">Total : S/{{detail.total}}</h4>
-              <hr>
             </div>
-            <div class="container-fluid w-100">
-              <!-- <a href="#" class="btn btn-primary float-right mt-2 ml-2"><i class="mdi mdi-printer mr-1"></i>Print</a> -->
-              <a href="#" @clicl="clear()" class="btn btn-secondary float-right mt-2" data-dismiss="modal">
-                <!-- <i class="mdi mdi-telegram mr-1"></i> -->
-               Cerrar
-              </a>
-            </div>
-          </div>
         </div>
-
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button @click="clear()" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        
       </div>
     </div>
   </div>
 <!-- FIN -->
 
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Mis Pedidos </h4>
-      <div class="row mt-4">
-        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-          <table id="sortable-table-2" class="table table-striped">
-            <thead>
-              <tr style="background-color: #309D4F; color: #fff">
-                <th class="sortStyle ascStyle">
-                  Código<i class="mdi mdi-chevron-down"></i>
-                </th>
-                <th class="sortStyle unsortStyle">
-                  Origen<i class="mdi mdi-chevron-down"></i>
-                </th>
-                <th class="sortStyle unsortStyle">
-                  Destino<i class="mdi mdi-chevron-down"></i>
-                </th>
-                <th class="sortStyle unsortStyle">
-                  Recojo<i class="mdi mdi-chevron-down"></i>
-                </th>
-                <th class="sortStyle unsortStyle">
-                  Entrega<i class="mdi mdi-chevron-down"></i>
-                </th>                
-                <th class="sortStyle unsortStyle">
-                  Estado<i class="mdi mdi-chevron-down"></i>
-                </th>
-                <th class="sortStyle unsortStyle">
-                  Acciones<i class="mdi mdi-chevron-down"></i>
-                </th>
-                <!-- <th></th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="item in services"
-                :key="item.id"
-              >
-                <td>{{ item.id }}</td>
-                <td>{{ item.distrito_origen.distrito }}</td>
-                <td>{{ item.distrito_destino.distrito }}</td>
-                <td>{{ item.fecha_recojo  | timeFormat }}</td>
-                <td>{{ item.fecha_entrega | timeFormat }}</td>
-                <td>
-                  <div v-if="item.service_state_id==2">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Pedidos</h4>
+
+        <div class="form-group row" style="margin-top: 30px">
+          <div class="col-lg-4">
+            <label>Filtrar por Estado:</label>
+            <select class="form-control" v-model="state">
+              <option v-for="item in states" :value="item.id" :key="item.id">
+                {{ item.estado }}
+              </option>
+            </select>
+          </div>
+          <div class="col-lg-4">
+            <label>Filtrar por Fecha:</label>
+            <input type="date" class="form-control" />
+          </div>
+          <div class="col-lg-2">
+            <label></label>
+            <button
+              class="form-control btn btn-gradient-primary mr-2"
+            >
+              Filtrar
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="table-sorter-wrapper col-lg-12 table-responsive">
+            <table id="sortable-table-2" class="table table-striped">
+              <thead>
+                <tr style="background-color: #309D4F; color: #fff">
+                  <th>Código</th>
+                  <th class="sortStyle ascStyle">
+                    Origen<i class="mdi mdi-chevron-down"></i>
+                  </th>
+                  <th class="sortStyle unsortStyle">
+                    Destino<i class="mdi mdi-chevron-down"></i>
+                  </th>
+                  <th class="sortStyle unsortStyle">
+                    Recojo<i class="mdi mdi-chevron-down"></i>
+                  </th>
+                  <th class="sortStyle unsortStyle">
+                    Entrega<i class="mdi mdi-chevron-down"></i>
+                  </th>
+                  <th class="sortStyle unsortStyle">
+                    Acciones<i class="mdi mdi-chevron-down"></i>
+                  </th>
+                  <th class="sortStyle unsortStyle">
+                    Estado<i class="mdi mdi-chevron-down"></i>
+                  </th>
+                  
+                  <th class="sortStyle unsortStyle">
+                    Transportista<i class="mdi mdi-chevron-down"></i>
+                  </th>
+                  <th class="sortStyle unsortStyle"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in services.data" :key="item.id">
+                  <td>{{item.id}}</td>
+                  <td>{{item.direccion_origen}} - {{item.distrito_origen.distrito}} </td>
+                  <td>{{item.direccion_destino}} - {{item.distrito_destino.distrito}}</td>
+                  <td>{{ item.fecha_recojo  | timeFormat }}</td>
+                  <td>{{ item.fecha_entrega | timeFormat }}</td>
+                  <td><button @click="getDetalle(item.id)" type="button" class="btn btn-outline-light text-black btn-sm" data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye"></i></button></td>
+                  <td>
+                    <div v-if="item.service_state_id==2">
                     <label class="badge badge-info">Aceptado</label>
                     </div>
-                  <div v-if="item.service_state_id==1">
-              <label class="badge badge-warning">Pendiente</label>
+                    <div v-if="item.service_state_id==1">
+                    <label class="badge badge-warning">Pendiente</label>
                     </div>
                     <div v-if="item.service_state_id==3">
                     <label class="badge badge-danger">En Tránsito</label>
@@ -188,38 +220,22 @@
                     <div v-if="item.service_state_id==4">
                     <label class="badge badge-success">Entregado</label>
                     </div>
-                </td>
-                <td>
-                  <button
-                    class="btn btn-outline-light text-black btn-sm"
-                    type="button"
-                    @click="getDetalle(item.id)"
-                    title="Ver detalle"
-                   data-toggle="modal" 
-                    data-target="#exampleModalTrackingDetalle"
-                  >
-                    <i class="mdi mdi-eye"></i>
-                  </button>             
-                </td>     
-                <!-- <td> 
-                 <div v-for ="item1 in item.products" >
-                  <div v-if="item1.imagen==null"></div>
-                 </div>
-                 <div v-if="alert=='true'">
-                   <i  
-                      class="mdi mdi-alert-circle"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      title="Es necesario que registre fotos referenciales del producto."
-                    >
-                    </i>
-                 </div>
-                </td> -->
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td>
+                    <select v-model="driver_id" ref="driver" class="form-control form-control-sm" aria-label="Default select example">
+                      <option >Seleccione a un Conductor</option>
+                      <option v-for="item in drivers" :value="item.id" :key="item.id">{{ item.name }}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <a href="#"  @click.prevent="assign(driver_id,item.id)" >Asignar</a>                      
+                  </td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
         <div class="row">
             <div class="col-sm-12 col-md-5"></div>
@@ -265,58 +281,57 @@
             </div>
         </div>
 
+      </div>
     </div>
   </div>
-</div>
-</div>
 </template>
-
 <script>
-import moment from 'moment'
-import cotizacion from './CotizationComponent';
+import moment from 'moment';
+import Vue from "vue";
+import VueSimpleAlert from "vue-simple-alert";
+Vue.use(VueSimpleAlert);
 export default {
-  props:[
-    'user'
-  ],
- components: {
-        cotizacion,
-    },
-  data() { 
-    return{
+  
+  data() {
+    return {
+      state:"",
+      states: "",
       services:[],
-      service:[],
+      drivers: [],
       detail:[],
-      products:[],
       imagenminiatura:"",
       imagen:"",
+      imagenevidence:{},
       distRecojo:"",
       zonaRecojo:"",
       distEntrega:"",
       zonaEntrega:"",
-      alert:"true",
-      current_page: 1,      
-    };  
+      current_page: 1,
+    };
   },
-  created(){
-    //Listado de Pedidos
-    axios.get("api/servicesall/"+this.user.id).then((res) => {
-      this.services = res.data.data;
-      console.log(this.user.id);
+  created() {
+    
+    axios.get("api/services/states").then((res) => {
+      this.states = res.data;
     });
-
+    axios.get("api/services/all").then((res) => {
+      this.services = res.data;
+      
+    });
+    axios.get("api/drivers/evaluated").then((res) => {
+      this.drivers = res.data.suitable;
+    });
   },
-
-  methods:{
-    // Paginación
+  methods: {
     getPedidos(num_page) {
       axios
-        .get("api/servicesall/"+this.user.id, {
+        .get("api/services/all", {
           params: {
             page: num_page,
           },
         })
         .then((res) => {
-          this.services = res.data.data;
+          this.services = res.data;
           this.current_page = res.data.current_page;
           console.log(this.services);
         })
@@ -328,83 +343,65 @@ export default {
 
     //Detalle de Pedido
     getDetalle(arg) { 
-      axios.get("api/services/"+arg).then((res) => {
+    axios.get("api/services/"+arg).then((res) => {
         this.detail = res.data;
         this.distRecojo = this.detail.distrito_origen.distrito;
         this.zonaRecojo = this.detail.distrito_origen.zona.zona;
         this.distEntrega = this.detail.distrito_destino.distrito;
         this.zonaEntrega = this.detail.distrito_destino.zona.zona;
         this.products = this.detail.products;
+    });
 
+    axios.get("api/services/" + arg+'/images').then((res) => {
+        this.imagenevidence = res.data[0];
+        console.log(this.imagenevidence );
       });
     },
 
-    updateProduct(arg) {
-      const config = { headers: { "content-type": "multipart/form-data" } };
-      let me = this;
-      let formData = new FormData();
-      formData.append("imagen", this.imagen);
-      formData.append("_method", "put");
-      let url = "api/products/" + arg; 
-      axios
-        .post(url, formData, config)
-        .then(function (response) {
-          alert("Se agregó correctamente la imagen.");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    
-    subirImagen(e) {
-      let file = e.target.files[0];
-      this.imagen = file;
-      this.mostrarImagen(file);
-      console.log(this.imagen);
-    },
-
-    mostrarImagen(file) {
-      let reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.imagenminiatura = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
-
     clear(){
-      this.detail = "";
-      this.distRecojo = "";
-      this.zonaRecojo = "";
-      this.distEntrega = "";
-      this.zonaEntrega = "";
-      this.products = "";
-      this.imagenminiatura = "";
-      this.imagen = "";
+        this.detail = "";
+        this.distRecojo = "";
+        this.zonaRecojo = "";
+        this.distEntrega = "";
+        this.zonaEntrega = "";
+        this.products = "";
+        this.imagenevidence={};
     },
-  },
 
-  computed: {
-    img() {
-      return this.imagenminiatura;
-    },
-  },
-
-  mounted() {
-    if (localStorage.getItem('service')) {
-      try {
-        this.service = JSON.parse(localStorage.getItem('service'));
-        
-      } catch(e) {
-        localStorage.removeItem('service');
+    assign(driver_id,service_id){
+      if (driver_id==undefined) {
+        this.$fire({
+          title: "Error",
+          text: "Seleccione a un Conductor" ,
+          type: "error",
+          showConfirmButton: false,
+          timer: 3000
+        })
       }
-    }
+       axios.post("api/allocations",{
+        service_id: service_id,
+        driver_id: driver_id
+      }).then((res) => {
+        this.$fire({
+          title: "Servicio asignado",
+          text: "Se ha asignado el Servicio" ,
+          type: "success",
+          showConfirmButton: false,
+          timer: 3000
+        })
+        axios.get("api/services/all").then((res) => {
+          this.services = res.data;
+        });
+      })
+    } 
   },
-
-  filters: {
+    filters: {
     timeFormat: function (arg) {
       return moment(arg).format('L');      
     }
-  }
+  },
+    mounted() {
+    this.getPedidos();
+  },
 };
 </script>

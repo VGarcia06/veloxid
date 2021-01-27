@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Models\Service;
+use App\Models\Gallery;
 use App\Models\Price;
 use App\Models\Places\Distrito;
 use App\Models\Product\Subcategory;
@@ -59,7 +60,6 @@ class ServiceController extends Controller
 
             $input = $request->all();
 
-            
 
             $service = Service::create([
                 'direccion_origen' => $input['direccion_origen'],
@@ -113,8 +113,9 @@ class ServiceController extends Controller
                                         'products.subcategory.vehicle_type',
                                         'products.subcategory.category',
                                         'distrito_origen.zona',
-                                        'distrito_destino.zona'
+                                        'distrito_destino.zona',
                                     );
+
         } catch (\Throwable $th) {
             throw $th;
             return response()->json([], 400);
@@ -201,7 +202,7 @@ class ServiceController extends Controller
     public function all()
     {
         try {
-            $services = Service::where('service_state_id',1)
+            $services = Service::select()
                                 ->orderBy('id', 'desc')
                                 ->with(
                                     'state',

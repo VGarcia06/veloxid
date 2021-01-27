@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <orders></orders>
+    <pedidos></pedidos>
 @endsection
