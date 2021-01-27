@@ -5260,6 +5260,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_simple_alert__WEBPACK_IMPORTE
         _this4.imagenevidence = res.data[0];
         console.log(_this4.imagenevidence);
       });
+    },
+    clearFields: function clearFields() {
+      this.detail = "";
+      this.distRecojo = "";
+      this.zonaRecojo = "";
+      this.distEntrega = "";
+      this.zonaEntrega = "";
+      this.products = "";
+      this.imagenevidence = {};
     }
   },
   filters: {
@@ -5296,6 +5305,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue_simple_alert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-simple-alert */ "./node_modules/vue-simple-alert/lib/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6421,6 +6438,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _CotizationComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CotizationComponent */ "./resources/js/components/CotizationComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -108452,7 +108477,23 @@ var render = function() {
     _c("div", { staticClass: "modal fade", attrs: { id: "myModal" } }, [
       _c("div", { staticClass: "modal-dialog modal-lg" }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "modal-header" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: {
+                  click: function($event) {
+                    return _vm.clearFields()
+                  }
+                }
+              },
+              [_vm._v("×")]
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c(
@@ -108633,7 +108674,21 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(7)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: {
+                  click: function($event) {
+                    return _vm.clearFields()
+                  }
+                }
+              },
+              [_vm._v("Cerrar")]
+            )
+          ])
         ])
       ])
     ]),
@@ -108957,7 +109012,12 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-danger btn-fw",
-                      attrs: { "data-dismiss": "modal" }
+                      attrs: { "data-dismiss": "modal" },
+                      on: {
+                        click: function($event) {
+                          return _vm.clearFields()
+                        }
+                      }
                     },
                     [_vm._v("\r\n              Cancelar\r\n            ")]
                   )
@@ -109091,7 +109151,12 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-danger btn-fw",
-                      attrs: { "data-dismiss": "modal" }
+                      attrs: { "data-dismiss": "modal" },
+                      on: {
+                        click: function($event) {
+                          return _vm.clearFields()
+                        }
+                      }
                     },
                     [_vm._v("\r\n              Cancelar\r\n            ")]
                   )
@@ -109172,7 +109237,7 @@ var render = function() {
                 attrs: { id: "sortable-table-2" }
               },
               [
-                _vm._m(8),
+                _vm._m(7),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -109631,19 +109696,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("h3", [_vm._v("Detalle de Servicio")])
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      )
+    return _c("div", { staticClass: "container-fluid" }, [
+      _c("h3", [_vm._v("Detalle de Servicio")])
     ])
   },
   function() {
@@ -109719,21 +109773,6 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("th", { staticClass: "text-right" })
         ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Cerrar")]
       )
     ])
   },
@@ -109876,7 +109915,7 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.detail.service_state_id == 3
-                      ? _c("label", { staticClass: "badge badge-danger" }, [
+                      ? _c("label", { staticClass: "badge badge-secondary" }, [
                           _vm._v("En Tránsito")
                         ])
                       : _vm._e(),
@@ -109884,6 +109923,18 @@ var render = function() {
                     _vm.detail.service_state_id == 4
                       ? _c("label", { staticClass: "badge badge-success" }, [
                           _vm._v("Entregado")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.detail.service_state_id == 5
+                      ? _c("label", { staticClass: "badge badge-danger" }, [
+                          _vm._v("Falso Flete")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.detail.service_state_id == 6
+                      ? _c("label", { staticClass: "badge badge-danger" }, [
+                          _vm._v("Rechazado")
                         ])
                       : _vm._e()
                   ])
@@ -110182,16 +110233,6 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", [
-                          item.service_state_id == 2
-                            ? _c("div", [
-                                _c(
-                                  "label",
-                                  { staticClass: "badge badge-info" },
-                                  [_vm._v("Aceptado")]
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
                           item.service_state_id == 1
                             ? _c("div", [
                                 _c(
@@ -110202,11 +110243,31 @@ var render = function() {
                               ])
                             : _vm._e(),
                           _vm._v(" "),
-                          item.service_state_id == 3
+                          item.service_state_id == 2
+                            ? _c("div", [
+                                _c(
+                                  "label",
+                                  { staticClass: "badge badge-info" },
+                                  [_vm._v("Aceptado")]
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          item.service_state_id == 6
                             ? _c("div", [
                                 _c(
                                   "label",
                                   { staticClass: "badge badge-danger" },
+                                  [_vm._v("Rechazado")]
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          item.service_state_id == 3
+                            ? _c("div", [
+                                _c(
+                                  "label",
+                                  { staticClass: "badge badge-secondary" },
                                   [_vm._v("En Tránsito")]
                                 )
                               ])
@@ -110218,6 +110279,16 @@ var render = function() {
                                   "label",
                                   { staticClass: "badge badge-success" },
                                   [_vm._v("Entregado")]
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          item.service_state_id == 5
+                            ? _c("div", [
+                                _c(
+                                  "label",
+                                  { staticClass: "badge badge-danger" },
+                                  [_vm._v("Falso Flete")]
                                 )
                               ])
                             : _vm._e()
@@ -111967,7 +112038,7 @@ var render = function() {
                                 _vm.detail.service_state_id == 3
                                   ? _c(
                                       "label",
-                                      { staticClass: "badge badge-danger" },
+                                      { staticClass: "badge badge-secondary" },
                                       [_vm._v("En Tránsito")]
                                     )
                                   : _vm._e(),
@@ -111977,6 +112048,22 @@ var render = function() {
                                       "label",
                                       { staticClass: "badge badge-success" },
                                       [_vm._v("Entregado")]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.detail.service_state_id == 5
+                                  ? _c(
+                                      "label",
+                                      { staticClass: "badge badge-danger" },
+                                      [_vm._v("Falso Flete")]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.detail.service_state_id == 6
+                                  ? _c(
+                                      "label",
+                                      { staticClass: "badge badge-danger" },
+                                      [_vm._v("Rechazado")]
                                     )
                                   : _vm._e()
                               ])
@@ -112289,7 +112376,7 @@ var render = function() {
                               staticClass: "btn btn-secondary float-right mt-2",
                               attrs: { href: "#", "data-dismiss": "modal" },
                               on: {
-                                clicl: function($event) {
+                                click: function($event) {
                                   return _vm.clear()
                                 }
                               }
@@ -112450,16 +112537,6 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
-                                  item.service_state_id == 2
-                                    ? _c("div", [
-                                        _c(
-                                          "label",
-                                          { staticClass: "badge badge-info" },
-                                          [_vm._v("Aceptado")]
-                                        )
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
                                   item.service_state_id == 1
                                     ? _c("div", [
                                         _c(
@@ -112472,11 +112549,33 @@ var render = function() {
                                       ])
                                     : _vm._e(),
                                   _vm._v(" "),
-                                  item.service_state_id == 3
+                                  item.service_state_id == 2
+                                    ? _c("div", [
+                                        _c(
+                                          "label",
+                                          { staticClass: "badge badge-info" },
+                                          [_vm._v("Aceptado")]
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  item.service_state_id == 6
                                     ? _c("div", [
                                         _c(
                                           "label",
                                           { staticClass: "badge badge-danger" },
+                                          [_vm._v("Rechazado")]
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  item.service_state_id == 3
+                                    ? _c("div", [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "badge badge-secondary"
+                                          },
                                           [_vm._v("En Tránsito")]
                                         )
                                       ])
@@ -112490,6 +112589,16 @@ var render = function() {
                                             staticClass: "badge badge-success"
                                           },
                                           [_vm._v("Entregado")]
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  item.service_state_id == 5
+                                    ? _c("div", [
+                                        _c(
+                                          "label",
+                                          { staticClass: "badge badge-danger" },
+                                          [_vm._v("Falso Flete")]
                                         )
                                       ])
                                     : _vm._e()

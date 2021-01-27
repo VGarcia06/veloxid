@@ -26,8 +26,10 @@
                   Estado del Servicio :
                     <label v-if="detail.service_state_id==2" class="badge badge-info">Aceptado</label>
                     <label v-if="detail.service_state_id==1" class="badge badge-warning">Pendiente</label>
-                    <label v-if="detail.service_state_id==3" class="badge badge-danger">En Tránsito</label>
+                    <label v-if="detail.service_state_id==3" class="badge badge-secondary">En Tránsito</label>
                     <label v-if="detail.service_state_id==4" class="badge badge-success">Entregado</label>
+                    <label v-if="detail.service_state_id==5" class="badge badge-danger">Falso Flete</label>
+                    <label v-if="detail.service_state_id==6" class="badge badge-danger">Rechazado</label>
                 </p>
               </div>
             </div>
@@ -208,18 +210,24 @@
                   <td>{{ item.fecha_entrega | timeFormat }}</td>
                   <td><button @click="getDetalle(item.id)" type="button" class="btn btn-outline-light text-black btn-sm" data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye"></i></button></td>
                   <td>
-                    <div v-if="item.service_state_id==2">
-                    <label class="badge badge-info">Aceptado</label>
-                    </div>
                     <div v-if="item.service_state_id==1">
-                    <label class="badge badge-warning">Pendiente</label>
+                      <label class="badge badge-warning">Pendiente</label>
+                    </div>
+                    <div v-if="item.service_state_id==2">
+                      <label class="badge badge-info">Aceptado</label>
+                    </div>
+                    <div v-if="item.service_state_id==6">
+                      <label class="badge badge-danger">Rechazado</label>
                     </div>
                     <div v-if="item.service_state_id==3">
-                    <label class="badge badge-danger">En Tránsito</label>
+                      <label class="badge badge-secondary">En Tránsito</label>
                     </div>
                     <div v-if="item.service_state_id==4">
-                    <label class="badge badge-success">Entregado</label>
+                      <label class="badge badge-success">Entregado</label>
                     </div>
+                    <div v-if="item.service_state_id==5">
+                      <label class="badge badge-danger">Falso Flete</label>
+                    </div>                    
                   </td>
                   <td>
                     <select v-model="driver_id" ref="driver" class="form-control form-control-sm" aria-label="Default select example">

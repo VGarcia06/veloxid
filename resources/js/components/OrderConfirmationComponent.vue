@@ -10,7 +10,7 @@
           <div class="container-fluid">
             <h3>Detalle de Servicio</h3>
           </div>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button @click="clearFields()" type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
         <!-- Modal body -->
@@ -112,7 +112,7 @@
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button @click="clearFields()" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
         
       </div>
@@ -242,7 +242,7 @@
             </button>
             <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
             <button
-              
+              @click="clearFields()"
               class="btn btn-danger btn-fw" data-dismiss="modal"
             >
               Cancelar
@@ -337,7 +337,7 @@
             </button>
             <!-- Botón que limpia el formulario y inicializa la variable a 0, solo se muestra si la variable update es diferente a 0-->
             <button
-              
+              @click="clearFields()"
               class="btn btn-danger btn-fw" data-dismiss="modal"
             >
               Cancelar
@@ -547,7 +547,7 @@ export default {
           // handle error
           console.log(error);
         });
-    },
+    },    
 
     cambio_estado(id_service, estado) {
     
@@ -641,7 +641,15 @@ export default {
       
     },
 
-
+    clearFields(){
+        this.detail = "";
+        this.distRecojo = "";
+        this.zonaRecojo = "";
+        this.distEntrega = "";
+        this.zonaEntrega = "";
+        this.products = "";
+        this.imagenevidence={};
+    },
 
   },
 
