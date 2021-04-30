@@ -29,6 +29,11 @@ class AllocationTest extends TestCase
     {
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $zonas = factory(Zona::class, 3)
                     ->create()
                     ->each(function ($zona)
@@ -119,7 +124,8 @@ class AllocationTest extends TestCase
             'estado' => 'Pendiente'
         ]);
 
-        $response = $this->json('GET','api/services/states/1');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET','api/services/states/1');
 
         $response->assertStatus(200)
                     ->assertJsonStructure([
@@ -143,6 +149,11 @@ class AllocationTest extends TestCase
     public function testDriverChiefGetsAllPendingServicesButThereAreNotPendingServices()
     {
         $this->seed();
+
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
 
         $zonas = factory(Zona::class, 3)
                     ->create()
@@ -195,7 +206,8 @@ class AllocationTest extends TestCase
             'estado' => 'Pendiente'
         ]);
 
-        $response = $this->json('GET','api/services/states/1');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET','api/services/states/1');
 
         $response->assertStatus(200)
                     ->assertJsonStructure([
@@ -211,6 +223,11 @@ class AllocationTest extends TestCase
     public function testDriverChiefAllocatesAPendingServiceToADriver()
     {
         $this->seed();
+
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
 
         $zonas = factory(Zona::class, 3)
                     ->create()
@@ -340,13 +357,15 @@ class AllocationTest extends TestCase
         /// new
         $json =[
             'service_id' => 1,
-            'driver_id' => 1,
+            'driver_id' => $user_driver->id
         ];
         ///
 
 
-        $response = $this->json('POST','api/allocations', $json);
-        
+        $response = $this->actingAs($user_chief)
+                            ->withSession(['foo' => 'bar'])
+                            ->json('POST','api/allocations', $json);
+
         $response->assertCreated();
     }
 
@@ -500,7 +519,7 @@ class AllocationTest extends TestCase
         $response = $this->actingAs($user_driver)
                             ->withSession(['foo' => 'bar'])
                             ->json('GET','api/allocations/');
-        $response->dump();
+        
         $response->assertSuccessful()
                     ->assertJsonStructure([
                         'data' => [
@@ -658,6 +677,10 @@ class AllocationTest extends TestCase
         $service->service_state_id = 2; // waiting for decision to be accepted or not
 
         $service->save();
+
+        $json = [
+            'id_status_internal' => 1,
+        ];
 
 
         $response = $this->actingAs($user_driver)

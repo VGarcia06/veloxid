@@ -23,6 +23,11 @@ class DriverEvaluationTest extends TestCase
 
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -50,7 +55,8 @@ class DriverEvaluationTest extends TestCase
                 ]
             ]
         ];
-        $response = $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -66,7 +72,8 @@ class DriverEvaluationTest extends TestCase
                 ]
             ]
         ];
-        $response = $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $response = $this->actingAs($user_chief)
+                            ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $response->assertCreated();
     }
@@ -80,6 +87,11 @@ class DriverEvaluationTest extends TestCase
     {
 
         $this->seed();
+
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
 
         $user = factory(User::class)->create([
             'idUserType' => 2,
@@ -110,7 +122,8 @@ class DriverEvaluationTest extends TestCase
             "requirement_status_id" => 1,
             "evals" => $evals
         ];
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -126,9 +139,11 @@ class DriverEvaluationTest extends TestCase
                 ]
             ]
         ];
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
-        $response = $this->json('GET', '/api/drivers/'. $user->id . '/evaluations');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET', '/api/drivers/'. $user->id . '/evaluations');
         
         $response->assertStatus(200)
                     ->assertJsonStructure([
@@ -162,6 +177,11 @@ class DriverEvaluationTest extends TestCase
 
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -189,9 +209,11 @@ class DriverEvaluationTest extends TestCase
                 ]
             ]
         ];
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
-        $response = $this->json('GET', '/api/drivers/'. $user->id . '/evaluations/1');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET', '/api/drivers/'. $user->id . '/evaluations/1');
 
         $response->assertStatus(200)
                     ->assertJsonStructure([
@@ -228,6 +250,11 @@ class DriverEvaluationTest extends TestCase
 
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -257,7 +284,8 @@ class DriverEvaluationTest extends TestCase
             "requirement_status_id" => 1,
             "evals" => $evals
         ];
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -273,9 +301,11 @@ class DriverEvaluationTest extends TestCase
                 ]
             ]
         ];
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
-        $response = $this->json('GET', '/api/drivers/evaluations');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET', '/api/drivers/evaluations');
         
         $response->assertStatus(200)
                     ->assertJsonStructure([

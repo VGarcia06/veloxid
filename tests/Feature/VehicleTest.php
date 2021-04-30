@@ -21,10 +21,16 @@ class VehicleTest extends TestCase
     {
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
         ]);
+
         $driverdata = new Driver();
         $driverdata->licenciaConducir = "asfd";
         $driverdata->constanciaEstadoSalud = "asfdasf";
@@ -50,7 +56,8 @@ class VehicleTest extends TestCase
                     ]
                 ]);
 
-        $response =  $this->Json('GET','/api/drivers/' . $user->id . '/vehicles', []);
+        $response =  $this->actingAs($user_chief)
+                            ->Json('GET','/api/drivers/' . $user->id . '/vehicles', []);
 
         $response
                 ->assertStatus(200)
@@ -95,6 +102,11 @@ class VehicleTest extends TestCase
     {
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -117,7 +129,8 @@ class VehicleTest extends TestCase
 
 
         
-        $response = $this->json('POST','/api/drivers/' . $user->id . '/vehicles', $json);
+        $response = $this->actingAs($user_chief)
+                            ->json('POST','/api/drivers/' . $user->id . '/vehicles', $json);
 
         $response->assertStatus(201);
     }

@@ -27,10 +27,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [\App\Http\Controllers\Auth\AuthController::class, 'user']);
     Route::post('logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout']);
 
-
-    /**
-     * Testing Api for authenticated users
-     */
     // APIS for getting Revisions
     Route::post('revisions', 'RevisionController@index');
     Route::apiResource('revisions', RevisionController::class)->only(['show']);
@@ -82,14 +78,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('vehicles.evaluations', VehicleEvaluationController::class);
     
     // APIS for Service 
-    Route::apiResource('services.images', Services\GalleryController::class)
-                    ->only(['index','store','destroy']);
+    Route::apiResource('services.images', Services\GalleryController::class)->only([
+        'index','store','destroy'
+    ]);
+    Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
+    Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
 });
 
 /// services
 Route::get('services/all','ServiceController@all');
-Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
-Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
 Route::get('servicesall/{id}','ServiceController@index');
 Route::apiResource('services', ServiceController::class)->only(['index','store','show']);
 

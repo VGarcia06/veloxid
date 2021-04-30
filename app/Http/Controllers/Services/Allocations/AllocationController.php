@@ -17,10 +17,10 @@ class AllocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($driver_id)
+    public function index()
     {
         try {
-            $driver = User::findOrFail($driver_id);
+            $driver = Auth::user();
 
             $allocations = $driver
                                     ->driver()
@@ -48,8 +48,8 @@ class AllocationController extends Controller
     {
         try {
             DB::beginTransaction();
-
-            $user = User::findOrFail($request->input('driver_id'));
+            $user = User::findOrFail( (int) $request->input('driver_id'));
+            
             // creating allocation 
             Allocation::create([
                 'driver_id' => $user->driver()->first()->id,
@@ -101,7 +101,7 @@ class AllocationController extends Controller
             // changing service state to the service
             $allocation = Allocation::findOrFail( (int) $id);
 
-            $allocation->estado = $request->id_status_internal; // accepted
+            $allocation->estado = $request->id_status_internal; // accepted/etc modifed by Osorio in order to be reused
 
             $allocation->save();
 

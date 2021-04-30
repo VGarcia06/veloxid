@@ -193,8 +193,10 @@ class AllocationVehicleTest extends TestCase
             'vehicle_id' => 1
         ];
 
-        $response = $this->json('POST','api/allocations/' . $allocation->id . '/vehicles', $json);
-        
+        $response = $this->actingAs($user_driver)
+                            ->withSession(['foo' => 'bar'])
+                            ->json('POST','api/allocations/' . $allocation->id . '/vehicles', $json);
+                                 
         $response->assertCreated();
     }
 
@@ -371,9 +373,13 @@ class AllocationVehicleTest extends TestCase
             'vehicle_id' => 1
         ];
 
-        $this->json('POST','api/allocations/' . $allocation->id . '/vehicles', $json);
+        $this->actingAs($user_driver)
+                ->withSession(['foo' => 'bar'])
+                ->json('POST','api/allocations/' . $allocation->id . '/vehicles', $json);
 
-        $response = $this->json('GET','api/allocations/' . $allocation->id . '/vehicles');
+        $response = $this->actingAs($user_driver)
+                            ->withSession(['foo' => 'bar'])
+                            ->json('GET','api/allocations/' . $allocation->id . '/vehicles');
         
         $response->assertSuccessful()
                     ->assertJsonStructure([
@@ -560,9 +566,13 @@ class AllocationVehicleTest extends TestCase
                                         ->vehicles()
                                         ->first()->id;
 
-        $this->json('POST','api/allocations/' . $allocation->id . '/vehicles', $json);
+        $this->actingAs($user_driver)
+                ->withSession(['foo' => 'bar'])
+                ->json('POST','api/allocations/' . $allocation->id . '/vehicles', $json);
 
-        $response = $this->json('DELETE','api/allocations/' . $allocation->id . '/vehicles/' . $vehicle_id);
+        $response = $this->actingAs($user_driver)
+                            ->withSession(['foo' => 'bar'])
+                            ->json('DELETE','api/allocations/' . $allocation->id . '/vehicles/' . $vehicle_id);
         
         $response->assertSuccessful();
     }

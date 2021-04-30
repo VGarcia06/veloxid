@@ -180,7 +180,9 @@ class DriverGalleryReportTest extends TestCase
             ]
         ];
         
-        $response = $this->json('POST','api/services/' . $service->id . '/images', $json);
+        $response = $this->actingAs($user_driver)
+                            ->withSession(['foo' => 'bar'])
+                            ->json('POST','api/services/' . $service->id . '/images', $json);
         
         $response->assertCreated();
     }
@@ -345,7 +347,9 @@ class DriverGalleryReportTest extends TestCase
             ]
         ];
         
-        $this->json('POST','api/services/' . $service->id . '/images', $json);
+        $this->actingAs($user_driver)
+                ->withSession(['foo' => 'bar'])
+                ->json('POST','api/services/' . $service->id . '/images', $json);
 
         $service->service_state_id = 4; // finished
 
@@ -360,12 +364,20 @@ class DriverGalleryReportTest extends TestCase
             ]
         ];
         
-        $this->json('POST','api/services/' . $service->id . '/images', $json);
+        $this->actingAs($user_driver)
+                ->withSession(['foo' => 'bar'])
+                ->json('POST','api/services/' . $service->id . '/images', $json);
 
 
-        $response = $this->json('GET','api/services/' . $service->id . '/images');
+        $response = $this->actingAs($user_driver)
+                            ->withSession(['foo' => 'bar'])
+                            ->json('GET','api/services/' . $service->id . '/images');
         
-        $response->assertOk()
+        /**
+         * Antes recibía agrupados por estado del servicio
+         */
+        
+        /* $response->assertOk()
                     ->assertJsonStructure([
                         3 => [
                             0 => [
@@ -386,6 +398,22 @@ class DriverGalleryReportTest extends TestCase
                                 'id',
                                 'imagen'
                             ]
+                        ]
+                    ]); */
+        
+        /**
+         * Ahora entrega todas las imágenes en un galería (No importa agruparlas por el estado del servicio).
+         */
+        
+        $response->assertOk()
+                    ->assertJsonStructure([
+                        0 => [
+                            'id',
+                            'imagen'
+                        ],
+                        1 => [
+                            'id',
+                            'imagen'
                         ]
                     ]);
     }
@@ -542,7 +570,9 @@ class DriverGalleryReportTest extends TestCase
                 ->json('PATCH','api/allocations/' . $allocation->id , $json);
 
 
-        $response = $this->json('GET','api/services/' . $service->id . '/images');
+        $response = $this->actingAs($user_driver)
+                            ->withSession(['foo' => 'bar'])
+                            ->json('GET','api/services/' . $service->id . '/images');
         
         $response->assertOk()
                     ->assertJsonStructure([]);
@@ -708,7 +738,9 @@ class DriverGalleryReportTest extends TestCase
             ]
         ];
         
-        $this->json('POST','api/services/' . $service->id . '/images', $json);
+        $this->actingAs($user_driver)
+                ->withSession(['foo' => 'bar'])
+                ->json('POST','api/services/' . $service->id . '/images', $json);
 
         $service->service_state_id = 4; // finished
 
@@ -727,7 +759,9 @@ class DriverGalleryReportTest extends TestCase
         
         $service->galleries()->createMany($array);
 
-        $response = $this->json('DELETE','api/services/' . $service->id . '/images/' . $service->galleries()->first()->id);
+        $response = $this->actingAs($user_driver)
+                            ->withSession(['foo' => 'bar'])
+                            ->json('DELETE','api/services/' . $service->id . '/images/' . $service->galleries()->first()->id);
         
         $response->assertSuccessful();
     }

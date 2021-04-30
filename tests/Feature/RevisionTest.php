@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Driver;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -21,6 +22,11 @@ class RevisionTest extends TestCase
          * Driver Evaluation TEST
          */
         $this->seed();
+
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
 
         $user = factory(User::class)->create([
             'idUserType' => 2,
@@ -50,7 +56,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -67,7 +74,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -99,7 +107,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         /**
          * Another test for another driver
@@ -136,7 +145,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -153,7 +163,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -185,17 +196,22 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
 
         /**
          * Real test of this TEST
          */
+
+        $now = Carbon::now(); // Getting now datetime
+
         $json = [
-            'from' => '2020-10-10',
-            'to' => '2020-12-10'
+            'from' => $now->subDay(2), // adding 2 days to now
+            'to' => $now->addDay(1) // substracting 1 day to now
         ];
 
-        $response = $this->json('GET','api/revisions',$json);
+        $response = $this->actingAs($user_chief)
+                            ->json('POST','api/revisions',$json); // I pass parameters
         
         $response->assertOk()
                     ->assertJsonStructure([
@@ -236,6 +252,11 @@ class RevisionTest extends TestCase
          */
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -264,7 +285,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -281,7 +303,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -313,7 +336,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         /**
          * Another test for another driver
@@ -350,7 +374,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -367,7 +392,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -399,7 +425,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
 
         /**
          * Real test of this TEST
@@ -409,7 +436,7 @@ class RevisionTest extends TestCase
             'to' => ''
         ];
 
-        $response = $this->json('GET','api/revisions',$json);
+        $response = $this->json('POST','api/revisions',$json);
         
         $response->assertOk()
                     ->assertJsonStructure([
@@ -450,6 +477,11 @@ class RevisionTest extends TestCase
          */
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -478,7 +510,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -495,7 +528,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -527,7 +561,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         /**
          * Another test for another driver
@@ -564,7 +599,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -581,7 +617,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -613,17 +650,22 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
 
         /**
          * Real test of this TEST
          */
+
+        $now = Carbon::now(); // Getting now datetime
+
         $json = [
             'from' => '',
-            'to' => '2020-12-10'
+            'to' => $now->addDay() // Adding 1 day to now
         ];
 
-        $response = $this->json('GET','api/revisions',$json);
+        $response = $this->actingAs($user_chief)
+                            ->json('POST','api/revisions',$json);
         
         $response->assertOk()
                     ->assertJsonStructure([
@@ -664,6 +706,11 @@ class RevisionTest extends TestCase
          */
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -692,7 +739,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -709,7 +757,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -741,7 +790,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         /**
          * Another test for another driver
@@ -778,7 +828,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -795,7 +846,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -827,17 +879,22 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
 
         /**
          * Real test of this TEST
          */
+
+        $now = Carbon::now(); // Getting now datetime
+
         $json = [
-            'from' => '2020-10-10',
+            'from' => $now->subDay(2), // Substracting 2 days to now
             'to' => ''
         ];
         
-        $response = $this->json('GET','api/revisions',$json);
+        $response = $this->actingAs($user_chief)
+                            ->json('POST','api/revisions',$json);
         
         $response->assertOk()
                     ->assertJsonStructure([
@@ -878,6 +935,11 @@ class RevisionTest extends TestCase
          */
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -906,7 +968,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -923,7 +986,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -955,7 +1019,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         /**
          * Another test for another driver
@@ -992,7 +1057,7 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json);
 
         $json = [
             "observacion" => "Hola",
@@ -1009,7 +1074,8 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
         
         /**
          * Vehicle Evaluation TEST
@@ -1041,9 +1107,11 @@ class RevisionTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json);
 
-        $response = $this->json('GET','api/revisions/2');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET','api/revisions/2');
         
         $response->assertOk()
                     ->assertJsonStructure([

@@ -14,6 +14,48 @@ use Tests\TestCase;
 
 class DriverTest extends TestCase
 {
+    
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testDriverChiefCreatesADriver()
+    {
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
+        $response =  $this->actingAs($user)
+                            ->Json('POST','/api/drivers', [
+                                'name' => 'ANDRES JUNIOR', 
+                                'email' => 'aaparcanatm@autonoma.edu.pe', 
+                                'password' => 'asdfasdfasdf', 
+                                'nombre' => 'algun nombre', 
+                                'apellidoPaterno' => 'Algun paellido', 
+                                'apellidoMaterno' => 'Algun apellido', 
+                                'telefono' => 535345, 
+                                'direccion' => 'asdfasdfsd', 
+                                'correo' => 'asdf@afa.com', 
+                                'imagen' => 'asdf/fasdfaf.jpg', 
+                                'numero' => 98485747,
+                                'idDocumentType' => 1,
+                                'licenciaConducir' => 'asdfasdfasdf',
+                                'constanciaEstadoSalud' => 'asdfasdf',
+                                'cuentaBancaria' => 'asdfasdfasdf',
+                                'banco' => 'asdfasdf'
+                            ]);
+
+        $response
+                ->assertStatus(201)
+                ->assertJson([
+                    'state' => True
+                    ]);
+    }
+
     /**
      * A basic feature test example.
      *
@@ -21,7 +63,14 @@ class DriverTest extends TestCase
      */
     public function testDriverChiefGetsDrivers()
     {
-        $this->Json('POST','/api/drivers', [
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
+        $this->actingAs($user)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -42,7 +91,7 @@ class DriverTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $this->Json('POST','/api/drivers', [
+        $this->actingAs($user)->Json('POST','/api/drivers', [
             'name' => 'ANA MARIA', 
             'email' => 'aaparcatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -71,7 +120,8 @@ class DriverTest extends TestCase
             "idUserType" => 1
         ]);
 
-        $response =  $this->Json('GET','/api/drivers', []);
+        $response =  $this->actingAs($user)
+                            ->Json('GET','/api/drivers', []);
 
         $response
                 ->assertStatus(200)
@@ -97,9 +147,16 @@ class DriverTest extends TestCase
      *
      * @return void
      */
-    public function testDriverChiefGetsDriver()
+    public function testDriverChiefGetsADriver()
     {
-        $this->Json('POST','/api/drivers', [
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
+        $this->actingAs($user)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -120,7 +177,8 @@ class DriverTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $response =  $this->Json('GET','/api/drivers/1', []);
+        $response =  $this->actingAs($user)
+                            ->Json('GET','/api/drivers/2', []);
 
         $response
                 ->assertStatus(200)
@@ -134,63 +192,38 @@ class DriverTest extends TestCase
      *
      * @return void
      */
-    public function testDriverChiefCreatesADriver()
-    {
-        $response =  $this->Json('POST','/api/drivers', [
-            'name' => 'ANDRES JUNIOR', 
-            'email' => 'aaparcanatm@autonoma.edu.pe', 
-            'password' => 'asdfasdfasdf', 
-            'nombre' => 'algun nombre', 
-            'apellidoPaterno' => 'Algun paellido', 
-            'apellidoMaterno' => 'Algun apellido', 
-            'telefono' => 535345, 
-            'direccion' => 'asdfasdfsd', 
-            'correo' => 'asdf@afa.com', 
-            'imagen' => 'asdf/fasdfaf.jpg', 
-            'numero' => 98485747,
-            'idDocumentType' => 1,
-            'licenciaConducir' => 'asdfasdfasdf',
-            'constanciaEstadoSalud' => 'asdfasdf',
-            'cuentaBancaria' => 'asdfasdfasdf',
-            'banco' => 'asdfasdf'
-        ]);
-
-        $response
-                ->assertStatus(201)
-                ->assertJson([
-                    'state' => True
-                    ]);
-    }
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function testDriverChiefCreatesADriverWithImage()
     {
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         //Storage::fake('public');
         
         //$file = UploadedFile::fake()->image('avatar.png');
 
-        $response =  $this->Json('POST','/api/drivers', [
-            'name' => 'ANDRES JUNIOR', 
-            'email' => 'aaparcanatm@autonoma.edu.pe', 
-            'password' => 'asdfasdfasdf', 
-            'nombre' => 'algun nombre', 
-            'apellidoPaterno' => 'Algun paellido', 
-            'apellidoMaterno' => 'Algun apellido', 
-            'telefono' => 535345, 
-            'direccion' => 'asdfasdfsd', 
-            'correo' => 'asdf@afa.com', 
-            'imagen' => 'jasd.jpg', 
-            'numero' => 98485747,
-            'idDocumentType' => 1,
-            'licenciaConducir' => 'asdfasdfasdf',
-            'constanciaEstadoSalud' => 'asdfasdf',
-            'cuentaBancaria' => 'asdfasdfasdf',
-            'banco' => 'asdfasdf'
-        ]);
+        $response =  $this->actingAs($user)
+                            ->Json('POST','/api/drivers', [
+                                'name' => 'ANDRES JUNIOR', 
+                                'email' => 'aaparcanatm@autonoma.edu.pe', 
+                                'password' => 'asdfasdfasdf', 
+                                'nombre' => 'algun nombre', 
+                                'apellidoPaterno' => 'Algun paellido', 
+                                'apellidoMaterno' => 'Algun apellido', 
+                                'telefono' => 535345, 
+                                'direccion' => 'asdfasdfsd', 
+                                'correo' => 'asdf@afa.com', 
+                                'imagen' => 'jasd.jpg', 
+                                'numero' => 98485747,
+                                'idDocumentType' => 1,
+                                'licenciaConducir' => 'asdfasdfasdf',
+                                'constanciaEstadoSalud' => 'asdfasdf',
+                                'cuentaBancaria' => 'asdfasdfasdf',
+                                'banco' => 'asdfasdf'
+                            ]);
 
         //Storage::disk('public')->assertExists($file->hashName());
 
@@ -208,7 +241,14 @@ class DriverTest extends TestCase
      */
     public function testDriverChiefUpdatesDriver()
     {
-        $this->Json('POST','/api/drivers', [
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
+        $this->actingAs($user)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -229,7 +269,7 @@ class DriverTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $response =  $this->Json('PUT','/api/drivers/1', [
+        $response =  $this->actingAs($user)->Json('PUT','/api/drivers/2', [
             'name' => 'ANDRES JUNIOR ALGO MAS', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -264,7 +304,14 @@ class DriverTest extends TestCase
      */
     public function testDriverChiefDeletesDriver()
     {
-        $this->Json('POST','/api/drivers', [
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
+        $this->actingAs($user)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -285,7 +332,8 @@ class DriverTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $response =  $this->Json('DELETE','/api/drivers/1', []);
+        $response =  $this->actingAs($user)
+                            ->Json('DELETE','/api/drivers/1', []);
 
         $response
                 ->assertStatus(204);
@@ -298,7 +346,14 @@ class DriverTest extends TestCase
      */
     public function testDriverUniqueEmailIsRequired()
     {
-        $this->Json('POST','/api/drivers', [
+        $this->seed();
+
+        $user = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
+        $this->actingAs($user)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf', 
@@ -317,7 +372,7 @@ class DriverTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $response =  $this->Json('POST','/api/drivers', [
+        $response =  $this->actingAs($user)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf', 
@@ -350,6 +405,11 @@ class DriverTest extends TestCase
 
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 2,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -375,7 +435,8 @@ class DriverTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $user1 = factory(User::class)->create([
             'idUserType' => 2,
@@ -404,7 +465,8 @@ class DriverTest extends TestCase
             "evals" => $evals
         ];
 
-        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
 
         $driver = $user1->driver()->first();
 
@@ -434,9 +496,11 @@ class DriverTest extends TestCase
             "observacion" => "Hola",
             "evals" => $evals
         ];
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
-        $response = $this->json('GET','/api/drivers/evaluated');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET','/api/drivers/evaluated');
 
         $response->assertStatus(200)
                     ->assertJsonStructure([
@@ -453,8 +517,12 @@ class DriverTest extends TestCase
      */
     public function testDriverChiefGetsSuitableAndUnsuitableDriversIfThereAreNotUnsuitableDrivers()
     {
-
         $this->seed();
+
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
 
         $user = factory(User::class)->create([
             'idUserType' => 2,
@@ -486,7 +554,8 @@ class DriverTest extends TestCase
             "evals" => $evals
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $driver = $user->driver()->first();
 
@@ -510,11 +579,14 @@ class DriverTest extends TestCase
         }
 
         $vehicle = $driver->vehicles()->first();
+
         $json = [
             "observacion" => "Hola",
             "evals" => $evals
         ];
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         $user1 = factory(User::class)->create([
             'idUserType' => 2,
@@ -543,11 +615,12 @@ class DriverTest extends TestCase
             "evals" => $evals
         ];
 
-        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
 
-        $driver = $user1->driver()->first();
+        $driver1 = $user1->driver()->first();
 
-        $driver->vehicles()
+        $driver1->vehicles()
                 ->createMany([
                     [
                         'placa' => 'asdfasdf',
@@ -558,7 +631,7 @@ class DriverTest extends TestCase
                 ]);
 
 
-        $vehicle = $driver->vehicles()->first();
+        $vehicle1 = $driver1->vehicles()->first();
 
         $evals = [];
         
@@ -569,13 +642,16 @@ class DriverTest extends TestCase
             ];
         }
 
-        $json = [
+        $json1 = [
             "observacion" => "Hola",
             "evals" => $evals
         ];
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle1->id . '/evaluations', $json1);
 
-        $response = $this->json('GET','/api/drivers/evaluated');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET','/api/drivers/evaluated');
         
         $response->assertStatus(200)
                     ->assertJsonStructure([
@@ -598,6 +674,11 @@ class DriverTest extends TestCase
 
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -625,7 +706,8 @@ class DriverTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user->id . '/evaluations', $json);
 
         $driver = $user->driver()->first();
 
@@ -655,7 +737,8 @@ class DriverTest extends TestCase
                 ]
             ]
         ];
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
         $user1 = factory(User::class)->create([
             'idUserType' => 2,
@@ -684,7 +767,8 @@ class DriverTest extends TestCase
             ]
         ];
 
-        $this->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/drivers/' . $user1->id . '/evaluations', $json1);
 
         $driver = $user1->driver()->first();
 
@@ -714,10 +798,12 @@ class DriverTest extends TestCase
                 ]
             ]
         ];
-        $this->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','/api/vehicles/' . $vehicle->id . '/evaluations', $json);
 
-        $response = $this->json('GET','/api/drivers/evaluated');
-
+        $response = $this->actingAs($user_chief)
+                            ->json('GET','/api/drivers/evaluated');
+        
         $response->assertStatus(200)
                     ->assertJsonStructure([
                         "message",
@@ -738,6 +824,11 @@ class DriverTest extends TestCase
     {
 
         $this->seed();
+
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
 
         $user = factory(User::class)->create([
             'idUserType' => 2,
@@ -795,7 +886,8 @@ class DriverTest extends TestCase
 
         $vehicle = $driver->vehicles()->first();
 
-        $response = $this->json('GET','/api/drivers/evaluated');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET','/api/drivers/evaluated');
 
         $response->assertStatus(200)
                     ->assertJsonStructure([

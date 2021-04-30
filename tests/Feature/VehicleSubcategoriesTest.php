@@ -18,8 +18,13 @@ class VehicleSubcategoriesTest extends TestCase
      *
      * @return void
      */
-    public function testSomeoneStoresSubcategoriesOfADriver()
+    public function testDriverChiefStoresSubcategoriesOfADriver()
     {
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $categories = factory(Category::class)
                     ->create()
                     ->each(function ($category)
@@ -83,7 +88,8 @@ class VehicleSubcategoriesTest extends TestCase
             3
         ];
 
-        $response = $this->json('POST','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories', $json);
+        $response = $this->actingAs($user_chief)
+                            ->json('POST','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories', $json);
         
         $response->assertCreated();
     }
@@ -93,8 +99,13 @@ class VehicleSubcategoriesTest extends TestCase
      *
      * @return void
      */
-    public function testSomeoneGetsSubcategoriesOfADriver()
+    public function testDriverChiefGetsSubcategoriesOfADriver()
     {
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $categories = factory(Category::class)
                     ->create()
                     ->each(function ($category)
@@ -158,9 +169,11 @@ class VehicleSubcategoriesTest extends TestCase
             3
         ];
 
-        $this->json('POST','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories', $json);
         
-        $response = $this->json('GET','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories');
+        $response = $this->actingAs($user_chief)
+                            ->json('GET','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories');
         
         $response->assertOk()
                     ->assertJsonStructure([
@@ -188,8 +201,13 @@ class VehicleSubcategoriesTest extends TestCase
      *
      * @return void
      */
-    public function testSomeoneDeletesSubcategoriesOfADriver()
+    public function testDriverChiefDeletesSubcategoriesOfADriver()
     {
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $categories = factory(Category::class)
                     ->create()
                     ->each(function ($category)
@@ -253,9 +271,11 @@ class VehicleSubcategoriesTest extends TestCase
             3
         ];
 
-        $this->json('POST','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories', $json);
+        $this->actingAs($user_chief)
+                ->json('POST','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories', $json);
         
-        $response = $this->json('DELETE','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories/2');
+        $response = $this->actingAs($user_chief)
+                            ->json('DELETE','api/vehicles/' . $user_driver->driver()->first()->vehicles()->first()->id . '/subcategories/2');
         
         $response->assertSuccessful();
     }

@@ -17,7 +17,12 @@ class SearchTest extends TestCase
      */
     public function testSearchADriverByNombre()
     {
-        $this->Json('POST','/api/drivers', [
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
+        $this->actingAs($user_chief)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -38,7 +43,7 @@ class SearchTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $this->Json('POST','/api/drivers', [
+        $this->actingAs($user_chief)->Json('POST','/api/drivers', [
             'name' => 'ANA MARIA', 
             'email' => 'aaparcatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -60,7 +65,7 @@ class SearchTest extends TestCase
         ]);
 
         //////////////
-        $this->Json('POST','/api/drivers', [
+        $this->actingAs($user_chief)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -81,7 +86,7 @@ class SearchTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $this->Json('POST','/api/drivers', [
+        $this->actingAs($user_chief)->Json('POST','/api/drivers', [
             'name' => 'ANA MARIA', 
             'email' => 'aamariatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -113,7 +118,8 @@ class SearchTest extends TestCase
         ]);
 
 
-        $response = $this->Json('GET','api/drivers/search?query=AN');
+        $response = $this->actingAs($user_chief)
+                            ->Json('GET','api/drivers/search?query=AN');
 
         $response->assertStatus(200);
     }
@@ -125,7 +131,12 @@ class SearchTest extends TestCase
      */
     public function testSearchADriverByApellidoPaterno()
     {
-        $this->Json('POST','/api/drivers', [
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
+        $this->actingAs($user_chief)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparcanatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -146,7 +157,7 @@ class SearchTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $this->Json('POST','/api/drivers', [
+        $this->actingAs($user_chief)->Json('POST','/api/drivers', [
             'name' => 'ANA MARIA', 
             'email' => 'aaparcatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -168,7 +179,7 @@ class SearchTest extends TestCase
         ]);
 
         //////////////
-        $this->Json('POST','/api/drivers', [
+        $this->actingAs($user_chief)->Json('POST','/api/drivers', [
             'name' => 'ANDRES JUNIOR', 
             'email' => 'aaparm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -189,7 +200,7 @@ class SearchTest extends TestCase
             'banco' => 'asdfasdf'
         ]);
 
-        $this->Json('POST','/api/drivers', [
+        $this->actingAs($user_chief)->Json('POST','/api/drivers', [
             'name' => 'ANA MARIA', 
             'email' => 'aamariatm@autonoma.edu.pe', 
             'password' => 'asdfasdfasdf',
@@ -235,10 +246,16 @@ class SearchTest extends TestCase
     {
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
         ]);
+
         $driverdata = new Driver();
         $driverdata->licenciaConducir = "asfd";
         $driverdata->constanciaEstadoSalud = "asfdasf";
@@ -288,7 +305,7 @@ class SearchTest extends TestCase
                     ]
                 ]);
 
-        $response =  $this->Json('GET','api/drivers/' . $user->id . '/vehicles/search?query=', []);
+        $response =  $this->actingAs($user_chief)->Json('GET','api/drivers/' . $user->id . '/vehicles/search?query=', []);
 
         $response->assertStatus(200)
                     ->assertJson([
@@ -344,6 +361,11 @@ class SearchTest extends TestCase
     {
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
@@ -397,7 +419,8 @@ class SearchTest extends TestCase
                     ]
                 ]);
 
-        $response =  $this->Json('GET','api/drivers/' . $user->id . '/vehicles/search?query=ASD', []);
+        $response =  $this->actingAs($user_chief)
+                            ->Json('GET','api/drivers/' . $user->id . '/vehicles/search?query=ASD', []);
 
         $response->assertStatus(200)
                     ->assertJson([
@@ -441,10 +464,16 @@ class SearchTest extends TestCase
     {
         $this->seed();
 
+        $user_chief = factory(User::class)->create([
+            'idUserType' => 3,
+            'idStatus' => 1
+        ]);
+
         $user = factory(User::class)->create([
             'idUserType' => 2,
             'idStatus' => 1
         ]);
+
         $driverdata = new Driver();
         $driverdata->licenciaConducir = "asfd";
         $driverdata->constanciaEstadoSalud = "asfdasf";
@@ -494,7 +523,8 @@ class SearchTest extends TestCase
                     ]
                 ]);
 
-        $response =  $this->Json('GET','api/drivers/' . $user->id . '/vehicles/search?query=444', []);
+        $response =  $this->actingAs($user_chief)
+                            ->Json('GET','api/drivers/' . $user->id . '/vehicles/search?query=444', []);
 
         $response->assertStatus(200)
                     ->assertJson([

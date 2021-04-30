@@ -21,11 +21,11 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($user_id)
+    public function index()
     {
         try {
             
-            $user = User::findOrFail($user_id);
+            $user = Auth::user();
 
             $services = $user
                             ->services()
@@ -70,7 +70,8 @@ class ServiceController extends Controller
                 'fecha_entrega' => $input['fecha_entrega'],
                 'total' => $input['total'],
                 'transaction_id' => $input['transaction_id'],
-                'user_id' => $input['user']['id'],
+                //'user_id' => $input['user']['id'], Esto sirvía solo para la modificación y para que funcione para la exposición final del proyecto de gestión
+                'user_id' => Auth::user()->id,
                 'service_state_id' => 1 // Initial
             ]);
 
@@ -107,6 +108,7 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
+        
         try {
             $service = Service::findOrFail($id)
                                     ->load(
