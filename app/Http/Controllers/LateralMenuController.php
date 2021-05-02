@@ -13,6 +13,6 @@ class LateralMenuController extends Controller
         ->where('idUsertype',Auth::user()->idUserType)
         ->get();
 
-        return $menu;
+        return response()->json($menu);
     }
 }

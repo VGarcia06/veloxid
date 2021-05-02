@@ -83,6 +83,8 @@ Route::middleware('auth:sanctum')->group(function () {
     ]);
     Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
     Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
+
+    Route::get('modules', [App\Http\Controllers\LateralMenuController::class, 'get_menulateral']);
 });
 
 /// services
