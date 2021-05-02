@@ -45,7 +45,7 @@ class AuthController extends Controller
 
     public function user() 
     {
-        return Auth::user();
+        return Auth::user()->load('person','role');
     }
 
     public function logout()
