@@ -84,7 +84,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('services/states', Services\ServiceStateController::class)->only(['index']);
     Route::get('services/states/{id}', 'ServiceController@get_services_from_specified_state');
 
+    // APIS for Modules from a User
     Route::get('modules', [App\Http\Controllers\LateralMenuController::class, 'get_menulateral']);
+
+    // APIS for Driver Chief
+    Route::apiResource('chiefs_drivers', DriverChiefController::class)->only(['index']);
 });
 
 /// services
