@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Models\Driver;
+use App\Models\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class DriverChiefController extends Controller
@@ -36,7 +42,59 @@ class DriverChiefController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request...
+        try {
+            $driver_chief = new User;
+
+            /**
+             * If you would like to begin a transaction manually and have 
+             * complete control over rollbacks and commits, you may use the 
+             * beginTransaction method on the DB facade:
+             */
+            DB::beginTransaction();
+
+            /**
+             * Validating unique email
+             */
+            $validator = Validator::make($request->all(), [
+                'email' => 'unique:users'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => 'email taken'
+                ], 400);
+            }
+
+            /**
+             * Laravel default user table instertion
+             */ 
+            $driver_chief->name = $request->name;
+            $driver_chief->email = $request->email;
+            $driver_chief->password = Hash::make($request->password);
+            $driver_chief->idUserType = 3; // The 2 is defined as Jefe de Conductores/Driver Chief
+            $driver_chief->idStatus = 1; // Driver is always activated once is created
+
+            $driver_chief->save();
+
+            /**
+             * Lastly, you can commit a transaction via the commit method:
+             */
+            DB::commit();
+        } catch (\Throwable $th) {
+            throw $th;
+
+            /**
+             * You can rollback the transaction via the rollBack method:
+             */
+            DB::rollBack();
+            return response()->json([
+                'error' => 'Something was wrong'
+            ], 400);
+        }
+
+        return response()
+                    ->json([], 201);
     }
 
     /**

@@ -14,7 +14,31 @@ class DriverChiefTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testAdminCreatesADriverChief()
+    {
+        $this->seed();
+
+        $admin = factory(User::class)->create([
+            'idUserType' => 4,
+            'idStatus' => 1
+        ]);
+
+        $response =  $this->actingAs($admin)
+                            ->Json('POST','/api/chiefs_drivers', [
+                                'name' => 'ANDRES JUNIOR', 
+                                'email' => 'aaparcanatm@autonoma.edu.pe', 
+                                'password' => 'asdfasdfasdf'
+                            ]);
+        
+        $response->assertCreated();
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testAdminGetsDriversChiefs()
     {
         $admin = factory(User::class)->create([
             'idUserType' => 4, // Otro usuario
