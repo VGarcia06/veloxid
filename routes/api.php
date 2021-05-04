@@ -89,6 +89,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // APIS for Driver Chief
     Route::apiResource('chiefs_drivers', DriverChiefController::class)->only(['index', 'store']);
+
+    // APIS for active and desactive Users
+    // PATCH -> active
+    // DELETE -> desactive
+    Route::apiResource('users',UserController::class)->only(['update','destroy']);
 });
 
 /// services
