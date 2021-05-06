@@ -88,7 +88,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('modules', [App\Http\Controllers\LateralMenuController::class, 'get_menulateral']);
 
     // APIS for Driver Chief
-    Route::apiResource('chiefs_drivers', DriverChiefController::class)->only(['index', 'store']);
+    Route::apiResource('chiefs_drivers', DriverChiefController::class)->only(['index', 'store', 'show', 'update']);
 
     // APIS for active and desactive Users
     // PATCH -> active

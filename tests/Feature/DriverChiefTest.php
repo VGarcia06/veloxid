@@ -74,4 +74,70 @@ class DriverChiefTest extends TestCase
                         ]
                     ]);
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testAdminGetsADriverChief()
+    {
+        $admin = factory(User::class)->create([
+            'idUserType' => 4, // Otro usuario
+            'idStatus' => 1
+        ]);
+
+        $chief1 = factory(User::class)->create([
+            'idUserType' => 3, // jefe de transporte - Driver Chief
+            'idStatus' => 1
+        ]);
+
+        $chief2 = factory(User::class)->create([
+            'idUserType' => 3, // jefe de transporte - Driver Chief
+            'idStatus' => 1
+        ]);
+
+        $response = $this->actingAs($admin)
+                            ->json('GET','/api/chiefs_drivers/' . $chief2->id);
+
+        $response->assertOK()
+                    ->assertJson([
+                        'name' => $chief2->name,
+                        'email' => $chief2->email,
+                        'idStatus' => 1,
+                        'idUserType' => 3
+                    ]);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testAdminUpdatesADriverChief()
+    {
+        $admin = factory(User::class)->create([
+            'idUserType' => 4, // Otro usuario
+            'idStatus' => 1
+        ]);
+
+        $chief1 = factory(User::class)->create([
+            'idUserType' => 3, // jefe de transporte - Driver Chief
+            'idStatus' => 1
+        ]);
+
+        $chief2 = factory(User::class)->create([
+            'idUserType' => 3, // jefe de transporte - Driver Chief
+            'idStatus' => 1
+        ]);
+
+        $json = [
+            'email' => 'aa@ff.com',
+        ];
+
+        $response = $this->actingAs($admin)
+                            ->json('PUT','/api/chiefs_drivers/' . $chief2->id, $json);
+
+        $response->assertOK();
+    }
 }

@@ -95,30 +95,52 @@ class DriverChiefController extends Controller
         }
 
         return response()
-                    ->json([], 201);
+                    ->json([], Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        return response()
+                    ->json(
+                        User::findOrFail($id), 
+                        Response::HTTP_OK
+                    );
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            User::findOrFail($id)->update($request->all());
+
+
+        } catch (\Throwable $th) {
+            throw $th;
+
+            return response()
+                    ->json(
+                        [],
+                        Response::HTTP_ERROR
+                    );
+        }
+
+        return response()
+                    ->json(
+                        [], 
+                        Response::HTTP_OK
+                    );
     }
 
     /**
