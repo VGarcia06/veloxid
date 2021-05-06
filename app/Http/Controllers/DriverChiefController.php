@@ -21,7 +21,8 @@ class DriverChiefController extends Controller
      */
     public function index()
     {
-        $driver_chiefs = User::where('idUserType',3)
+        $driver_chiefs = User::withTrashed()
+                                ->where('idUserType',3)
                                 ->with(
                                     'person', 
                                     'driver', 

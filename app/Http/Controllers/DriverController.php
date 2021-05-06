@@ -21,7 +21,8 @@ class DriverController extends Controller
      */
     public function index()
     {
-        $drivers = Driver::where('idUserType', 2) // The 2 is defined as Conductor/Driver
+        $drivers = Driver::withTrashed()
+                        ->where('idUserType', 2) // The 2 is defined as Conductor/Driver
                         ->with('person', 'driver', 'status')
                         ->paginate(12);
                         
