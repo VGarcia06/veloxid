@@ -108,7 +108,7 @@ class DriverChiefController extends Controller
     {
         return response()
                     ->json(
-                        User::findOrFail($id), 
+                        User::withTrashed()->findOrFail($id), 
                         Response::HTTP_OK
                     );
     }
@@ -123,7 +123,7 @@ class DriverChiefController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            User::findOrFail($id)->update($request->all());
+            User::withTrashed()->findOrFail($id)->update($request->all());
 
 
         } catch (\Throwable $th) {

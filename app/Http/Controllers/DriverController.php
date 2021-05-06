@@ -162,7 +162,7 @@ class DriverController extends Controller
     public function show($id)
     {
         try {
-            $driver = Driver::findOrFail($id)
+            $driver = Driver::withTrashed()->findOrFail($id)
                                 ->load('person.documentType', 'driver');
 
             if (Storage::disk('public')->exists($driver->person->imagen)) {
@@ -194,7 +194,7 @@ class DriverController extends Controller
         // Validate the request...
         
         try {
-            $driver = Driver::find($id);
+            $driver = Driver::withTrashed()->find($id);
 
             /**
              * If you would like to begin a transaction manually and have 
